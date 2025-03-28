@@ -1,0 +1,133 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    background-color: #f0f0f0;
+}
+
+header {
+    background-color: #009933;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+#sidebar {
+    width: 250px;
+    background-color: #183264;
+    color: white;
+    position: fixed;
+    left: 0;
+    height: 100%; /* Ajuste para dejar espacio para el header */
+    padding: 20px;
+    z-index: 1000;
+}
+
+#sidebar h2 {
+    text-align: center;
+}
+
+#sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#sidebar ul li {
+    margin: 20px 0;
+}
+
+#sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#sidebar ul li a:hover {
+    background-color: #009933;
+}
+
+main {
+    flex: 1;
+    padding: 1rem;
+    margin-left: 300px; /* Ajuste para dejar espacio para la barra lateral */
+    margin-top: 80px; /* Ajuste para dejar espacio para el header */
+    transition: margin-left 0.3s; /* Transición suave para el margen */
+}
+
+#usuarios, #convenios {
+    margin-bottom: 2rem;
+}
+
+h1, h2 {
+    margin: 0 0 1rem 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    text-align: left;
+}
+
+table th {
+    background-color: #f4f4f4;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+button {
+    background-color: #009933;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #007a29;
+}
+
+.metric-card {
+    background-color: #f4f4f4;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.metric-card.green {
+    background-color: #009933;
+    color: white;
+}
+
+.metric-card.blue {
+    background-color: #183264;
+    color: white;
+}
+
+.metric-card.orange {
+    background-color: #EB6012;
+    color: white;
+}
