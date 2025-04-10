@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <link rel="stylesheet" href="chat.css">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="sidebar">
+            <div class="user-info">
+                <button onclick="location.href='../convenios/chatlist.html'" class="back-button">Regresar</button>
+                <h2>[Escuela/Aliado]</h2>
+            </div>
+            <div class="cronograma">
+                <h3>Cronograma de Avance</h3>
+                    <p>1.     Chat<p>
+                    <p>2.     Contrato Digital de Convenio
+                        <div class="file-upload">
+                            <input type="file" id="file-upload">
+                        </div>
+                    </p>
+                    <p>3.     Firma Digital de Convenio
+                        <div class="agreement">
+                            <input type="checkbox" id="accept-agreement">
+                            <label for="accept-agreement">Aceptar el Convenio</label>
+                        </div>
+                    </p>
+            </div>
+        </div>
+        <div class="chat-window">
+            <div class="chat-messages">
+                <!-- Mensajes del chat -->
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="Escribe un mensaje...">
+                <button>Enviar</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

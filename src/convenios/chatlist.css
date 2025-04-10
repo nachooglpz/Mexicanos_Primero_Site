@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+/* Color Palette */
+:root {
+    --green: #009933;
+    --blue: #183264;
+    --orange: #EB6012;
+    --yellow: #F59D15;
+}
+  
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+#sidebar {
+    width: 250px;
+    background-color: var(--blue);
+    color: white;
+    position: fixed;
+    height: 100%;
+    padding: 20px;
+}
+
+#sidebar h2 {
+    text-align: center;
+}
+
+#sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#sidebar ul li {
+    margin: 20px 0;
+}
+
+#sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#sidebar ul li a:hover {
+    background-color: var(--green);
+}
+
+#main-content {
+    margin-left: 270px;
+    padding: 20px;
+    flex-grow: 1;
+}
+
+#main-content h1 {
+    color: var(--blue);
+}
+
+.chat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+}
+
+.chat-card {
+    background-color: var(--blue);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    flex: 1 1 100%;
+    box-sizing: border-box;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+
+.chat-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.chat-card h2 {
+    background-color: var(--green);
+    padding: 10px;
+    border-radius: 5px;
+    margin: -20px -20px 20px -20px;
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    #main-content {
+        margin-left: 0;
+    }
+
+    .chat-card {
+        flex: 1 1 100%;
+    }
+}

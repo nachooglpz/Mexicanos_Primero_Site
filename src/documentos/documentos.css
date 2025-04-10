@@ -1,0 +1,159 @@
+/* filepath: /home/gomez/mockup/documentos.css */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+/* Color Palette */
+:root {
+    --green: #009933;
+    --blue: #183264;
+    --orange: #EB6012;
+    --yellow: #F59D15;
+}
+  
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+#sidebar {
+    width: 250px;
+    background-color: var(--blue);
+    color: white;
+    position: fixed;
+    height: 100%;
+    padding: 20px;
+}
+
+#sidebar h2 {
+    text-align: center;
+}
+
+#sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#sidebar ul li {
+    margin: 20px 0;
+}
+
+#sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#sidebar ul li a:hover {
+    background-color: var(--green);
+}
+
+#main-content {
+    margin-left: 300px;
+    padding: 20px;
+    flex-grow: 1;
+}
+
+#main-content h1 {
+    color: var(--blue);
+}
+
+.upload-section {
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.upload-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.upload-section label {
+    font-weight: bold;
+}
+
+.upload-section input[type="text"],
+.upload-section input[type="file"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.upload-section button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--green);
+    color: white;
+    cursor: pointer;
+}
+
+.upload-section button:hover {
+    background-color: #007722;
+}
+
+.document-list {
+    margin-top: 40px;
+}
+
+.document-list h2 {
+    color: var(--blue);
+}
+
+.document-card {
+    background-color: var(--blue);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.document-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.document-card h3 {
+    background-color: var(--green);
+    padding: 10px;
+    border-radius: 5px;
+    margin: -20px -20px 20px -20px;
+    text-align: center;
+}
+
+.delete-button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--orange);
+    color: white;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: var(--orange);
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    #main-content {
+        margin-left: 0;
+    }
+
+    .upload-section,
+    .document-card {
+        flex: 1 1 100%;
+    }
+}
