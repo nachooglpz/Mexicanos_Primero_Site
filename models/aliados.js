@@ -1,6 +1,10 @@
 const db = require('../db.js');
 
 const getAllAliados = async () => {
+    return await db.query('SELECT * FROM aliados');
+}
+
+const getAllActiveAliados = async () => {
     return await db.query('SELECT * FROM aliados WHERE estatus_activo = true');
 }
 
