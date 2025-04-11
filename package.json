@@ -7,7 +7,11 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "migrate": "knex --knexfile backend/knexfile.js migrate:latest",
+    "rollback": "knex --knexfile backend/knexfile.js migrate:down",
+    "knex_up": "knex --knexfile backend/knexfile.js migrate:up",
+    "knex_down": "knex --knexfile backend/knexfile.js migrate:down"
   },
   "dependencies": {
     "express": "^5.1.0",
