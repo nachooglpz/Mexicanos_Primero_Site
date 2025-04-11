@@ -8,4 +8,4 @@ const getApoyosByAliado = async (aliado) => {
     return await db.query('SELECT DISTINCT tipo_apoyo FROM tipos_de_apoyo_a_brindar WHERE usuario_aliado = $1', [aliado]);
 }
 
-module.exports = { getAllAliados, getAliadosByKeyword, getAliadosBySector, getAliadosByTipoApoyo, getApoyosByAliado };
+module.exports = { getAllAliados, getApoyosByAliado }
