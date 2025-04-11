@@ -3,15 +3,15 @@
  * @returns { Promise<void> }
  */
 export async function up(knex) {
-    return knex.schema.createTable('Administradores_de_Escuela', function(t) {
-        t.string('Usuario_escuela').primary();
-        t.string('Nombre').notNull();
-        t.string('Contraseña').notNull();
-        t.string('Email').notNull();
-        t.string('Escuela').notNull();
-        t.text('Direccion').notNull();
-        t.string('CCT').notNull();
-        t.boolean('Estatus_activo').notNull().defaultTo(false);
+    return knex.schema.createTable('administradores_de_escuela', function(t) {
+        t.string('usuario_escuela').primary();
+        t.string('nombre').notNull();
+        t.string('contrasena').notNull();
+        t.string('email').notNull();
+        t.string('escuela').notNull();
+        t.text('direccion').notNull();
+        t.string('cct').notNull();
+        t.boolean('estatus_activo').notNull().defaultTo(false);
     });
 };
 
@@ -20,5 +20,5 @@ export async function up(knex) {
  * @returns { Promise<void> }
  */
 export async function down(knex) {
-    return knex.schema.dropTable('Administradores_de_Escuela');
+    return knex.schema.dropTable('administradores_de_escuela');
 };

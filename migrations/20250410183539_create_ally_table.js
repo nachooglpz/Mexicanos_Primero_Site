@@ -3,15 +3,15 @@
  * @returns { Promise<void> }
  */
 export async function up(knex) {
-    return knex.schema.createTable('Aliados', function(t) {
-        t.string('Usuario_aliado').primary();
-        t.string('Nombre').notNull();
-        t.string('Contraseña').notNull();
-        t.string('Email').notNull();
-        t.string('Empresa').notNull();
-        t.string('Sector').notNull();
-        t.text('Direccion').notNull();
-        t.boolean('Estatus_activo').notNull().defaultTo(false);
+    return knex.schema.createTable('aliados', function(t) {
+        t.string('usuario_aliado').primary();
+        t.string('nombre').notNull();
+        t.string('contrasena').notNull();
+        t.string('email').notNull();
+        t.string('empresa').notNull();
+        t.string('sector').notNull();
+        t.text('direccion').notNull();
+        t.boolean('estatus_activo').notNull().defaultTo(false);
     });
 };
 
@@ -20,5 +20,5 @@ export async function up(knex) {
  * @returns { Promise<void> }
  */
 export async function down(knex) {
-    return knex.schema.dropTable('Aliados');
+    return knex.schema.dropTable('aliados');
 };

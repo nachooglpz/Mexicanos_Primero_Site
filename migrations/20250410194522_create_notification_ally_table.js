@@ -3,20 +3,19 @@
  * @returns { Promise<void> }
  */
 export async function up(knex) {
-    return knex.schema.createTable('notificaciones_a_administradores_de_escuelas', function(t) {
+    return knex.schema.createTable('notificaciones_a_aliados', function(t) {
         t.integer('id_notificacion').unsigned().notNull();
-        t.string('usuario_escuela').notNull();
+        t.string('usuario_aliado').notNull();
 
-        // Foreign key de ID_notificacion
+        // Foreign key de ID_convenio
         t.foreign('id_notificacion')
             .references('id_notificacion')
             .inTable('notificaciones')
             .onDelete('CASCADE');
 
-        // Foreign key de Usuario_escuela
-        t.foreign('usuario_escuela')
-            .references('usuario_escuela')
-            .inTable('administradores_de_escuela')
+        t.foreign('usuario_aliado')
+            .references('usuario_aliado')
+            .inTable('aliados')
     });
 };
 
@@ -25,5 +24,5 @@ export async function up(knex) {
  * @returns { Promise<void> }
  */
 export async function down(knex) {
-    return knex.schema.dropTable('notificaciones_a_administradores_de_escuelas');
+    return knex.schema.dropTable('notificaciones_a_aliados');
 };

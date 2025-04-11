@@ -3,13 +3,13 @@
  * @returns { Promise<void> }
  */
 export async function up(knex) {
-    return knex.schema.createTable('Convenio', function(t) {
-        t.increments('ID_convenio').primary();
-        t.text('Link_contrato').notNull();
-        t.boolean('Estatus_firma_aliado').notNull().defaultTo(false);
-        t.boolean('Estatus_firma_escuela').notNull().defaultTo(false);
-        t.boolean('Finalizado').notNull().defaultTo(false);
-        t.date('Fecha_inicio').notNull();
+    return knex.schema.createTable('convenio', function(t) {
+        t.increments('id_convenio').primary();
+        t.text('link_contrato').notNull();
+        t.boolean('estatus_firma_aliado').notNull().defaultTo(false);
+        t.boolean('estatus_firma_escuela').notNull().defaultTo(false);
+        t.boolean('finalizado').notNull().defaultTo(false);
+        t.date('fecha_inicio').notNull();
     });
 };
 
@@ -18,5 +18,5 @@ export async function up(knex) {
  * @returns { Promise<void> }
  */
 export async function down(knex) {
-    return knex.schema.dropTable('Convenio');
+    return knex.schema.dropTable('convenio');
 };

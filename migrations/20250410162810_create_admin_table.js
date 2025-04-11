@@ -3,11 +3,11 @@
  * @returns { Promise<void> }
  */
 export async function up(knex) {
-    return knex.schema.createTable('Administrador', function(t) {
-        t.string('Usuario_admin').primary();
-        t.string('Nombre').notNull();
-        t.string('Contraseña').notNull();
-        t.string('Email').notNull();
+    return knex.schema.createTable('administrador', function(t) {
+        t.string('usuario_admin').primary();
+        t.string('nombre').notNull();
+        t.string('contraseña').notNull();
+        t.string('email').notNull();
     });
 };
 
@@ -16,5 +16,5 @@ export async function up(knex) {
  * @returns { Promise<void> }
  */
 export async function down(knex) {
-    return knex.schema.dropTable('Administrador');
+    return knex.schema.dropTable('administrador');
 };

@@ -3,10 +3,10 @@
  * @returns { Promise<void> }
  */
 export async function up(knex) {
-    return knex.schema.createTable('Notificaciones', function(t) {
-        t.increments('ID_notificacion').primary();
-        t.text('Titulo').notNull();
-        t.text('Texto').notNull();
+    return knex.schema.createTable('notificaciones', function(t) {
+        t.increments('id_notificacion').primary();
+        t.text('titulo').notNull();
+        t.text('texto').notNull();
     });
 };
 
@@ -15,5 +15,5 @@ export async function up(knex) {
  * @returns { Promise<void> }
  */
 export async function down(knex) {
-    return knex.schema.dropTable('Notificaciones');
+    return knex.schema.dropTable('notificaciones');
 };
