@@ -134,7 +134,7 @@ function AllyList({filters}) {
     return (
         <div className="ally-list">
             {aliadosInstances.map((aliado) => (
-                    <div key={aliado.usuario_aliado} className="ally-card" data-sector={aliado.sector} data-support="financiero">
+                    <div key={aliado.usuario_aliado} className="ally-card">
                         <h2>{aliado.nombre}</h2>
                         <p>Sector: {aliado.sector}</p>
                         <p>Tipos de Apoyo:</p>
