@@ -3,14 +3,14 @@
  * @returns { Promise<void> }
  */
 export async function up(knex) {
-    return knex.schema.createTable('Tipos_de_apoyo_a_brindar', function(t) {
-        t.string('Usuario_aliado').notNullable();
-        t.string('Tipo_Apoyo').notNullable();
+    return knex.schema.createTable('tipos_de_apoyo_a_brindar', function(t) {
+        t.string('usuario_aliado').notNullable();
+        t.string('tipo_apoyo').notNullable();
 
         // Define la foreign key
-        t.foreign('Usuario_aliado')
-        .references('Usuario_aliado')
-        .inTable('Aliados')
+        t.foreign('usuario_aliado')
+        .references('usuario_aliado')
+        .inTable('aliados')
         .onDelete('CASCADE'); // si se borra un admin, se borran sus necesidades
     });
 };
@@ -20,5 +20,5 @@ export async function up(knex) {
  * @returns { Promise<void> }
  */
 export async function down(knex) {
-    return knex.schema.dropTable('Tipos_de_apoyo_a_brindar');
+    return knex.schema.dropTable('tipos_de_apoyo_a_brindar');
 };
