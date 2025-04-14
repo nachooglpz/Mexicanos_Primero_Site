@@ -15,7 +15,7 @@ const validateApoyoQuery = (req, res, next) => {
 };
 
 const validateFilteredAliadosQuery = (req, res, next) => {
-    if (!('name' in req.query)|| !('sector' in req.query) || !('apoyo' in req.query)) {
+    if (!('name' in req.query && 'sector' in req.query && 'apoyo' in req.query)) {
         const error = new Error(`Query is missing name, sector, or apoyo. Arguments: ${req.query}`);
         error.status = 401;
         return next(error);
