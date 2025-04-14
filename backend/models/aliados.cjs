@@ -20,7 +20,7 @@ const getApoyosByAliado = async (aliado) => {
 
 const getDistinctApoyos = async () => {
     const res = await db.query('SELECT DISTINCT tipo_apoyo FROM tipos_de_apoyo_a_brindar tdaab JOIN aliados a ON tdaab.usuario_aliado = a.usuario_aliado WHERE a.estatus_activo = true');
-    console.log(res.rows);
+    // console.log(res.rows);
     return res.rows;
 }
 
@@ -33,15 +33,15 @@ const getFilteredAliados = async (name, sector, apoyo) => {
     } else if (name === '' && apoyo === '') {
         res = await db.query('SELECT * FROM aliados WHERE sector = $1 AND estatus_activo = true', [sector]);
     } else if (sector === '' && apoyo === '') {
-        res = await db.query('SELECT * FROM aliados WHERE nombre LIKE $1 AND estatus_activo = true', [`%${name}%`]);
+        res = await db.query('SELECT * FROM aliados WHERE (UPPER(nombre) LIKE UPPER($1) OR UPPER(empresa) LIKE UPPER($1) OR UPPER(sector) LIKE UPPER($1)) AND estatus_activo = true', [`%${name}%`]);
     } else if (name === '') {
         res = await db.query('SELECT * FROM aliados a JOIN tipos_de_apoyo_a_brindar tdaab ON a.usuario_aliado = tdaab.usuario_aliado WHERE a.sector = $1 AND tdaab.tipo_apoyo = $2 AND a.estatus_activo = true', [sector, apoyo]);
     } else if (sector === '') {
-        res = await db.query('SELECT * from ALIADOS a JOIN tipos_de_apoyo_a_brindar tdaab ON a.usuario_aliado = tdaab.usuario_aliado WHERE a.nombre LIKE $1 AND tdaab.tipo_apoyo = $2 AND a.estatus_activo = true', [`%${name}%`, apoyo]);
+        res = await db.query('SELECT * from ALIADOS a JOIN tipos_de_apoyo_a_brindar tdaab ON a.usuario_aliado = tdaab.usuario_aliado WHERE (UPPER(a.nombre) LIKE UPPER($1) OR UPPER(a.empresa) LIKE UPPER($1) OR UPPER(a.sector) LIKE UPPER($1)) AND tdaab.tipo_apoyo = $2 AND a.estatus_activo = true', [`%${name}%`, apoyo]);
     } else if (apoyo === '') {
-        res = await db.query('SELECT * FROM aliados WHERE nombre LIKE $1 AND sector = $2 AND estatus_activo = true', [`%${name}%`, sector])
+        res = await db.query('SELECT * FROM aliados WHERE (UPPER(nombre) LIKE UPPER($1) OR UPPER(empresa) LIKE UPPER($1) OR UPPER(sector) LIKE UPPER($1)) AND sector = $2 AND estatus_activo = true', [`%${name}%`, sector])
     } else {
-        res = await db.query('select * from aliados a join tipos_de_apoyo_a_brindar tdaab on a.usuario_aliado = tdaab.usuario_aliado where a.nombre like $1 and a.sector = $2 and tdaab.tipo_apoyo = $3 and a.estatus_activo = true', [`%${name}%`, sector, apoyo]);
+        res = await db.query('select * from aliados a join tipos_de_apoyo_a_brindar tdaab on a.usuario_aliado = tdaab.usuario_aliado where (UPPER(a.nombre) like UPPER($1) or UPPER(a.empresa) LIKE UPPER($1) OR UPPER(a.sector) LIKE UPPER($1)) and a.sector = $2 and tdaab.tipo_apoyo = $3 and a.estatus_activo = true', [`%${name}%`, sector, apoyo]);
     }
     
     // console.log(res.rows);
@@ -50,7 +50,7 @@ const getFilteredAliados = async (name, sector, apoyo) => {
 
 const getSectores = async () => {
     const res = await db.query('SELECT DISTINCT sector FROM aliados WHERE estatus_activo = true');
-    console.log(res.rows);
+    // console.log(res.rows);
     return res.rows;
 }
 
