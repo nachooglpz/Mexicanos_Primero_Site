@@ -2,7 +2,6 @@
 const express = require('express');
 const app = express();
 
-const { testRouter } = require('./routes/test.cjs');
 const { aliadosRouter } = require('./routes/aliados.cjs')
 
 const PORT = process.env.PORT || 3000;
@@ -11,7 +10,6 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static('public'));
 
 // Routes go here
-app.use('/api', testRouter);
 app.use('/api/aliados', aliadosRouter);
 
 // Start the server listening on PORT
