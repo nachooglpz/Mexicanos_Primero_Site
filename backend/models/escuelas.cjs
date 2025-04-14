@@ -17,9 +17,9 @@ getFilteredEscuelas = async (name, necesidad) => {
     } else if (name === '') {
         result = await db.query('SELECT * FROM administradores_de_escuela ade JOIN necesidades n ON ade.usuario_escuela = n.usuario_escuela WHERE n.necesidad = $1 AND ade.estatus_activo = true', [necesidad]);
     } else if (necesidad === '') {
-        result = await db.query('SELECT * FROM administradores_de_escuela ade WHERE nombre LIKE $1 AND estatus_activo = true', [`%${name}%`]);
+        result = await db.query('SELECT * FROM administradores_de_escuela ade WHERE (UPPER(nombre) LIKE UPPER($1) OR UPPER(escuela) LIKE UPPER($1)) AND estatus_activo = true', [`%${name}%`]);
     } else {
-        result = await db.query('SELECT * FROM administradores_de_escuela ade JOIN necesidades n ON ade.usuario_escuela = n.usuario_escuela WHERE ade.nombre LIKE $1 AND n.necesidad = $2 AND ade.estatus_activo = true', [`%${name}%`, necesidad]);
+        result = await db.query('SELECT * FROM administradores_de_escuela ade JOIN necesidades n ON ade.usuario_escuela = n.usuario_escuela WHERE (UPPER(ade.nombre) LIKE UPPER($1) OR UPPER(ade.escuela) LIKE UPPER($1)) AND n.necesidad = $2 AND ade.estatus_activo = true', [`%${name}%`, necesidad]);
     }
     return result.rows;
 };
