@@ -1,4 +1,13 @@
 import { useEffect, useState } from 'react';
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './aliados.css'
+
+createRoot(document.getElementById('main-content')).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+)
 
 class Aliado {
   constructor(data, tipos_de_ayuda = []) {
