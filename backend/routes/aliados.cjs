@@ -15,9 +15,9 @@ const validateApoyoQuery = (req, res, next) => {
 };
 
 const validateFilteredAliadosQuery = (req, res, next) => {
-    if (!('sector' in req.query) || !('apoyo' in req.query)) {
-        const error = new Error(`Query is missing sector, or apoyo. Arguments: ${req.query}`);
-        error.status = 400;
+    if (!('name' in req.query)|| !('sector' in req.query) || !('apoyo' in req.query)) {
+        const error = new Error(`Query is missing name, sector, or apoyo. Arguments: ${req.query}`);
+        error.status = 401;
         return next(error);
     }
     next();
@@ -29,8 +29,8 @@ aliadosRouter.get('/', async (req, res, next) => {
 });
 
 aliadosRouter.get('/filtered', validateFilteredAliadosQuery, async (req, res, next) => {
-    const { sector, apoyo } = req.query;
-    const dbAliados = await aliadosModel.getFilteredAliados(sector, apoyo);
+    const { name, sector, apoyo } = req.query;
+    const dbAliados = await aliadosModel.getFilteredAliados(name, sector, apoyo);
     res.send(dbAliados);
 });
 

@@ -21,7 +21,7 @@ class Aliado {
 }
 
 function App() {
-    const [filters, setFilters] = useState({ sector: '', apoyo: '' });
+    const [filters, setFilters] = useState({ keyWord: '', sector: '', apoyo: '', });
 
     const handleFilterChange = (newFilters) => {
         setFilters(newFilters);
@@ -48,6 +48,7 @@ function App() {
 function SearchFilter({ onFilterChange }) {
     const [sectores, setSectores] = useState([]);
     const [apoyos, setApoyos] = useState([]);
+    const [searchKeyWord, setSearchKeyWord] = useState('');
     const [selectedSector, setSelectedSector] = useState('');
     const [selectedApoyo, setSelectedApoyo] = useState('');
 
@@ -69,21 +70,27 @@ function SearchFilter({ onFilterChange }) {
             });
     }, []);
 
+    const handleKeyWordChange = (e) => {
+        const value = e.target.value;
+        setSearchKeyWord(value);
+        onFilterChange({ keyWord: value, sector: selectedSector, apoyo: selectedApoyo })
+    };
+
     const handleSectorChange = (e) => {
         const value = e.target.value;
         setSelectedSector(value);
-        onFilterChange({ sector: value, apoyo: selectedApoyo });
+        onFilterChange({ keyWord: searchKeyWord, sector: value, apoyo: selectedApoyo });
     };
 
     const handleApoyoChange = (e) => {
         const value = e.target.value;
         setSelectedApoyo(value);
-        onFilterChange({ sector: selectedSector, apoyo: value });
+        onFilterChange({ keyWord: searchKeyWord, sector: selectedSector, apoyo: value });
     };
 
     return (
         <div className="search-filter">
-            <input type="text" id="search" placeholder="Buscar aliados..." />
+            <input type="text" id="search" placeholder="Buscar aliados..." onChange={handleKeyWordChange} />
             <select id="sector-filter" value={selectedSector} onChange={handleSectorChange}>
                 <option value="">Filtrar por sector</option>
                 {sectores.map((sector, index) => (
@@ -106,7 +113,7 @@ function AllyList({filters}) {
 
     useEffect(() => {
         // Fetch aliados
-        fetch(`/api/aliados/filtered?sector=${filters.sector}&apoyo=${filters.apoyo}`)
+        fetch(`/api/aliados/filtered?name=${filters.keyWord}&sector=${filters.sector}&apoyo=${filters.apoyo}`)
             .then((res) => res.json())
             .then((data) => {
                 setAliados(data);
