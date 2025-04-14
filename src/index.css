@@ -36,6 +36,8 @@ h2 {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-right: 10px;
+    margin-bottom: 10px;
 }
 
 .btn-primary:hover {
@@ -49,11 +51,16 @@ h2 {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
+    box-sizing: border-box;
 }
 
 .form-control:focus {
     border-color: var(--blue);
     outline: none;
+}
+
+.form-check-input {
+    margin-bottom: 10px;
 }
 
 @media (max-width: 768px) {
