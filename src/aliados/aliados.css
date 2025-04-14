@@ -50,13 +50,13 @@ body {
     background-color: var(--green);
 }
 
-#main-content {
+.main-content {
     margin-left: 270px;
     padding: 20px;
     flex-grow: 1;
 }
 
-#main-content h1 {
+.main-content h1 {
     color: var(--blue);
     text-align: center;
 }
@@ -142,11 +142,11 @@ body {
         position: relative;
     }
 
-    #main-content {
+    .main-content {
         margin-left: 0;
     }
 
-    #stats {
+    .stats {
         flex-direction: column;
     }
 
