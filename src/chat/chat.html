@@ -3,41 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat</title>
+    <title>Convenio</title>
     <link rel="stylesheet" href="chat.css">
 </head>
 <body>
-    <div class="chat-container">
-        <div class="sidebar">
-            <div class="user-info">
-                <button onclick="location.href='../convenios/chatlist.html'" class="back-button">Regresar</button>
-                <h2>[Escuela/Aliado]</h2>
+    <div class="container">
+        <button class="back-button" onclick="location.href='../convenios/chatlist.html'">Regresar</button>
+        <h1>Convenio</h1>
+        <h2>Cronograma de Avance</h2>
+        <div class="cronograma">
+            <div class="step">
+                <label for="chat-link">Chat:</label>
+                <input type="text" id="chat-link" placeholder="Ingresa el enlace del chat">
             </div>
-            <div class="cronograma">
-                <h3>Cronograma de Avance</h3>
-                    <p>1.     Chat<p>
-                    <p>2.     Contrato Digital de Convenio
-                        <div class="file-upload">
-                            <input type="file" id="file-upload">
-                        </div>
-                    </p>
-                    <p>3.     Firma Digital de Convenio
-                        <div class="agreement">
-                            <input type="checkbox" id="accept-agreement">
-                            <label for="accept-agreement">Aceptar el Convenio</label>
-                        </div>
-                    </p>
+            <div class="step">
+                <label for="file-link">Contrato Digital de Convenio:</label>
+                <input type="text" id="chat-link" placeholder="Ingresa el enlace al Contrato Digital de Convenio">
+            </div>
+            <div class="step">
+                <label for="accept-agreement">
+                    <input type="checkbox" id="accept-agreement">
+                    Aceptar el Convenio
+                </label>
             </div>
         </div>
-        <div class="chat-window">
-            <div class="chat-messages">
-                <!-- Mensajes del chat -->
-            </div>
-            <div class="chat-input">
-                <input type="text" placeholder="Escribe un mensaje...">
-                <button>Enviar</button>
-            </div>
-        </div>
+        <button class="submit-button">Guardar</button>
     </div>
 </body>
 </html>
