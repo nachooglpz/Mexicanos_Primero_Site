@@ -3,7 +3,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './aliados.css'
 
-createRoot(document.getElementById('main-content')).render(
+createRoot(document.getElementById('aliados')).render(
   <StrictMode>
     <App />
   </StrictMode>,
