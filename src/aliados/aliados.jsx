@@ -53,7 +53,7 @@ function SearchFilter({ onFilterChange }) {
     const [selectedApoyo, setSelectedApoyo] = useState('');
 
     useEffect(() => {
-        fetch('/api/aliados/sectores')
+        fetch('/aliados/sectores')
             .then((res) => res.json())
             .then((data) => {
                 const sectoresList = data.map((item) => item.sector);
@@ -62,7 +62,7 @@ function SearchFilter({ onFilterChange }) {
     }, []);
 
     useEffect(() => {
-        fetch('/api/aliados/distinctApoyos')
+        fetch('/aliados/distinctApoyos')
             .then((res) => res.json())
             .then((data) => {
                 const apoyosList = data.map((item) => item.tipo_apoyo);
@@ -113,14 +113,14 @@ function AllyList({filters}) {
 
     useEffect(() => {
         // Fetch aliados
-        fetch(`/api/aliados/filtered?name=${filters.keyWord}&sector=${filters.sector}&apoyo=${filters.apoyo}`)
+        fetch(`/aliados/filtered?name=${filters.keyWord}&sector=${filters.sector}&apoyo=${filters.apoyo}`)
             .then((res) => res.json())
             .then((data) => {
                 setAliados(data);
 
                 // Fetch apoyos for each aliado and create Aliado instances
                 const fetchApoyosPromises = data.map((aliado) =>
-                fetch(`/api/aliados/apoyos?usuario_aliado=${aliado.usuario_aliado}`)
+                fetch(`/aliados/apoyos?usuario_aliado=${aliado.usuario_aliado}`)
                     .then((res) => res.json())
                     .then((apoyos) => new Aliado(aliado, apoyos))
                 );

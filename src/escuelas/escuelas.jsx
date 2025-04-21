@@ -51,7 +51,7 @@ function SearchFilter({ onFilterChange }) {
     const [selectedNecesidad, setSelectedNecesidad] = useState('');
 
     useEffect(() => {
-        fetch('/api/escuelas/distinctNecesidades')
+        fetch('/escuelas/distinctNecesidades')
             .then((res) => res.json())
             .then((data) => {
                 const necesidadesList = data.map((item) => item.necesidad);
@@ -90,14 +90,14 @@ function SchoolList({filters}) {
 
     useEffect(() => {
         // Fetch escuelas
-        fetch(`/api/escuelas/filtered?keyWord=${filters.keyWord}&necesidad=${filters.necesidad}`)
+        fetch(`/escuelas/filtered?keyWord=${filters.keyWord}&necesidad=${filters.necesidad}`)
             .then((res) => res.json())
             .then((data) => {
                 setEscuelas(data);
 
                 // Fetch necesidades for each Escuela and create Escuela instances
                 const fetchNecesidadesPromises = data.map((escuela) =>
-                fetch(`/api/escuelas/necesidades?usuario=${escuela.usuario_escuela}`)
+                fetch(`/escuelas/necesidades?usuario=${escuela.usuario_escuela}`)
                     .then((res) => res.json())
                     .then((necesidades) => new Escuela(escuela, necesidades))
                 );

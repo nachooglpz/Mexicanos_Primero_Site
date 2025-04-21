@@ -11,8 +11,8 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static('public'));
 
 // Routes go here
-app.use('/api/aliados', aliadosRouter);
-app.use('/api/escuelas', escuelasRouter);
+app.use('/aliados', aliadosRouter);
+app.use('/escuelas', escuelasRouter);
 
 // Start the server listening on PORT
 app.listen(PORT, () => {
