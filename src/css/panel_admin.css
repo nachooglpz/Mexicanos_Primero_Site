@@ -7,7 +7,7 @@
     --orange: #EB6012;
     --yellow: #F59D15;
 }
-  
+
 body {
     font-family: 'Montserrat', sans-serif;
     background-color: #f4f4f4;
@@ -116,7 +116,7 @@ button {
 }
 
 button:hover {
-    background-color: var(-green);
+    background-color: var(--green);
 }
 
 .metric-card {
@@ -128,7 +128,7 @@ button:hover {
 }
 
 .metric-card.green {
-    background-color: var(-green);
+    background-color: var(--green);
     color: white;
 }
 
