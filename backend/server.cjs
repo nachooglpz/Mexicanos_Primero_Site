@@ -4,6 +4,7 @@ const app = express();
 
 const { aliadosRouter } = require('./routes/aliados.cjs');
 const { escuelasRouter } = require('./routes/escuelas.cjs');
+const { notificacionesRouter } = require('./routes/notificaciones.cjs');
 
 const PORT = process.env.PORT || 3000;
 
@@ -11,8 +12,9 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static('public'));
 
 // Routes go here
-app.use('/aliados', aliadosRouter);
-app.use('/escuelas', escuelasRouter);
+app.use('/api/aliados', aliadosRouter);
+app.use('/api/escuelas', escuelasRouter);
+app.use('/api/notificaciones', notificacionesRouter);
 
 // Start the server listening on PORT
 app.listen(PORT, () => {

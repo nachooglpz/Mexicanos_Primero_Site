@@ -7,7 +7,7 @@ import AliadosApp from './aliados/aliados.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     {/* <App /> */}
-    <AliadosApp />
+    <AliadosApp username="usuario25" />
 
   </StrictMode>,
 )

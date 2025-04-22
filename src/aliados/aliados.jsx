@@ -14,7 +14,7 @@ class Aliado {
   }
 }
 
-function AliadosApp() {
+function AliadosApp({username}) {
     document.title = "Páigna de Inicio";
     const [filters, setFilters] = useState({ keyWord: '', sector: '', apoyo: '', });
 
@@ -36,15 +36,8 @@ function AliadosApp() {
             <h1>Lista de Aliados</h1>
             <SearchFilter onFilterChange={handleFilterChange}/>
             <AllyList filters={filters} />
-
-            {/* <div id="notifications">
-                <h2>Notificaciones</h2>
-                <ul>
-                    <li>Notificación 1</li>
-                    <li>Notificación 2</li>
-                    <li>Notificación 3</li>
-                </ul>
-            </div> */}
+            <AllyNotis username={username}/>
+            
         </div>
         </>
     );
@@ -151,6 +144,36 @@ function AllyList({filters}) {
                         </ul>
                     </div>
             ))}
+        </div>
+    );
+}
+
+function AllyNotis({username}) {
+    const [notis, setNotis] = useState([]);
+
+    useEffect(() => {
+        // Fetch notificaciones
+        fetch(`/api/notificaciones/escuelas?usuario=${username}`)
+            .then((res) => res.json())
+            .then((data) => {
+                setNotis(data);
+            })
+    }, []);
+
+    return (
+        <div id="notifications">
+            <h2 id="title">Notificaciones</h2>
+            <ul>
+                {notis.map((noti, index) => (
+                    <li key={`notis-${index}`}>
+                        <h2>{noti.titulo}</h2>
+                        <p>{noti.texto}</p>
+                    </li>
+                ))}
+                {/* <li>Notificación 1</li>
+                <li>Notificación 2</li>
+                <li>Notificación 3</li> */}
+            </ul>
         </div>
     );
 }
