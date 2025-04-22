@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './aliados.css'
+import Mapcomponent from '../mapcomponent'; // Ajusta la ruta según tu estructura
+
 
 createRoot(document.getElementById('aliados')).render(
   <StrictMode>
@@ -32,6 +34,8 @@ function App() {
         <h1>Lista de Aliados</h1>
         <SearchFilter onFilterChange={handleFilterChange}/>
         <AllyList filters={filters} />
+        <h2>Mapa de Ubicación de Escuelas</h2>
+        <Mapcomponent />
 
         {/* <div id="notifications">
             <h2>Notificaciones</h2>
