@@ -8,6 +8,11 @@
     --orange: #EB6012;
     --yellow: #F59D15;
 }
+
+#root {
+    height: 100%;
+    width: 100%;
+}
   
 body {
     font-family: 'Montserrat', sans-serif;

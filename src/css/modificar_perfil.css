@@ -25,6 +25,7 @@ body {
 
 label {
     color: var(--blue);
+    margin-right: 10px;
 }
 
 input, select, button {

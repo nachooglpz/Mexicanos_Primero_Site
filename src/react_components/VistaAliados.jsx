@@ -1,13 +1,7 @@
 import { useEffect, useState } from 'react';
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import '../aliados/aliados.css'
-
-createRoot(document.getElementById('escuelas')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+import '../css/pagina_principal.css'
 
 class Escuela {
     constructor(data, necesidades = []) {
@@ -20,7 +14,7 @@ class Escuela {
     }
 }
 
-function App() {
+function VistaAliados() {
     const [filters, setFilters] = useState({ keyWord: '', necesidad: '' });
 
     const handleFilterChange = (newFilters) => {
@@ -29,6 +23,15 @@ function App() {
 
     return (
         <>
+        <div id="sidebar">
+            <h2>Menú</h2>
+            <ul>
+                <li><a href="../perfil/perfil.html">Perfil</a></li>
+                <li><a href="../convenios/chatlist.html">Chat</a></li>
+                <li><a href="../documentos/documentos.html">Carga de Documentos</a></li>
+            </ul>
+        </div>
+        <div className="main-content">
             <h1>Lista de Escuelas</h1>
             <SearchFilter onFilterChange={handleFilterChange}/>
             <SchoolList filters={filters} />
@@ -41,6 +44,7 @@ function App() {
                     <li>Notificación 3</li>
                 </ul>
             </div> */}
+        </div>
         </>
     );
 }
@@ -72,7 +76,7 @@ function SearchFilter({ onFilterChange }) {
     };
     
     return (
-        <div class="search-filter">
+        <div className="search-filter">
             <input type="text" id="search" placeholder="Buscar escuelas..." onChange={handlekeyWordChange} />
             <select id="support-filter" onChange={handleNecesidadChange}>
                 <option value="">Filtrar por necesidad</option>
@@ -125,3 +129,5 @@ function SchoolList({filters}) {
         </div>
     );
 }
+
+export default VistaAliados;

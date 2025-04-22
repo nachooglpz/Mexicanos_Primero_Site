@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './aliados.css'
-import Mapcomponent from '../mapcomponent'; // Ajusta la ruta según tu estructura
+import '../css/pagina_principal.css'
+import Mapcomponent from './mapcomponent'; // Ajusta la ruta según tu estructura
 
 
 class Aliado {
@@ -16,7 +16,7 @@ class Aliado {
   }
 }
 
-function AliadosApp({username}) {
+function VistaEscuelas({username}) {
     document.title = "Página de Inicio";
     const [filters, setFilters] = useState({ keyWord: '', sector: '', apoyo: '', });
 
@@ -179,4 +179,4 @@ function AllyNotis({username}) {
     );
 }
 
-export default AliadosApp;
+export default VistaEscuelas;
