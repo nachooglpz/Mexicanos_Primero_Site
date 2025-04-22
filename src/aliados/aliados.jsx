@@ -3,12 +3,6 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './aliados.css'
 
-createRoot(document.getElementById('aliados')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
-
 class Aliado {
   constructor(data, tipos_de_ayuda = []) {
     this.usuario_aliado = data.usuario_aliado;
@@ -20,7 +14,8 @@ class Aliado {
   }
 }
 
-function App() {
+function AliadosApp() {
+    document.title = "Páigna de Inicio";
     const [filters, setFilters] = useState({ keyWord: '', sector: '', apoyo: '', });
 
     const handleFilterChange = (newFilters) => {
@@ -29,18 +24,28 @@ function App() {
 
     return (
         <>
-        <h1>Lista de Aliados</h1>
-        <SearchFilter onFilterChange={handleFilterChange}/>
-        <AllyList filters={filters} />
-
-        {/* <div id="notifications">
-            <h2>Notificaciones</h2>
+        <div id="sidebar">
+            <h2>Menú</h2>
             <ul>
-                <li>Notificación 1</li>
-                <li>Notificación 2</li>
-                <li>Notificación 3</li>
+                <li><a href="../perfil/perfil.html">Perfil</a></li>
+                <li><a href="../convenios/chatlist.html">Chat</a></li>
+                <li><a href="../documentos/documentos.html">Carga de Documentos</a></li>
             </ul>
-        </div> */}
+        </div>
+        <div className="main-content">
+            <h1>Lista de Aliados</h1>
+            <SearchFilter onFilterChange={handleFilterChange}/>
+            <AllyList filters={filters} />
+
+            {/* <div id="notifications">
+                <h2>Notificaciones</h2>
+                <ul>
+                    <li>Notificación 1</li>
+                    <li>Notificación 2</li>
+                    <li>Notificación 3</li>
+                </ul>
+            </div> */}
+        </div>
         </>
     );
 }
@@ -150,4 +155,4 @@ function AllyList({filters}) {
     );
 }
 
-export default App;
+export default AliadosApp;
