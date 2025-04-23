@@ -1,15 +1,9 @@
 import { useEffect, useState } from 'react';
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './aliados.css'
-import Mapcomponent from '../mapcomponent'; // Ajusta la ruta según tu estructura
+import '../css/pagina_principal.css'
+import Mapcomponent from './mapcomponent'; // Ajusta la ruta según tu estructura
 
-
-createRoot(document.getElementById('aliados')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
 
 class Aliado {
   constructor(data, tipos_de_ayuda = []) {
@@ -22,7 +16,8 @@ class Aliado {
   }
 }
 
-function App() {
+function VistaEscuelas({username}) {
+    document.title = "Página de Inicio";
     const [filters, setFilters] = useState({ keyWord: '', sector: '', apoyo: '', });
 
     const handleFilterChange = (newFilters) => {
@@ -31,20 +26,23 @@ function App() {
 
     return (
         <>
-        <h1>Lista de Aliados</h1>
-        <SearchFilter onFilterChange={handleFilterChange}/>
-        <AllyList filters={filters} />
-        <h2>Mapa de Ubicación de Escuelas</h2>
-        <Mapcomponent />
-
-        {/* <div id="notifications">
-            <h2>Notificaciones</h2>
+        <div id="sidebar">
+            <h2>Menú</h2>
             <ul>
-                <li>Notificación 1</li>
-                <li>Notificación 2</li>
-                <li>Notificación 3</li>
+                <li><a href="../perfil/perfil.html">Perfil</a></li>
+                <li><a href="../convenios/chatlist.html">Chat</a></li>
+                <li><a href="../documentos/documentos.html">Carga de Documentos</a></li>
             </ul>
-        </div> */}
+        </div>
+        <div className="main-content">
+            <h1>Lista de Aliados</h1>
+            <SearchFilter onFilterChange={handleFilterChange}/>
+            <AllyList filters={filters} />
+            <AllyNotis username={username}/>
+            <h1>Mapa de Ubicación de Aliados</h1>
+            <Mapcomponent />
+            
+        </div>
         </>
     );
 }
@@ -154,4 +152,31 @@ function AllyList({filters}) {
     );
 }
 
-export default App;
+function AllyNotis({username}) {
+    const [notis, setNotis] = useState([]);
+
+    useEffect(() => {
+        // Fetch notificaciones
+        fetch(`/api/notificaciones/escuelas?usuario=${username}`)
+            .then((res) => res.json())
+            .then((data) => {
+                setNotis(data);
+            })
+    }, []);
+
+    return (
+        <div id="notifications">
+            <h1 id="title">Notificaciones</h1>
+            <ul>
+                {notis.map((noti, index) => (
+                    <li key={`notis-${index}`}>
+                        <h2>{noti.titulo}</h2>
+                        <p>{noti.texto}</p>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+}
+
+export default VistaEscuelas;

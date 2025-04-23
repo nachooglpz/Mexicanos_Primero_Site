@@ -88,6 +88,7 @@ body {
 }
 
 .chat-card h2 {
+    color: white;
     background-color: var(--green);
     padding: 10px;
     border-radius: 5px;
