@@ -6,11 +6,17 @@
     --blue: #183264;
     --orange: #EB6012;
     --yellow: #F59D15;
+    --background: #f4f4f4;
+}
+
+#root {
+    height: 100%;
+    width: 100%;
 }
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: #f4f4f4;
+    background-color: var(--background);
     margin: 0;
     padding: 0;
     display: flex;
@@ -94,7 +100,7 @@ table th, table td {
 }
 
 table th {
-    background-color: #f4f4f4;
+    background-color: var(--background);
 }
 
 table tbody tr:nth-child(even) {
@@ -102,7 +108,7 @@ table tbody tr:nth-child(even) {
 }
 
 table tbody tr:nth-child(odd) {
-    background-color: #ffffff;
+    background-color: white;
 }
 
 button {
@@ -120,7 +126,7 @@ button:hover {
 }
 
 .metric-card {
-    background-color: #f4f4f4;
+    background-color: var(--background);
     padding: 1rem;
     border-radius: 8px;
     margin-bottom: 1rem;

@@ -1,4 +1,4 @@
-import '../css/panel_admin.css';
+import '../css/panel_admin.css'
 
 function PanelAdmin() {
     return (
