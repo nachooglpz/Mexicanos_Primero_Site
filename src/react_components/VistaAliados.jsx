@@ -14,7 +14,7 @@ class Escuela {
     }
 }
 
-function VistaAliados() {
+function VistaAliados({username}) {
     const [filters, setFilters] = useState({ keyWord: '', necesidad: '' });
 
     const handleFilterChange = (newFilters) => {
@@ -35,6 +35,7 @@ function VistaAliados() {
             <h1>Lista de Escuelas</h1>
             <SearchFilter onFilterChange={handleFilterChange}/>
             <SchoolList filters={filters} />
+            <AllyNotis username={username} />
 
             {/* <div id="notifications">
                 <h2>Notificaciones</h2>
@@ -126,6 +127,33 @@ function SchoolList({filters}) {
                     </ul>
                 </div>
             ))}
+        </div>
+    );
+}
+
+function AllyNotis({username}) {
+    const [notis, setNotis] = useState([]);
+
+    useEffect(() => {
+        // Fetch notificaciones
+        fetch(`/api/notificaciones/aliados?usuario=${username}`)
+            .then((res) => res.json())
+            .then((data) => {
+                setNotis(data);
+            })
+    }, []);
+
+    return (
+        <div id="notifications">
+            <h1 id="title">Notificaciones</h1>
+            <ul>
+                {notis.map((noti, index) => (
+                    <li key={`notis-${index}`}>
+                        <h2>{noti.titulo}</h2>
+                        <p>{noti.texto}</p>
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 }
