@@ -38,7 +38,7 @@ function VistaEscuelas({username}) {
             <h1>Lista de Aliados</h1>
             <SearchFilter onFilterChange={handleFilterChange}/>
             <AllyList filters={filters} />
-            <AllyNotis username={username}/>
+            <SchoolNotis username={username}/>
             <h1>Mapa de Ubicación de Aliados</h1>
             <Mapcomponent />
             
@@ -152,7 +152,7 @@ function AllyList({filters}) {
     );
 }
 
-function AllyNotis({username}) {
+function SchoolNotis({username}) {
     const [notis, setNotis] = useState([]);
 
     useEffect(() => {
