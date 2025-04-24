@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
 import '../css/pagina_principal.css'
 import MapComponentSchool from './mapcomponent_escuela';
 
@@ -109,7 +107,6 @@ function SearchFilter({ onFilterChange }) {
 }
 
 function AllyList({filters}) {
-    const [aliados, setAliados] = useState([]);
     const [aliadosInstances, setAliadosInstances] = useState([]);
 
     useEffect(() => {
@@ -117,7 +114,6 @@ function AllyList({filters}) {
         fetch(`/api/aliados/filtered?name=${filters.keyWord}&sector=${filters.sector}&apoyo=${filters.apoyo}`)
             .then((res) => res.json())
             .then((data) => {
-                setAliados(data);
 
                 // Fetch apoyos for each aliado and create Aliado instances
                 const fetchApoyosPromises = data.map((aliado) =>
@@ -167,7 +163,11 @@ function SchoolNotis({username}) {
         <div id="notifications">
             <h1 id="title">Notificaciones</h1>
             <ul>
-                {notis.map((noti, index) => (
+                {notis.length === 0
+                    ? <li key={`notis-no-data`}>
+                        <h2>Sin notificaciones</h2>
+                    </li>
+                    : notis.map((noti, index) => (
                     <li key={`notis-${index}`}>
                         <h2>{noti.titulo}</h2>
                         <p>{noti.texto}</p>
