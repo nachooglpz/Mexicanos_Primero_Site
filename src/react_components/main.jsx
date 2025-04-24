@@ -14,8 +14,9 @@ import PanelAdmin from './PanelAdmin.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     {/* <AliadosApp username="usuario25" /> */}
-    {/* <VistaAliados /> */}
-    <PanelAdmin />
-
+ <VistaAliados />  
+{/* <VistaEscuelas /> */}
+{/*     <PanelAdmn />
+ */}
   </StrictMode>,
 )
