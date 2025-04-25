@@ -2,7 +2,7 @@ import '../css/panel_admin.css';
 import {useDispatch, useSelector} from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../features/userSlice.js';
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from "react";
 import { Usuario, AdministradorDeEscuela, Aliado } from '../models/Usuario';
 
 function PanelAdmin() {
@@ -108,8 +108,8 @@ function PanelAdmin() {
             <div className="panel-admin-sidebar">
                 <h2>Menú</h2>
                 <ul>
-                    <li><a href="../perfil/perfil.html">Perfil</a></li>
-                    <li><a href="../convenios/chatlist.html">Chat</a></li>
+                    <li><Link to="/modificarPerfil">Perfil</Link></li>
+                    {/*<li><a href="../convenios/chatlist.html">Chat</a></li>*/}
                     <li><Link to="/" onClick={() => dispatch(logout())}>Cerrar Sesión</Link></li>
                 </ul>
             </div>
@@ -165,7 +165,6 @@ function PanelAdmin() {
                         </tbody>
                     </table>
                 </section>
-
                 <section id="documentos">
                     <h2>Subir Documento</h2>
                     <form
@@ -194,17 +193,40 @@ function PanelAdmin() {
                         <button type="submit">Subir Documento</button>
                     </form>
                 </section>
-
-                <div className="panel-admin-notifications">
-                    <h2>Notificaciones</h2>
-                    <ul>
-                        <li>Notificación 1</li>
-                        <li>Notificación 2</li>
-                        <li>Notificación 3</li>
-                    </ul>
-                </div>
+                <AdminNotis username={username} />
             </main>
         </>
+    );
+}
+
+function AdminNotis({username}) {
+    const [notis, setNotis] = useState([]);
+
+    useEffect(() => {
+        // Fetch notificaciones
+        fetch(`/api/notificaciones/admin?usuario=${username}`)
+            .then((res) => res.json())
+            .then((data) => {
+                setNotis(data);
+            })
+    }, []);
+
+    return (
+        <div className="panel-admin-notifications">
+            <h1>Notificaciones</h1>
+            <ul>
+                {notis.length === 0
+                    ? <li key={`notis-no-data`}>
+                        <h2>Sin notificaciones</h2>
+                    </li>
+                    : notis.map((noti, index) => (
+                        <li key={`notis-${index}`}>
+                            <h2>{noti.titulo}</h2>
+                            <p>{noti.texto}</p>
+                        </li>
+                    ))}
+            </ul>
+        </div>
     );
 }
 

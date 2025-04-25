@@ -149,7 +149,7 @@ function AllyNotis({ username }) {
                 console.error('Error al obtener notificaciones:', error);
                 setNotis([]); // Asegúrate de que `notis` sea un arreglo vacío en caso de error
             });
-    }, [username]);
+    });
 
     return (
         <div id="notifications">

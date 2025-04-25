@@ -128,8 +128,12 @@ body {
     margin-top: 40px;
 }
 
-.panel-admin-notifications h2 {
+.panel-admin-notifications h1 {
     color: var(--blue);
+}
+
+.panel-admin-notifications h2 {
+    color: var(--white);
 }
 
 .panel-admin-notifications ul {
