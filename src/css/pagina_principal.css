@@ -1,58 +1,52 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
-/* Color Palette */
+/* Paleta de colores */
 :root {
     --green: #009933;
     --blue: #183264;
     --orange: #EB6012;
     --yellow: #F59D15;
+    --light-gray: #f4f4f4;
+    --white: #ffffff;
 }
 
-/* Ensure the html and body take up the full height and width */
-html, body {
-    height: 100%;
-    width: 100%;
+/* Contenedor principal */
+.vista-container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--light-gray);
     margin: 0;
     padding: 0;
-    font-family: 'Montserrat', sans-serif;
-    background-color: #f4f4f4;
-    display: flex;
-    flex-direction: column; /* Ensure proper stacking of elements */
-}
-  
-body {
-    font-family: 'Montserrat', sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    display: flex;
-}
-
-/* Sidebar should stretch to full height */
-#sidebar {
-    width: 250px;
-    background-color: var(--blue);
-    color: white;
-    position: fixed;
-    height: 100%; /* Full height of the viewport */
-    padding: 20px;
     box-sizing: border-box;
 }
 
-#sidebar h2 {
-    text-align: center;
+/* Sidebar */
+.vista-sidebar {
+    width: 250px;
+    background-color: var(--blue);
+    color: var(--white);
+    padding: 20px;
+    box-sizing: border-box;
+    height: 100%;
 }
 
-#sidebar ul {
+.vista-sidebar h2 {
+    text-align: center;
+    color: var(--white);
+}
+
+.vista-sidebar ul {
     list-style-type: none;
     padding: 0;
 }
 
-#sidebar ul li {
+.vista-sidebar ul li {
     margin: 20px 0;
 }
 
-#sidebar ul li a {
+.vista-sidebar ul li a {
     color: white;
     text-decoration: none;
     display: block;
@@ -60,21 +54,19 @@ body {
     border-radius: 5px;
 }
 
-#sidebar ul li a:hover {
+.vista-sidebar ul li a:hover {
     background-color: var(--green);
 }
 
-/* Main content should fill the remaining space */
-.main-content {
-    margin-left: 270px; /* Account for the sidebar width */
+/* Contenido principal */
+.vista-main-content {
+    flex-grow: 1;
     padding: 20px;
-    flex-grow: 1; /* Allow it to grow and fill the remaining space */
     box-sizing: border-box;
-    height: 100%; /* Ensure it spans the full height */
-    overflow-y: auto; /* Add scrolling if content overflows */
+    overflow-y: auto;
 }
 
-.main-content h1 {
+.vista-main-content h1 {
     color: var(--blue);
     text-align: center;
 }
@@ -93,7 +85,7 @@ body {
     border: 1px solid #ccc;
 }
 
-/* Ensure ally-list and other elements adjust properly */
+/* Lista de tarjetas */
 .ally-list {
     display: flex;
     flex-wrap: wrap;
@@ -103,7 +95,6 @@ body {
     box-sizing: border-box;
 }
 
-/* Ensure the ally cards are responsive */
 .ally-card {
     background-color: var(--blue);
     color: white;
@@ -129,17 +120,14 @@ body {
     text-align: center;
 }
 
+/* Notificaciones */
 #notifications {
     margin-top: 40px;
     flex: 1 1 100%;
 }
 
 #notifications h2 {
-    color: var(--blue);
-}
-
-#notifications #title {
-    text-align: center;
+    color: var(--white) !important;
 }
 
 #notifications ul {
@@ -164,26 +152,97 @@ body {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-@media (max-width: 768px) {
-    #sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
+/* Convenio específico */
+.convenio-body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--light-gray);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+}
 
-    .main-content {
-        margin-left: 0;
-    }
+.convenio-container {
+    background-color: var(--white);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    box-sizing: border-box;
+    text-align: center;
+}
 
-    .stats {
-        flex-direction: column;
-    }
+.convenio-title {
+    color: var(--blue);
+    margin-bottom: 20px;
+}
 
-    .card {
-        flex: 1 1 100%;
-    }
+.convenio-subtitle {
+    color: var(--green);
+    margin-bottom: 20px;
+}
 
-    .ally-card {
-        flex: 1 1 100%;
-    }
+.convenio-cronograma {
+    text-align: left;
+}
+
+.convenio-step {
+    margin-bottom: 20px;
+}
+
+.convenio-label {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--blue);
+    font-weight: bold;
+}
+
+.convenio-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.convenio-checkbox {
+    margin-right: 10px;
+}
+
+.convenio-submit-button {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.convenio-submit-button:hover {
+    background-color: var(--green);
+}
+
+.convenio-back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.convenio-back-button:hover {
+    background-color: var(--green);
 }

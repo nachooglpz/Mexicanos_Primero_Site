@@ -1,112 +1,117 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
-/* Color Palette */
+/* Paleta de colores */
 :root {
     --green: #009933;
     --blue: #183264;
     --orange: #EB6012;
-    --yellow: #F59D15;
+    --light-gray: #f4f4f4;
+    --white: #ffffff;
 }
-  
-body {
+
+/* Contenedor principal */
+.listado-convenios-container {
+    display: flex;
+    height: 100vh; /* Ocupa toda la altura de la pantalla */
+    width: 100vw; /* Ocupa todo el ancho de la pantalla */
     font-family: 'Montserrat', sans-serif;
-    background-color: #f4f4f4;
+    background-color: var(--light-gray);
     margin: 0;
     padding: 0;
-    display: flex;
+    box-sizing: border-box;
 }
 
-#sidebar {
+/* Sidebar */
+.listado-convenios-sidebar {
     width: 250px;
     background-color: var(--blue);
-    color: white;
-    position: fixed;
+    color: var(--white);
     height: 100%;
     padding: 20px;
+    box-sizing: border-box;
 }
 
-#sidebar h2 {
+.listado-convenios-sidebar h2 {
     text-align: center;
 }
 
-#sidebar ul {
+.listado-convenios-menu {
     list-style-type: none;
     padding: 0;
 }
 
-#sidebar ul li {
+.listado-convenios-menu li {
     margin: 20px 0;
 }
 
-#sidebar ul li a {
-    color: white;
+.listado-convenios-menu li a {
+    color: var(--white);
     text-decoration: none;
     display: block;
     padding: 10px;
     border-radius: 5px;
 }
 
-#sidebar ul li a:hover {
+.listado-convenios-menu li a:hover {
     background-color: var(--green);
 }
 
-#main-content {
-    margin-left: 270px;
-    padding: 20px;
+/* Contenido principal */
+.listado-convenios-main-content {
     flex-grow: 1;
-}
-
-#main-content h1 {
-    color: var(--blue);
-}
-
-.chat-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
     padding: 20px;
-    justify-content: center;
+    overflow-y: auto;
+    box-sizing: border-box;
 }
 
-.chat-card {
-    background-color: var(--blue);
-    color: white;
+.listado-convenios-title {
+    color: var(--blue);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Lista de convenios */
+/* Lista de convenios */
+.listado-convenios-chat-list {
+    margin-top: 20px;
+}
+
+.listado-convenios-chat-card {
+    background-color: var(--white);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
     transition: transform 0.3s, box-shadow 0.3s;
-    flex: 1 1 100%;
-    box-sizing: border-box;
-    border: none;
     cursor: pointer;
-    text-align: center;
+    border: none;
+    text-align: left;
 }
 
-.chat-card:hover {
+.listado-convenios-chat-card:hover {
     transform: scale(1.05);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.chat-card h2 {
-    color: white;
-    background-color: var(--green);
-    padding: 10px;
-    border-radius: 5px;
-    margin: -20px -20px 20px -20px;
+.listado-convenios-chat-card h2 {
+    color: var(--blue);
+    margin-bottom: 10px;
 }
 
+.listado-convenios-chat-card p {
+    color: var(--green);
+    margin-bottom: 10px;
+}
+
+/* Responsividad */
 @media (max-width: 768px) {
-    #sidebar {
+    .listado-convenios-sidebar {
         width: 100%;
         height: auto;
         position: relative;
     }
 
-    #main-content {
+    .listado-convenios-main-content {
         margin-left: 0;
-    }
-
-    .chat-card {
-        flex: 1 1 100%;
     }
 }

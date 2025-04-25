@@ -1,22 +1,22 @@
-import '../css/panel_admin.css'
+import '../css/panel_admin.css';
 
 function PanelAdmin() {
     return (
         <>
-            <header>
+            <header className="panel-admin-header">
                 <h1>Panel de Administración</h1>
             </header>
-            <div id="sidebar">
+            <div className="panel-admin-sidebar">
                 <h2>Menú</h2>
                 <ul>
                     <li><a href="../perfil/perfil.html">Perfil</a></li>
                     <li><a href="../convenios/chatlist.html">Chat</a></li>
                 </ul>
             </div>
-            <main>
-                <section id="usuarios">
+            <main className="panel-admin-main">
+                <section className="panel-admin-usuarios">
                     <h2>Lista de Usuarios</h2>
-                    <table>
+                    <table className="panel-admin-table">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -30,11 +30,11 @@ function PanelAdmin() {
                             {/* Aquí se llenará la lista de usuarios dinámicamente */}
                         </tbody>
                     </table>
-                    <button id="crear-usuario">Crear Nuevo Usuario Administrador</button>
+                    <button className="panel-admin-crear-usuario">Crear Nuevo Usuario Administrador</button>
                 </section>
-                <section id="convenios">
+                <section className="panel-admin-convenios">
                     <h2>Lista de Convenios</h2>
-                    <table>
+                    <table className="panel-admin-table">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -50,7 +50,7 @@ function PanelAdmin() {
                     </table>
                 </section>
 
-                <div id="notifications">
+                <div className="panel-admin-notifications">
                     <h2>Notificaciones</h2>
                     <ul>
                         <li>Notificación 1</li>
