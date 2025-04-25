@@ -1,6 +1,9 @@
 import '../css/inicio_sesion.css';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { login } from '../features/userSlice.js';
 
-function PaginaPrincipal() {
+function PaginaInicio() {
   return (
       <div className="inicio-sesion-registro">
         <InicioSesion />
@@ -10,6 +13,27 @@ function PaginaPrincipal() {
 }
 
 function InicioSesion() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    const username = document.getElementById('login-username').value;
+    const password = document.getElementById('login-password').value;
+
+    fetch (`/api/login?usuario=${username}&contrasena=${password}`,)
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          if (data.usuario === null) {
+            alert('Usuario o contraseña incorrectos');
+          }
+          else {
+            dispatch(login({ usuario: data.usuario, tipo_usuario: data.tipo_usuario }));
+            navigate('/paginaPrincipal');
+          }
+        })
+  }
+
   return (
     <div className="row inicio-sesion">
       <div className="col-md-6 inicio-sesion-contenedor">
@@ -22,7 +46,7 @@ function InicioSesion() {
 
           <button
             type="button"
-            onClick={() => (window.location.href = './src/aliados/aliados.html')}
+            onClick={handleLogin}
             className="btn btn-primary inicio-sesion-boton"
           >
             Iniciar Sesión
@@ -90,4 +114,4 @@ function Registro() {
   );
 }
 
-export default PaginaPrincipal;
+export default PaginaInicio;

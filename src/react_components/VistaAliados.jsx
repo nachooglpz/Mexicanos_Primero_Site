@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import { Link } from 'react-router-dom';
+import { logout } from '../features/userSlice.js';
 import '../css/pagina_principal.css';
 
 class Escuela {
@@ -12,8 +15,12 @@ class Escuela {
     }
 }
 
-function VistaAliados({ username }) {
+function VistaAliados() {
     document.title = "Página de Inicio";
+    const dispatch = useDispatch();
+
+    const username = useSelector((state) => state.usuario.usuario);
+
     const [filters, setFilters] = useState({ keyWord: '', necesidad: '' });
 
     const handleFilterChange = (newFilters) => {
@@ -28,6 +35,7 @@ function VistaAliados({ username }) {
                     <li><a href="../perfil/perfil.html">Perfil</a></li>
                     <li><a href="../convenios/chatlist.html">Chat</a></li>
                     <li><a href="../documentos/documentos.html">Carga de Documentos</a></li>
+                    <li><Link to="/" onClick={() => dispatch(logout())}>Cerrar Sesión</Link></li>
                 </ul>
             </div>
             <div className="vista-main-content">

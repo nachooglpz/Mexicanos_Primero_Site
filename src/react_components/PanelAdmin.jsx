@@ -1,6 +1,12 @@
 import '../css/panel_admin.css';
+import {useDispatch, useSelector} from 'react-redux';
+import { Link } from 'react-router-dom';
+import { logout } from '../features/userSlice.js';
 
 function PanelAdmin() {
+    const dispatch = useDispatch();
+    const username = useSelector((state) => state.usuario.usuario);
+
     return (
         <>
             <header className="panel-admin-header">
@@ -11,6 +17,7 @@ function PanelAdmin() {
                 <ul>
                     <li><a href="../perfil/perfil.html">Perfil</a></li>
                     <li><a href="../convenios/chatlist.html">Chat</a></li>
+                    <li><Link to="/" onClick={() => dispatch(logout())}>Cerrar Sesión</Link></li>
                 </ul>
             </div>
             <main className="panel-admin-main">
