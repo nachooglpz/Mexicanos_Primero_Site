@@ -65,7 +65,7 @@ function SearchFilter({ onFilterChange }) {
         setSelectedNecesidad(value);
         onFilterChange({ keyWord: searchKeyWord, necesidad: value });
     };
-    
+
     return (
         <div className="search-filter">
             <input type="text" id="search" placeholder="Buscar escuelas..." onChange={handlekeyWordChange} />
@@ -80,7 +80,6 @@ function SearchFilter({ onFilterChange }) {
 }
 
 function SchoolList({filters}) {
-    const [escuelas, setEscuelas] = useState([]);
     const [escuelasInstances, setEscuelasInstances] = useState([]);
 
     useEffect(() => {
@@ -88,7 +87,6 @@ function SchoolList({filters}) {
         fetch(`/api/escuelas/filtered?keyWord=${filters.keyWord}&necesidad=${filters.necesidad}`)
             .then((res) => res.json())
             .then((data) => {
-                setEscuelas(data);
 
                 // Fetch necesidades for each Escuela and create Escuela instances
                 const fetchNecesidadesPromises = data.map((escuela) =>
