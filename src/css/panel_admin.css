@@ -71,6 +71,13 @@ body {
     background-color: var(--green);
 }
 
+.panel-admin-main {
+    margin-left: 250px;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-top: 80px;
+}
+
 .panel-admin-usuarios,
 .panel-admin-convenios {
     margin-bottom: 40px;
@@ -84,6 +91,7 @@ body {
 .panel-admin-table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 20px;
 }
 
 .panel-admin-table th,
