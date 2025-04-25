@@ -1,46 +1,45 @@
 import { useEffect, useState } from 'react';
-import '../css/pagina_principal.css'
+import '../css/pagina_principal.css';
 import MapComponentSchool from './mapcomponent_escuela';
 
 class Aliado {
-  constructor(data, tipos_de_ayuda = []) {
-    this.usuario_aliado = data.usuario_aliado;
-    this.nombre = data.nombre;
-    this.empresa = data.empresa;
-    this.sector = data.sector;
-    this.direccion = data.direccion;
-    this.tipos_de_ayuda = tipos_de_ayuda.map((ayuda) => ayuda.tipo_apoyo);
-  }
+    constructor(data, tipos_de_ayuda = []) {
+        this.usuario_aliado = data.usuario_aliado;
+        this.nombre = data.nombre;
+        this.empresa = data.empresa;
+        this.sector = data.sector;
+        this.direccion = data.direccion;
+        this.tipos_de_ayuda = tipos_de_ayuda.map((ayuda) => ayuda.tipo_apoyo);
+    }
 }
 
-function VistaEscuelas({username}) {
+function VistaEscuelas({ username }) {
     document.title = "Página de Inicio";
-    const [filters, setFilters] = useState({ keyWord: '', sector: '', apoyo: '', });
+    const [filters, setFilters] = useState({ keyWord: '', sector: '', apoyo: '' });
 
     const handleFilterChange = (newFilters) => {
         setFilters(newFilters);
     };
 
     return (
-        <>
-        <div id="sidebar">
-            <h2>Menú</h2>
-            <ul>
-                <li><a href="../perfil/perfil.html">Perfil</a></li>
-                <li><a href="../convenios/chatlist.html">Chat</a></li>
-                <li><a href="../documentos/documentos.html">Carga de Documentos</a></li>
-            </ul>
+        <div className="vista-container">
+            <div className="vista-sidebar">
+                <h2>Menú</h2>
+                <ul>
+                    <li><a href="../perfil/perfil.html">Perfil</a></li>
+                    <li><a href="../convenios/chatlist.html">Chat</a></li>
+                    <li><a href="../documentos/documentos.html">Carga de Documentos</a></li>
+                </ul>
+            </div>
+            <div className="vista-main-content">
+                <h1>Lista de Aliados</h1>
+                <SearchFilter onFilterChange={handleFilterChange} />
+                <AllyList filters={filters} />
+                <SchoolNotis username={username} />
+                <h1>Mapa de Ubicación de Aliados</h1>
+                <MapComponentSchool username={username}/>
+            </div>
         </div>
-        <div className="main-content">
-            <h1>Lista de Aliados</h1>
-            <SearchFilter onFilterChange={handleFilterChange}/>
-            <AllyList filters={filters} />
-            <SchoolNotis username={username}/>
-            <h1>Mapa de Ubicación de Aliados</h1>
-            <MapComponentSchool username={username}/>
-            
-        </div>
-        </>
     );
 }
 

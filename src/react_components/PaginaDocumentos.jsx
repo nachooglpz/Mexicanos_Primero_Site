@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
 import '../css/pagina_documentos.css';
+import { useState, useEffect } from 'react';
 
 function PaginaDocumentos() {
     const [titulo, setTitulo] = useState('');
@@ -82,19 +82,19 @@ function PaginaDocumentos() {
     }, []);
 
     return (
-        <>
-            <div id="sidebar">
+        <div className="pagina-documentos-container">
+            <div className="pagina-documentos-sidebar">
                 <h2>Menú</h2>
                 <ul>
-                    <li><a href="../aliados/aliados.html">Inicio</a></li>
-                    <li><a href="../perfil/perfil.html">Perfil</a></li>
-                    <li><a href="../convenios/chatlist.html">Chat</a></li>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#perfil">Perfil</a></li>
+                    <li><a href="#chat">Chat</a></li>
                 </ul>
             </div>
-            <div id="main-content">
+            <div className="pagina-documentos-main-content">
                 <h1>Carga de Documentos</h1>
-                <div className="upload-section">
-                    <form id="upload-form" onSubmit={handleSubmit}>
+                <div className="pagina-documentos-upload-section">
+                    <form className="pagina-documentos-upload-form" onSubmit={handleSubmit}>
                         <label htmlFor="document-title">Título de documento:</label>
                         <input
                             type="text"
@@ -116,11 +116,11 @@ function PaginaDocumentos() {
                         <button type="submit">Subir documento</button>
                     </form>
                 </div>
-                <div className="document-list">
+                <div className="pagina-documentos-list">
                     <h2>Documentos Subidos</h2>
                     {documentos.length > 0 ? (
                         documentos.map((doc) => (
-                            <div className="document-card" key={doc.id_documento}>
+                            <div className="pagina-documentos-card" key={doc.id_documento}>
                                 <h3>{doc.titulo}</h3>
                                 <p>
                                     <a href={doc.link} target="_blank" rel="noopener noreferrer">
@@ -128,7 +128,7 @@ function PaginaDocumentos() {
                                     </a>
                                 </p>
                                 <button
-                                    className="delete-button"
+                                    className="pagina-documentos-delete-button"
                                     onClick={() => handleDelete(doc.id_documento)}
                                 >
                                     Eliminar
@@ -140,7 +140,7 @@ function PaginaDocumentos() {
                     )}
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 

@@ -1,164 +1,165 @@
-/* filepath: /home/gomez/mockup/documentos.css */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
-/* Color Palette */
+/* Paleta de colores */
 :root {
     --green: #009933;
     --blue: #183264;
     --orange: #EB6012;
-    --yellow: #F59D15;
+    --light-gray: #f4f4f4;
+    --white: #ffffff;
 }
 
-#root {
-    height: 100%;
-    width: 100%;
-}
-  
-body {
+/* Contenedor principal */
+.pagina-documentos-container {
+    display: flex;
+    height: 100vh; /* Ocupa toda la altura de la pantalla */
+    width: 100vw; /* Ocupa todo el ancho de la pantalla */
     font-family: 'Montserrat', sans-serif;
-    background-color: #f4f4f4;
+    background-color: var(--light-gray);
     margin: 0;
     padding: 0;
-    display: flex;
+    box-sizing: border-box;
 }
 
-#sidebar {
+/* Sidebar */
+.pagina-documentos-sidebar {
     width: 250px;
     background-color: var(--blue);
-    color: white;
-    position: fixed;
+    color: var(--white);
     height: 100%;
     padding: 20px;
+    box-sizing: border-box;
 }
 
-#sidebar h2 {
+.pagina-documentos-sidebar h2 {
     text-align: center;
 }
 
-#sidebar ul {
+.pagina-documentos-sidebar ul {
     list-style-type: none;
     padding: 0;
 }
 
-#sidebar ul li {
+.pagina-documentos-sidebar ul li {
     margin: 20px 0;
 }
 
-#sidebar ul li a {
-    color: white;
+.pagina-documentos-sidebar ul li a {
+    color: var(--white);
     text-decoration: none;
     display: block;
     padding: 10px;
     border-radius: 5px;
 }
 
-#sidebar ul li a:hover {
+.pagina-documentos-sidebar ul li a:hover {
     background-color: var(--green);
 }
 
-#main-content {
-    margin-left: 300px;
-    padding: 20px;
+/* Contenido principal */
+.pagina-documentos-main-content {
     flex-grow: 1;
-}
-
-#main-content h1 {
-    color: var(--blue);
-}
-
-.upload-section {
     padding: 20px;
-    border-radius: 10px;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.pagina-documentos-main-content h1 {
+    color: var(--blue);
+    text-align: center;
     margin-bottom: 20px;
 }
 
-.upload-section form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+/* Sección de carga de documentos */
+.pagina-documentos-upload-section {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
-.upload-section label {
+.pagina-documentos-upload-form label {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--blue);
     font-weight: bold;
 }
 
-.upload-section input[type="text"],
-.upload-section input[type="file"] {
+.pagina-documentos-upload-form input {
+    width: 100%;
     padding: 10px;
-    border-radius: 5px;
+    margin-bottom: 15px;
     border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
 }
 
-.upload-section button {
-    padding: 10px;
+.pagina-documentos-upload-form button {
+    background-color: var(--blue);
+    color: var(--white);
+    padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: var(--green);
-    color: white;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.upload-section button:hover {
-    background-color: #007722;
+.pagina-documentos-upload-form button:hover {
+    background-color: var(--green);
 }
 
-.document-list {
-    margin-top: 40px;
+/* Lista de documentos */
+.pagina-documentos-list {
+    margin-top: 20px;
 }
 
-.document-list h2 {
+.pagina-documentos-list h2 {
     color: var(--blue);
+    margin-bottom: 20px;
 }
 
-.document-card {
-    background-color: var(--blue);
-    color: white;
+.pagina-documentos-card {
+    background-color: var(--white);
     padding: 20px;
     border-radius: 10px;
-    margin-bottom: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
+    margin-bottom: 20px;
 }
 
-.document-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+.pagina-documentos-card h3 {
+    color: var(--blue);
+    margin-bottom: 10px;
 }
 
-.document-card h3 {
-    background-color: var(--green);
-    padding: 10px;
-    border-radius: 5px;
-    margin: -20px -20px 20px -20px;
-    text-align: center;
+.pagina-documentos-card p {
+    color: var(--green);
+    margin-bottom: 10px;
 }
 
-.delete-button {
-    padding: 10px;
+.pagina-documentos-delete-button {
+    background-color: var(--orange);
+    color: var(--white);
+    padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: var(--orange);
-    color: white;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.delete-button:hover {
-    background-color: var(--orange);
+.pagina-documentos-delete-button:hover {
+    background-color: #c94e0d;
 }
 
+/* Responsividad */
 @media (max-width: 768px) {
-    #sidebar {
+    .pagina-documentos-sidebar {
         width: 100%;
         height: auto;
         position: relative;
     }
 
-    #main-content {
+    .pagina-documentos-main-content {
         margin-left: 0;
-    }
-
-    .upload-section,
-    .document-card {
-        flex: 1 1 100%;
     }
 }

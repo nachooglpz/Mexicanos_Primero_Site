@@ -1,31 +1,31 @@
-import '../css/convenio.css'
+import '../css/convenio.css';
 
 function Convenio() {
     return (
-        <>
-            <div className="container">
-                <button className="back-button" onClick="location.href='../convenios/chatlist.html'">Regresar</button>
-                <h1>Convenio</h1>
-                <h2>Cronograma de Avance</h2>
-                <div className="cronograma">
-                    <div className="step">
-                        <label htmlFor="chat-link">Chat:</label>
-                        <input type="text" id="chat-link" placeholder="Ingresa el enlace del chat" />
+        <div className="convenio-body">
+            <div className="convenio-container">
+                <button className="convenio-back-button" onClick="location.href='../convenios/chatlist.html'">Regresar</button>
+                <h1 className="convenio-title">Convenio</h1>
+                <h2 className="convenio-subtitle">Cronograma de Avance</h2>
+                <div className="convenio-cronograma">
+                    <div className="convenio-step">
+                        <label htmlFor="chat-link" className="convenio-label">Chat:</label>
+                        <input type="text" id="chat-link" className="convenio-input" placeholder="Enlace del Chat" />
                     </div>
-                    <div className="step">
-                        <label htmlFor="file-link">Contrato Digital de Convenio:</label>
-                        <input type="text" id="chat-link" placeholder="Ingresa el enlace al Contrato Digital de Convenio" />
+                    <div className="convenio-step">
+                        <label htmlFor="file-link" className="convenio-label">Contrato Digital de Convenio:</label>
+                        <input type="text" id="file-link" className="convenio-input" placeholder="Enlace del Contrato Digital de Convenio" />
                     </div>
-                    <div className="step">
-                        <label htmlFor="accept-agreement">
-                            <input type="checkbox" id="accept-agreement" />
+                    <div className="convenio-step">
+                        <label htmlFor="accept-agreement" className="convenio-label">
+                            <input type="checkbox" id="accept-agreement" className="convenio-checkbox" />
                             Aceptar el Convenio
                         </label>
                     </div>
                 </div>
-                <button className="submit-button">Guardar</button>
+                <button className="convenio-submit-button">Guardar</button>
             </div>
-        </>
+        </div>
     );
 }
 

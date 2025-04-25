@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import '../css/pagina_principal.css'
-import MapComponent from './mapcomponent';  
+import '../css/pagina_principal.css';
+import MapComponent from './mapcomponent';
 
 class Escuela {
     constructor(data, necesidades = []) {
@@ -15,7 +13,8 @@ class Escuela {
     }
 }
 
-function VistaAliados({username}) {
+function VistaAliados({ username }) {
+    document.title = "Página de Inicio";
     const [filters, setFilters] = useState({ keyWord: '', necesidad: '' });
 
     const handleFilterChange = (newFilters) => {
@@ -23,33 +22,24 @@ function VistaAliados({username}) {
     };
 
     return (
-        <>
-        <div id="sidebar">
-            <h2>Menú</h2>
-            <ul>
-                <li><a href="../perfil/perfil.html">Perfil</a></li>
-                <li><a href="../convenios/chatlist.html">Chat</a></li>
-                <li><a href="../documentos/documentos.html">Carga de Documentos</a></li>
-            </ul>
-        </div>
-        <div className="main-content">
-            <h1>Lista de Escuelas</h1>
-            <SearchFilter onFilterChange={handleFilterChange}/>
-            <SchoolList filters={filters} />
-            {/* <AllyNotis username={username} /> */}
-            <h1>Mapa de ubicacion de Escuelas </h1>
-            <MapComponent username={username} />
-
-            {/* <div id="notifications">
-                <h2>Notificaciones</h2>
+        <div className="vista-container">
+            <div className="vista-sidebar">
+                <h2>Menú</h2>
                 <ul>
-                    <li>Notificación 1</li>
-                    <li>Notificación 2</li>
-                    <li>Notificación 3</li>
+                    <li><a href="../perfil/perfil.html">Perfil</a></li>
+                    <li><a href="../convenios/chatlist.html">Chat</a></li>
+                    <li><a href="../documentos/documentos.html">Carga de Documentos</a></li>
                 </ul>
-            </div> */}
+            </div>
+            <div className="vista-main-content">
+                <h1>Lista de Escuelas</h1>
+                <SearchFilter onFilterChange={handleFilterChange} />
+                <SchoolList filters={filters} />
+                <AllyNotis username={username} />
+                <h1>Mapa de ubicacion de Escuelas </h1>
+                <MapComponent username={username} />
+            </div>
         </div>
-        </>
     );
 }
 
@@ -138,11 +128,7 @@ function AllyNotis({ username }) {
     const [notis, setNotis] = useState([]);
 
     useEffect(() => {
-        if (!username) {
-            console.error('El usuario no está definido para las notificaciones');
-            return;
-        }
-
+        // Fetch notificaciones
         fetch(`/api/notificaciones/aliados?usuario=${username}`)
             .then((res) => {
                 if (!res.ok) {
@@ -151,12 +137,7 @@ function AllyNotis({ username }) {
                 return res.json();
             })
             .then((data) => {
-                if (Array.isArray(data)) {
-                    setNotis(data);
-                } else {
-                    console.error('La respuesta no es un arreglo:', data);
-                    setNotis([]);
-                }
+                setNotis(data);
             })
             .catch((error) => {
                 console.error('Error al obtener notificaciones:', error);
@@ -168,12 +149,16 @@ function AllyNotis({ username }) {
         <div id="notifications">
             <h1 id="title">Notificaciones</h1>
             <ul>
-                {notis.map((noti, index) => (
-                    <li key={`notis-${index}`}>
-                        <h2>{noti.titulo}</h2>
-                        <p>{noti.texto}</p>
+                {notis.length === 0
+                    ? <li key={`notis-no-data`}>
+                        <h2>Sin notificaciones</h2>
                     </li>
-                ))}
+                    : notis.map((noti, index) => (
+                        <li key={`notis-${index}`}>
+                            <h2>{noti.titulo}</h2>
+                            <p>{noti.texto}</p>
+                        </li>
+                    ))}
             </ul>
         </div>
     );
