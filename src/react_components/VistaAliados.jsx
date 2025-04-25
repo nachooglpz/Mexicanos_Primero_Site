@@ -137,7 +137,7 @@ function AllyNotis({username}) {
             .then((data) => {
                 setNotis(data);
             })
-    }, []);
+    });
 
     return (
         <div id="notifications">
