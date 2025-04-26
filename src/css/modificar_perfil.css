@@ -1,13 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
-/* Color Palette */
+/* Paleta de colores */
 :root {
     --green: #009933;
     --blue: #183264;
     --orange: #EB6012;
     --yellow: #F59D15;
 }
-  
+
 body {
     font-family: 'Montserrat', sans-serif;
     background-color: #f4f4f4;
@@ -19,28 +19,43 @@ body {
     justify-content: center;
 }
 
-.title {
+.modificar-perfil-title {
     color: var(--blue);
 }
 
-label {
+.modificar-perfil-form {
+    background-color: var(--white);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.modificar-perfil-form label {
     color: var(--blue);
     margin-right: 10px;
 }
 
-input, select, button {
+.modificar-perfil-form input,
+.modificar-perfil-form select,
+.modificar-perfil-button {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
 
-input:focus, select:focus, button:focus {
+.modificar-perfil-form input:focus,
+.modificar-perfil-form select:focus,
+.modificar-perfil-button:focus {
     outline: none;
     border-color: var(--green);
 }
 
-button {
+.modificar-perfil-button {
     background-color: var(--green);
     color: white;
     border: none;
@@ -48,12 +63,12 @@ button {
     transition: background-color 0.3s;
 }
 
-button:hover {
+.modificar-perfil-button:hover {
     background-color: #007a29;
 }
 
 @media (max-width: 768px) {
-    .container {
+    .modificar-perfil-form {
         width: 100%;
         margin: 10px;
     }

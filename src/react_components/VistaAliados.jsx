@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import '../css/pagina_principal.css'
+import {useDispatch, useSelector} from 'react-redux';
+import { Link } from 'react-router-dom';
+import { logout } from '../features/userSlice.js';
+import '../css/pagina_principal.css';
 import MapComponentSchool from './mapcomponent_escuela';
-
 
 class Escuela {
     constructor(data, necesidades = []) {
@@ -16,7 +16,12 @@ class Escuela {
     }
 }
 
-function VistaAliados({username}) {
+function VistaAliados() {
+    document.title = "Página de Inicio";
+    const dispatch = useDispatch();
+
+    const username = useSelector((state) => state.usuario.usuario);
+
     const [filters, setFilters] = useState({ keyWord: '', necesidad: '' });
 
     const handleFilterChange = (newFilters) => {
@@ -24,33 +29,25 @@ function VistaAliados({username}) {
     };
 
     return (
-        <>
-        <div id="sidebar">
-            <h2>Menú</h2>
-            <ul>
-                <li><a href="../perfil/perfil.html">Perfil</a></li>
-                <li><a href="../convenios/chatlist.html">Chat</a></li>
-                <li><a href="../documentos/documentos.html">Carga de Documentos</a></li>
-            </ul>
-        </div>
-        <div className="main-content">
-            <h1>Lista de Escuelas</h1>
-            <SearchFilter onFilterChange={handleFilterChange}/>
-            <SchoolList filters={filters} />
-            <AllyNotis username={username} />
-            <h1>Mapa de ubicacion de Aliados </h1>
-            <MapComponentSchool/>
-
-            {/* <div id="notifications">
-                <h2>Notificaciones</h2>
+        <div className="vista-container">
+            <div className="vista-sidebar">
+                <h2>Menú</h2>
                 <ul>
-                    <li>Notificación 1</li>
-                    <li>Notificación 2</li>
-                    <li>Notificación 3</li>
+                    <li><Link to="/modificarPerfil">Perfil</Link></li>
+                    <li><a href="../convenios/chatlist.html">Chat</a></li>
+                    <li><a href="../documentos/documentos.html">Carga de Documentos</a></li>
+                    <li><Link to="/" onClick={() => dispatch(logout())}>Cerrar Sesión</Link></li>
                 </ul>
-            </div> */}
+            </div>
+            <div className="vista-main-content">
+                <h1>Lista de Escuelas</h1>
+                <SearchFilter onFilterChange={handleFilterChange} />
+                <SchoolList filters={filters} />
+                <AllyNotis username={username} />
+                <h1>Mapa de ubicacion de Aliados </h1>
+                <MapComponentSchool/>
+            </div>
         </div>
-        </>
     );
 }
 
@@ -79,7 +76,7 @@ function SearchFilter({ onFilterChange }) {
         setSelectedNecesidad(value);
         onFilterChange({ keyWord: searchKeyWord, necesidad: value });
     };
-    
+
     return (
         <div className="search-filter">
             <input type="text" id="search" placeholder="Buscar escuelas..." onChange={handlekeyWordChange} />
@@ -94,7 +91,6 @@ function SearchFilter({ onFilterChange }) {
 }
 
 function SchoolList({filters}) {
-    const [escuelas, setEscuelas] = useState([]);
     const [escuelasInstances, setEscuelasInstances] = useState([]);
 
     useEffect(() => {
@@ -102,7 +98,6 @@ function SchoolList({filters}) {
         fetch(`/api/escuelas/filtered?keyWord=${filters.keyWord}&necesidad=${filters.necesidad}`)
             .then((res) => res.json())
             .then((data) => {
-                setEscuelas(data);
 
                 // Fetch necesidades for each Escuela and create Escuela instances
                 const fetchNecesidadesPromises = data.map((escuela) =>
@@ -145,18 +140,22 @@ function AllyNotis({username}) {
             .then((data) => {
                 setNotis(data);
             })
-    }, []);
+    });
 
     return (
         <div id="notifications">
             <h1 id="title">Notificaciones</h1>
             <ul>
-                {notis.map((noti, index) => (
-                    <li key={`notis-${index}`}>
-                        <h2>{noti.titulo}</h2>
-                        <p>{noti.texto}</p>
+                {notis.length === 0
+                    ? <li key={`notis-no-data`}>
+                        <h2>Sin notificaciones</h2>
                     </li>
-                ))}
+                    : notis.map((noti, index) => (
+                        <li key={`notis-${index}`}>
+                            <h2>{noti.titulo}</h2>
+                            <p>{noti.texto}</p>
+                        </li>
+                    ))}
             </ul>
         </div>
     );

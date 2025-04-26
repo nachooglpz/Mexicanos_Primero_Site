@@ -1,49 +1,52 @@
 import { useEffect, useState } from 'react';
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import '../css/pagina_principal.css'
-import Mapcomponent from './mapcomponent'; // Ajusta la ruta según tu estructura
-
+import {useDispatch, useSelector} from 'react-redux';
+import { Link } from 'react-router-dom';
+import { logout } from '../features/userSlice.js';
+import '../css/pagina_principal.css';
+import Mapcomponent from './mapcomponent';
 
 class Aliado {
-  constructor(data, tipos_de_ayuda = []) {
-    this.usuario_aliado = data.usuario_aliado;
-    this.nombre = data.nombre;
-    this.empresa = data.empresa;
-    this.sector = data.sector;
-    this.direccion = data.direccion;
-    this.tipos_de_ayuda = tipos_de_ayuda.map((ayuda) => ayuda.tipo_apoyo);
-  }
+    constructor(data, tipos_de_ayuda = []) {
+        this.usuario_aliado = data.usuario_aliado;
+        this.nombre = data.nombre;
+        this.empresa = data.empresa;
+        this.sector = data.sector;
+        this.direccion = data.direccion;
+        this.tipos_de_ayuda = tipos_de_ayuda.map((ayuda) => ayuda.tipo_apoyo);
+    }
 }
 
-function VistaEscuelas({username}) {
+function VistaEscuelas() {
     document.title = "Página de Inicio";
-    const [filters, setFilters] = useState({ keyWord: '', sector: '', apoyo: '', });
+    const dispatch = useDispatch();
+    const username = useSelector((state) => state.usuario.usuario);
+
+    const [filters, setFilters] = useState({ keyWord: '', sector: '', apoyo: '' });
 
     const handleFilterChange = (newFilters) => {
         setFilters(newFilters);
     };
 
     return (
-        <>
-        <div id="sidebar">
-            <h2>Menú</h2>
-            <ul>
-                <li><a href="../perfil/perfil.html">Perfil</a></li>
-                <li><a href="../convenios/chatlist.html">Chat</a></li>
-                <li><a href="../documentos/documentos.html">Carga de Documentos</a></li>
-            </ul>
+        <div className="vista-container">
+            <div className="vista-sidebar">
+                <h2>Menú</h2>
+                <ul>
+                    <li><Link to="/modificarPerfil">Perfil</Link></li>
+                    <li><a href="../convenios/chatlist.html">Chat</a></li>
+                    <li><a href="../documentos/documentos.html">Carga de Documentos</a></li>
+                    <li><Link to="/" onClick={() => dispatch(logout())}>Cerrar Sesión</Link></li>
+                </ul>
+            </div>
+            <div className="vista-main-content">
+                <h1>Lista de Aliados</h1>
+                <SearchFilter onFilterChange={handleFilterChange} />
+                <AllyList filters={filters} />
+                <SchoolNotis username={username} />
+                <h1>Mapa de Ubicación de Aliados</h1>
+                <Mapcomponent />
+            </div>
         </div>
-        <div className="main-content">
-            <h1>Lista de Aliados</h1>
-            <SearchFilter onFilterChange={handleFilterChange}/>
-            <AllyList filters={filters} />
-            <SchoolNotis username={username}/>
-            <h1>Mapa de Ubicación de Aliados</h1>
-            <Mapcomponent />
-            
-        </div>
-        </>
     );
 }
 
@@ -110,7 +113,6 @@ function SearchFilter({ onFilterChange }) {
 }
 
 function AllyList({filters}) {
-    const [aliados, setAliados] = useState([]);
     const [aliadosInstances, setAliadosInstances] = useState([]);
 
     useEffect(() => {
@@ -118,7 +120,6 @@ function AllyList({filters}) {
         fetch(`/api/aliados/filtered?name=${filters.keyWord}&sector=${filters.sector}&apoyo=${filters.apoyo}`)
             .then((res) => res.json())
             .then((data) => {
-                setAliados(data);
 
                 // Fetch apoyos for each aliado and create Aliado instances
                 const fetchApoyosPromises = data.map((aliado) =>
@@ -168,7 +169,11 @@ function SchoolNotis({username}) {
         <div id="notifications">
             <h1 id="title">Notificaciones</h1>
             <ul>
-                {notis.map((noti, index) => (
+                {notis.length === 0
+                    ? <li key={`notis-no-data`}>
+                        <h2>Sin notificaciones</h2>
+                    </li>
+                    : notis.map((noti, index) => (
                     <li key={`notis-${index}`}>
                         <h2>{noti.titulo}</h2>
                         <p>{noti.texto}</p>

@@ -7,28 +7,81 @@
     --orange: #EB6012;
     --yellow: #F59D15;
 }
-  
+
 body {
     font-family: 'Montserrat', sans-serif;
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ocupa toda la pantalla */
 }
 
-h2 {
+.inicio-sesion-registro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.inicio-sesion h2,
+.registro h2 {
+    text-align: center;
+    color: var(--blue);
+    margin-bottom: 20px;
+}
+
+.inicio-sesion,
+.registro {
+    flex: 1;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    flex-basis: 45%; /* Define el ancho base de las columnas */
+    min-width: 400px; /* Asegura un ancho mínimo */
+}
+
+.inicio-sesion-titulo, .registro-titulo {
+    text-align: center;
     color: var(--blue);
     font-weight: 700;
     margin-bottom: 20px;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+.inicio-sesion-formulario, .registro-formulario {
+    display: flex;
+    flex-direction: column;
 }
 
-.btn-primary {
+.inicio-sesion-label, .registro-label {
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: var(--blue);
+}
+
+.inicio-sesion-input, .registro-input, .registro-select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.inicio-sesion-input:focus, .registro-input:focus, .registro-select:focus {
+    border-color: var(--blue);
+    outline: none;
+}
+
+.inicio-sesion-boton, .registro-boton {
     background-color: var(--blue);
     border: none;
     color: #fff;
@@ -36,44 +89,36 @@ h2 {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-right: 10px;
     margin-bottom: 10px;
 }
 
-.btn-primary:hover {
+.inicio-sesion-boton:hover, .registro-boton:hover {
     background-color: var(--green);
 }
 
-.form-control {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    box-sizing: border-box;
+.registro-check {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
 }
 
-.form-control:focus {
-    border-color: var(--blue);
-    outline: none;
+.registro-checkbox {
+    margin-right: 10px;
 }
 
-.form-check-input {
-    margin-bottom: 10px;
+.registro-check-label {
+    font-size: 14px;
+    color: var(--blue);
 }
 
 @media (max-width: 768px) {
-    .container {
-        padding: 10px;
-    }
-
-    .row {
+    .pagina-principal {
         flex-direction: column;
+        align-items: center;
     }
 
-    .col-md-6 {
+    .inicio-sesion, .registro {
         width: 100%;
-        margin-bottom: 20px;
+        max-width: 90%;
     }
 }

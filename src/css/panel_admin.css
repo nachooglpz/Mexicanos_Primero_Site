@@ -1,17 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
-/* Color Palette */
+/* Paleta de colores */
 :root {
     --green: #009933;
     --blue: #183264;
     --orange: #EB6012;
     --yellow: #F59D15;
     --background: #f4f4f4;
-}
-
-#root {
-    height: 100%;
-    width: 100%;
+    --white: #ffffff;
 }
 
 body {
@@ -22,9 +18,9 @@ body {
     display: flex;
 }
 
-header {
+.panel-admin-header {
     background-color: var(--green);
-    color: white;
+    color: var(--white);
     padding: 1rem;
     text-align: center;
     width: 100%;
@@ -32,146 +28,129 @@ header {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 900;
 }
 
-#sidebar {
+.panel-admin-sidebar {
     width: 250px;
     background-color: var(--blue);
-    color: white;
-    position: fixed;
+    color: var(--white);
+    position: fixed; /* Fija el sidebar en su lugar */
+    top: 0; /* Elimina el espacio reservado por el header */
     left: 0;
-    height: 100%;
+    height: 100vh; /* Ocupa toda la altura de la pantalla */
     padding: 20px;
-    z-index: 1000;
+    box-sizing: border-box;
+    z-index: 1001; /* Asegura que el sidebar esté encima del header */
+    overflow-y: auto; /* Permite desplazamiento si el contenido es largo */
 }
 
-#sidebar h2 {
+.panel-admin-sidebar h2 {
     text-align: center;
+    color: var(--white);
 }
 
-#sidebar ul {
+.panel-admin-sidebar ul {
     list-style-type: none;
     padding: 0;
 }
 
-#sidebar ul li {
+.panel-admin-sidebar ul li {
     margin: 20px 0;
 }
 
-#sidebar ul li a {
-    color: white;
+.panel-admin-sidebar ul li a {
+    color: var(--white);
     text-decoration: none;
     display: block;
     padding: 10px;
     border-radius: 5px;
 }
 
-#sidebar ul li a:hover {
+.panel-admin-sidebar ul li a:hover {
     background-color: var(--green);
 }
 
-main {
-    flex: 1;
-    padding: 1rem;
-    margin-left: 300px;
+.panel-admin-main {
+    margin-left: 250px;
+    padding: 20px;
+    box-sizing: border-box;
     margin-top: 80px;
-    transition: margin-left 0.3s;
 }
 
-#usuarios, #convenios {
-    margin-bottom: 2rem;
+.panel-admin-usuarios,
+.panel-admin-convenios {
+    margin-bottom: 40px;
 }
 
-h1, h2 {
-    margin: 0 0 1rem 0;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 1rem;
-}
-
-table th, table td {
-    border: 1px solid #ddd;
-    padding: 0.5rem;
-    text-align: left;
-}
-
-table th {
-    background-color: var(--background);
-}
-
-table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-table tbody tr:nth-child(odd) {
-    background-color: white;
-}
-
-button {
-    background-color: var(--green);
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: var(--green);
-}
-
-.metric-card {
-    background-color: var(--background);
-    padding: 1rem;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.metric-card.green {
-    background-color: var(--green);
-    color: white;
-}
-
-.metric-card.blue {
-    background-color: var(--blue);
-    color: white;
-}
-
-.metric-card.orange {
-    background-color: var(--orange);
-    color: white;
-}
-
-#notifications {
-    margin-top: 40px;
-    flex: 1 1 100%;
-}
-
-#notifications h2 {
+.panel-admin-usuarios h2,
+.panel-admin-convenios h2 {
     color: var(--blue);
 }
 
-#notifications ul {
+.panel-admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.panel-admin-table th,
+.panel-admin-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.panel-admin-table th {
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+.panel-admin-table tr:nth-child(even) {
+    background-color: var(--background);
+}
+
+.panel-admin-crear-usuario {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: var(--green);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.panel-admin-crear-usuario:hover {
+    background-color: #007722;
+}
+
+.panel-admin-notifications {
+    margin-top: 40px;
+}
+
+.panel-admin-notifications h1 {
+    color: var(--blue);
+}
+
+.panel-admin-notifications h2 {
+    color: var(--white);
+}
+
+.panel-admin-notifications ul {
     list-style-type: none;
     padding: 0;
 }
 
-#notifications ul li {
+.panel-admin-notifications ul li {
     background-color: var(--green);
-    color: white;
+    color: var(--white);
     padding: 10px;
     margin: 10px 0;
     border-radius: 5px;
     transition: transform 0.3s;
 }
 
-#notifications ul li:hover {
+.panel-admin-notifications ul li:hover {
     transform: scale(1.05);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
