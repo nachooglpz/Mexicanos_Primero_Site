@@ -3,8 +3,7 @@ import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
-
-const MapComponent = () => {
+const MapComponentSchool = () => {
   // 1. Define la dirección que quieres mostrar:
   const address = 'Av. México 100, Guadalajara, Jalisco, México';
 
@@ -61,4 +60,4 @@ const MapComponent = () => {
   );
 };
 
-export default MapComponent;
+export default MapComponentSchool;

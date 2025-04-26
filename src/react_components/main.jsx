@@ -13,6 +13,9 @@ import InicioSesion from './InicioSesion_Registro.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    {/* <AliadosApp username="usuario25" /> */}
+    {/* <VistaAliados /> */}
+    <PanelAdmin />
 
   </StrictMode>,
 )

@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import '../css/pagina_principal.css'
+import MapComponentSchool from './mapcomponent_escuela';
+
 
 class Escuela {
     constructor(data, necesidades = []) {
@@ -36,6 +38,8 @@ function VistaAliados({username}) {
             <SearchFilter onFilterChange={handleFilterChange}/>
             <SchoolList filters={filters} />
             <AllyNotis username={username} />
+            <h1>Mapa de ubicacion de Aliados </h1>
+            <MapComponentSchool/>
 
             {/* <div id="notifications">
                 <h2>Notificaciones</h2>
