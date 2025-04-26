@@ -8,7 +8,7 @@ const escuelasModel = require('../models/escuelas.cjs');
 const validateFilteredEscuelasQuery = (req, res, next) => {
     if (!('keyWord' in req.query && 'necesidad' in req.query)) {
         const error = new Error(`Query is missing name or necesidad. Arguments: ${req.query}`);
-        error.status = 401;
+        error.status = 400;
         return next(error);
     }
     next();
@@ -17,7 +17,7 @@ const validateFilteredEscuelasQuery = (req, res, next) => {
 const validateNecesidadesQuery = (req, res, next) => {
     if (!('usuario' in req.query)) {
         const error = new Error(`Query is missing usuario. Arguments: ${req.query}`);
-        error.status = 402;
+        error.status = 400;
         return next(error);
     }
     next();
