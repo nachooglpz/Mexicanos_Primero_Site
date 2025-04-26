@@ -1,4 +1,6 @@
 import '../css/modificar_perfil.css';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 function ModificarPerfil() {
     return (
@@ -17,20 +19,17 @@ function ModificarPerfil() {
                     <label htmlFor="password">Nueva Contraseña:</label>
                     <input type="password" id="password" name="password" required placeholder="Nueva Contraseña" /><br /><br />
 
+                    <label htmlFor="password">Repita Nueva Contraseña:</label>
+                    <input type="password" id="repeated-password" name="repeated-password" required placeholder="Repita Nueva Contraseña" /><br /><br />
+
                     <label htmlFor="address">Dirección:</label>
                     <input type="text" id="address" name="address" placeholder="Dirección" /><br /><br />
 
-                    <label htmlFor="userType">Tipo de Usuario:</label>
-                    <select id="userType" name="userType">
-                        <option value="admin">Escuela</option>
-                        <option value="editor">Aliado</option>
-                    </select><br /><br />
-
-                    <label htmlFor="register-institution">Institución</label>
-                    <input type="text" className="modificar-perfil-input" id="register-institution" placeholder="Institución" /><br /><br />
-
-                    <label htmlFor="register-sector">Sector</label>
-                    <input type="text" className="modificar-perfil-input" id="register-sector" placeholder="Sector" /><br /><br />
+                    {/*<label htmlFor="userType">Tipo de Usuario:</label>*/}
+                    {/*<select id="userType" name="userType">*/}
+                    {/*    <option value="admin">Escuela</option>*/}
+                    {/*    <option value="editor">Aliado</option>*/}
+                    {/*</select><br /><br />*/}
 
                     <label htmlFor="register-support">Tipo de Apoyo a brindar</label>
                     <input type="text" className="modificar-perfil-input" id="register-support" placeholder="Tipo de apoyo a brindar" /><br /><br />
@@ -38,6 +37,36 @@ function ModificarPerfil() {
                     <button className="modificar-perfil-button" type="submit">Guardar Cambios</button>
                 </form>
             </div>
+        </>
+    );
+}
+
+function PerfilAliado() {
+
+    return (
+        <>
+            <label htmlFor="register-">Sector</label>
+            <input type="text" className="modificar-perfil-input" id="register-sector" placeholder="Sector" /><br /><br />
+
+            <label htmlFor="register-sector">Sector</label>
+            <input type="text" className="modificar-perfil-input" id="register-sector" placeholder="Sector" /><br /><br />
+        </>
+    );
+}
+
+function PerfilEscuela() {
+    return(
+        <>
+            <label htmlFor="register-institution">Institución</label>
+            <input type="text" className="modificar-perfil-input" id="register-institution" placeholder="Institución" /><br /><br />
+        </>
+    );
+}
+
+function PerfilAdmin() {
+    return(
+        <>
+
         </>
     );
 }

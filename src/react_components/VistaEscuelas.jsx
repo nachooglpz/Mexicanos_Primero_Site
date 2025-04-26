@@ -32,7 +32,7 @@ function VistaEscuelas() {
             <div className="vista-sidebar">
                 <h2>Menú</h2>
                 <ul>
-                    <li><a href="../perfil/perfil.html">Perfil</a></li>
+                    <li><Link to="/modificarPerfil">Perfil</Link></li>
                     <li><a href="../convenios/chatlist.html">Chat</a></li>
                     <li><a href="../documentos/documentos.html">Carga de Documentos</a></li>
                     <li><Link to="/" onClick={() => dispatch(logout())}>Cerrar Sesión</Link></li>
