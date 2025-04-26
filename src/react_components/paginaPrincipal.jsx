@@ -8,11 +8,10 @@ function PaginaPrincipal() {
 
     return (
         <>
-            {usertype === 'admin' ? <PanelAdmin /> :
-                usertype === 'escuela' ? <VistaEscuelas /> :
-                    usertype === 'aliado' ? <VistaAliados /> :
-                        <p>Usuario no ha iniciado sesión</p>
-            }
+            {usertype === 'admin' && <PanelAdmin />}
+            {usertype === 'escuela' && <VistaEscuelas />}
+            {usertype === 'aliado' && <VistaAliados />}
+            {usertype === null && <p>Usuario no ha iniciado sesión.</p>}
         </>
     );
 }
