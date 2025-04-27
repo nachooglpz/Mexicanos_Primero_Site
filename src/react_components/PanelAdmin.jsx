@@ -4,6 +4,8 @@ import '../css/panel_admin.css';
 
 function PanelAdmin() {
     const [usuarios, setUsuarios] = useState([]);
+    const [titulo, setTitulo] = useState('');
+    const [link, setLink] = useState('');
 
     useEffect(() => {
         const fetchUsuarios = async () => {
@@ -58,6 +60,39 @@ function PanelAdmin() {
 
         fetchUsuarios();
     }, []);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        console.log('Formulario enviado'); // Verifica si el método se ejecuta
+        console.log('Título:', titulo); // Verifica el valor de "titulo"
+        console.log('Link:', link); // Verifica el valor de "link"
+
+        try {
+            const response = await fetch('/api/documentos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ titulo, link }),
+            });
+
+            console.log('Respuesta del servidor:', response); // Verifica la respuesta del servidor
+
+            if (response.ok) {
+                alert('Documento subido exitosamente');
+                setTitulo('');
+                setLink('');
+            } else {
+                const errorData = await response.json();
+                console.log('Error del servidor:', errorData); // Verifica el error del servidor
+                alert(`Error: ${errorData.error}`);
+            }
+        } catch (error) {
+            console.error('Error al subir el documento:', error); // Verifica si ocurre un error en el fetch
+            alert('Error al subir el documento');
+        }
+    };
 
     return (
         <>
@@ -122,6 +157,35 @@ function PanelAdmin() {
                             {/* Aquí se llenará la lista de convenios dinámicamente */}
                         </tbody>
                     </table>
+                </section>
+
+                <section id="documentos">
+                    <h2>Subir Documento</h2>
+                    <form
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            console.log('Evento onSubmit disparado'); // Verifica si el evento se dispara
+                            handleSubmit(e);
+                        }}
+                    >
+                        <label htmlFor="titulo">Título del Documento:</label>
+                        <input
+                            type="text"
+                            id="titulo"
+                            value={titulo}
+                            onChange={(e) => setTitulo(e.target.value)}
+                            required
+                        />
+                        <label htmlFor="link">Link del Documento:</label>
+                        <input
+                            type="text"
+                            id="link"
+                            value={link}
+                            onChange={(e) => setLink(e.target.value)}
+                            required
+                        />
+                        <button type="submit">Subir Documento</button>
+                    </form>
                 </section>
 
                 <div id="notifications">
