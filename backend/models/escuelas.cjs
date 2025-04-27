@@ -34,4 +34,15 @@ const getDistinctNecesidades = async () => {
     return result.rows;
 }
 
-module.exports = { getAllEscuelas, getAllActiveEscuelas, getFilteredEscuelas, getNecesidadesByEscuela, getDistinctNecesidades }
+const getDireccionesEscuelas = async () => {
+    try {
+        const result = await db.query('SELECT usuario_escuela, nombre, escuela, direccion FROM administradores_de_escuela WHERE estatus_activo = true');
+        console.log('Direcciones obtenidas de la base de datos:', result.rows);
+        return result.rows;
+    } catch (error) {
+        console.error('Error en getDireccionesEscuelas:', error.message);
+        throw error; // Lanza el error para que el endpoint lo capture
+    }
+};
+
+module.exports = { getAllEscuelas,getDireccionesEscuelas ,getAllActiveEscuelas, getFilteredEscuelas, getNecesidadesByEscuela, getDistinctNecesidades }

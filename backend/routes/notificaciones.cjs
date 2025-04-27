@@ -16,8 +16,26 @@ const validateEscuelasQuery = (req, res, next) => {
 
 notificacionesRouter.get('/escuelas', validateEscuelasQuery, async (req, res, next) => {
     const { usuario } = req.query;
+    console.log('Usuario recibido:', usuario);
     const notis = await notificacionesModel.getNoficicacionesByEscuela(usuario);
     res.status(201).send(notis);
+});
+
+notificacionesRouter.get('/aliados', async (req, res) => {
+    const { usuario } = req.query;
+
+    if (!usuario) {
+        return res.status(400).json({ error: 'El parámetro usuario es obligatorio' });
+    }
+
+    console.log('Usuario recibido:', usuario);
+    try {
+        const notificaciones = await db.query('SELECT * FROM notificaciones WHERE usuario_aliado = $1', [usuario]);
+        res.json(notificaciones.rows);
+    } catch (error) {
+        console.error('Error al obtener notificaciones:', error);
+        res.status(500).json({ error: 'Error al obtener notificaciones' });
+    }
 });
 
 notificacionesRouter.use((err, req, res, next) => {

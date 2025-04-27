@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import '../css/pagina_principal.css'
-import MapComponentSchool from './mapcomponent_escuela';
-
+import MapComponent from './mapcomponent';  
 
 class Escuela {
     constructor(data, necesidades = []) {
@@ -37,9 +36,9 @@ function VistaAliados({username}) {
             <h1>Lista de Escuelas</h1>
             <SearchFilter onFilterChange={handleFilterChange}/>
             <SchoolList filters={filters} />
-            <AllyNotis username={username} />
-            <h1>Mapa de ubicacion de Aliados </h1>
-            <MapComponentSchool/>
+            {/* <AllyNotis username={username} /> */}
+            <h1>Mapa de ubicacion de Escuelas </h1>
+            <MapComponent username={username} />
 
             {/* <div id="notifications">
                 <h2>Notificaciones</h2>
@@ -135,17 +134,35 @@ function SchoolList({filters}) {
     );
 }
 
-function AllyNotis({username}) {
+function AllyNotis({ username }) {
     const [notis, setNotis] = useState([]);
 
     useEffect(() => {
-        // Fetch notificaciones
+        if (!username) {
+            console.error('El usuario no está definido para las notificaciones');
+            return;
+        }
+
         fetch(`/api/notificaciones/aliados?usuario=${username}`)
-            .then((res) => res.json())
-            .then((data) => {
-                setNotis(data);
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error(`Error en la solicitud: ${res.status}`);
+                }
+                return res.json();
             })
-    }, []);
+            .then((data) => {
+                if (Array.isArray(data)) {
+                    setNotis(data);
+                } else {
+                    console.error('La respuesta no es un arreglo:', data);
+                    setNotis([]);
+                }
+            })
+            .catch((error) => {
+                console.error('Error al obtener notificaciones:', error);
+                setNotis([]); // Asegúrate de que `notis` sea un arreglo vacío en caso de error
+            });
+    }, [username]);
 
     return (
         <div id="notifications">

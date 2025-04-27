@@ -40,6 +40,16 @@ escuelasRouter.get('/necesidades', validateNecesidadesQuery, async (req, res, ne
     res.send(necesidades);
 });
 
+escuelasRouter.get('/direcciones', async (req, res) => {
+    try {
+        const direcciones = await escuelasModel.getDireccionesEscuelas();
+        res.json(direcciones); // Envía las direcciones como JSON
+    } catch (error) {
+        console.error('Error al obtener direcciones de escuelas:', error);
+        res.status(500).send('Error al obtener direcciones de escuelas');
+    }
+});
+
 escuelasRouter.use((err, req, res, next) => {
     const status = err.status || 500;
     res.status(status).send(err.message);

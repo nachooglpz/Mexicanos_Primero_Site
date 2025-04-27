@@ -53,5 +53,9 @@ const getSectores = async () => {
     // console.log(res.rows);
     return res.rows;
 }
-
-module.exports = { getAllAliados, getAllActiveAliados, getApoyosByAliado, getDistinctApoyos, getFilteredAliados, getSectores }
+const getDireccionesAliados = async () => {
+    const res = await db.query('SELECT usuario_aliado, nombre, empresa, direccion FROM aliados WHERE estatus_activo = true');
+    // console.log(res.rows);
+    return res.rows;
+};
+module.exports = { getAllAliados, getAllActiveAliados, getApoyosByAliado, getDistinctApoyos, getFilteredAliados, getSectores, getDireccionesAliados }

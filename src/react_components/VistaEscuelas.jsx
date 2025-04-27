@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import '../css/pagina_principal.css'
-import Mapcomponent from './mapcomponent'; // Ajusta la ruta según tu estructura
-
+import MapComponentSchool from './mapcomponent_escuela';
 
 class Aliado {
   constructor(data, tipos_de_ayuda = []) {
@@ -40,7 +39,7 @@ function VistaEscuelas({username}) {
             <AllyList filters={filters} />
             <SchoolNotis username={username}/>
             <h1>Mapa de Ubicación de Aliados</h1>
-            <Mapcomponent />
+            <MapComponentSchool username={username}/>
             
         </div>
         </>

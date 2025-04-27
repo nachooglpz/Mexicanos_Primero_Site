@@ -50,6 +50,17 @@ aliadosRouter.get('/sectores', async (req, res, next) => {
     res.send(sectores);
 });
 
+aliadosRouter.get('/direcciones', async (req, res, next) => {
+    try {
+        const direcciones = await aliadosModel.getDireccionesAliados();
+        console.log(direcciones); // Verifica que las direcciones se obtengan correctamente
+        res.json(direcciones); // Envía las direcciones como JSON
+    } catch (error) {
+        console.error('Error al obtener direcciones de aliados:', error);
+        res.status(500).send('Error al obtener direcciones de aliados');
+    }
+});
+
 aliadosRouter.use((err, req, res, next) => {
     const status = err.status || 500;
     res.status(status).send(err.message);
