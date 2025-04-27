@@ -2,7 +2,7 @@ import '../css/modificar_perfil.css';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Aliado, AdministradorDeEscuela } from '../models/Usuario.js';
+import { Aliado, AdministradorDeEscuela, Administrador } from '../models/Usuario.js';
 
 function ModificarPerfil() {
     document.title = 'Modificar Perfil';
@@ -253,9 +253,90 @@ function PerfilEscuela() {
 }
 
 function PerfilAdmin() {
-    return(
-        <>
+    const username = useSelector((state) => state.usuario.usuario);
+    const [admin, setAdmin] = useState(new Administrador('', '', '', ''));
+    const [cambios, setCambios] = useState({ nombre: '', email: '', password: '', confirmpsswd: '' });
+    const [saved, setSaved] = useState(false);
 
+    useEffect(() => {
+        fetch(`/api/admin/admin?usuario_admin=${username}`)
+            .then((res) => res.json())
+            .then((data) => {
+                const adminData = data[0];
+                setAdmin(new Administrador(adminData.nombre, adminData.usuario_admin, adminData.contrasena, adminData.email));
+            });
+    }, [saved]);
+
+    const handleGuardarCambios = () => {
+        if ((cambios.password || cambios.confirmpsswd) && (cambios.password !== cambios.confirmpsswd)) {
+            alert('Las contraseñas no coinciden');
+            return;
+        }
+
+        fetch(`/api/admin/edit?usuario_admin=${username}&nombre=${cambios.nombre || admin.nombre}&email=${cambios.email || admin.email}&contrasena=${cambios.password || admin.contrasena}`, {
+            method: 'PUT',
+        })
+            .then((res) => {
+                if (res.ok) {
+                    console.log('Cambios guardados: ', res);
+                }
+            });
+        setCambios({ nombre: '', email: '', password: '', confirmpsswd: '' });
+        setSaved(!saved);
+    };
+
+    return (
+        <>
+            <div className="modificar-perfil-title">
+                <h1>Perfil de Administrador:</h1>
+            </div>
+            <div className="modificar-perfil-form">
+                <form>
+                    <label htmlFor="name">Nombre:</label>
+                    <input
+                        type="text"
+                        id="name"
+                        className="modificar-perfil-input"
+                        placeholder={admin.nombre}
+                        onChange={(e) => setCambios((prev) => ({ ...prev, nombre: e.target.value }))}
+                    /><br /><br />
+
+                    <label htmlFor="email">Correo:</label>
+                    <input
+                        type="email"
+                        id="email"
+                        className="modificar-perfil-input"
+                        placeholder={admin.email}
+                        onChange={(e) => setCambios((prev) => ({ ...prev, email: e.target.value }))}
+                    /><br /><br />
+
+                    <label htmlFor="password">Nueva Contraseña:</label>
+                    <input
+                        type="password"
+                        id="password"
+                        className="modificar-perfil-input"
+                        placeholder="Nueva Contraseña"
+                        onChange={(e) => setCambios((prev) => ({ ...prev, password: e.target.value }))}
+                    /><br /><br />
+
+                    <label htmlFor="repeated-password">Repita Nueva Contraseña:</label>
+                    <input
+                        type="password"
+                        id="repeated-password"
+                        className="modificar-perfil-input"
+                        placeholder="Repita Nueva Contraseña"
+                        onChange={(e) => setCambios((prev) => ({ ...prev, confirmpsswd: e.target.value }))}
+                    /><br /><br />
+
+                    <button
+                        className="modificar-perfil-button"
+                        type="button"
+                        onClick={handleGuardarCambios}
+                    >
+                        Guardar Cambios
+                    </button>
+                </form>
+            </div>
         </>
     );
 }

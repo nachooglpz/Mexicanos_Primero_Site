@@ -5,6 +5,7 @@ const app = express();
 
 const { aliadosRouter } = require('./routes/aliados.cjs');
 const { escuelasRouter } = require('./routes/escuelas.cjs');
+const { adminRouter } = require('./routes/admin.cjs');
 const { notificacionesRouter } = require('./routes/notificaciones.cjs');
 const documentosRouter = require('./routes/documentos.cjs');
 
@@ -23,13 +24,15 @@ app.use(express.json());
 app.use('/api/aliados', aliadosRouter);
 app.use('/api/escuelas', escuelasRouter);
 app.use('/api/notificaciones', notificacionesRouter);
+app.use('/api/admin', adminRouter);
+
 app.use('/api/documentos', documentosRouter);
 
-//ruta para obtener todos los usuarios 
+//ruta para obtener todos los usuarios
 app.get('/api/usuarios', async (req, res) => {
     try {
         console.log('Ruta /api/usuarios llamada');
-        
+
         // Obtén los datos de ambas tablas
         const administradores = await db.query('SELECT * FROM administradores_de_escuela');
         const aliados = await db.query('SELECT * FROM aliados');
