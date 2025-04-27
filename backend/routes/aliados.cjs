@@ -4,16 +4,6 @@ const aliadosRouter = express.Router();
 
 const aliadosModel = require('../models/aliados.cjs');
 
-// Middleware
-const validateAliadoQuery = (req, res, next) => {
-    if (!('usuario_aliado' in req.query)) {
-        const error = new Error(`Query is missing usuario_aliado. Arguments: ${req.query}`);
-        error.status = 400;
-        return next(error);
-    }
-    next();
-}
-
 const validateApoyoQuery = (req, res, next) => {
     if (!('usuario_aliado' in req.query)) {
         const error = new Error(`Query is missing usuario_aliado. Arguments: ${req.query}`);
