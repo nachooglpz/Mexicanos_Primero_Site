@@ -1,4 +1,4 @@
-import '../css/lista_convenios.css';
+import './lista_convenios.css';
 
 function ListadoConvenios() {
     return (

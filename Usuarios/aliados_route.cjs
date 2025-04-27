@@ -2,7 +2,7 @@ const express = require('express');
 
 const aliadosRouter = express.Router();
 
-const aliadosModel = require('../models/aliados.cjs');
+const aliadosModel = require('./aliados_model.cjs');
 
 // Middleware
 const validateApoyoQuery = (req, res, next) => {
