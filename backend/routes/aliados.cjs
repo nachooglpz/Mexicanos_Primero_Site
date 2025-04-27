@@ -25,7 +25,7 @@ const validateApoyoPostDelete = (req, res, next) => {
 const validateFilteredAliadosQuery = (req, res, next) => {
     if (!('name' in req.query && 'sector' in req.query && 'apoyo' in req.query)) {
         const error = new Error(`Query is missing name, sector, or apoyo. Arguments: ${req.query}`);
-        error.status = 400;
+        error.status = 401;
         return next(error);
     }
     next();
@@ -45,7 +45,7 @@ aliadosRouter.get('/', async (req, res, next) => {
     res.send(dbAliados);
 });
 
-aliadosRouter.get('/aliado', async (req, res, next) => {
+aliadosRouter.get('/aliado', validateApoyoQuery, async (req, res, next) => {
     const dbAliado = await aliadosModel.getAliado(req.query.usuario_aliado);
     res.send(dbAliado);
 })

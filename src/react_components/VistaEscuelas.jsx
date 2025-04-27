@@ -3,6 +3,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../features/userSlice.js';
 import '../css/pagina_principal.css';
+import Mapcomponent from './mapcomponent';
+import '../css/pagina_principal.css'
 import MapComponentSchool from './mapcomponent_escuela';
 
 class Aliado {
@@ -28,6 +30,7 @@ function VistaEscuelas() {
     };
 
     return (
+        <>
         <div className="vista-container">
             <div className="vista-sidebar">
                 <h2>Menú</h2>
@@ -47,6 +50,7 @@ function VistaEscuelas() {
                 <MapComponentSchool username={username}/>
             </div>
         </div>
+        </>
     );
 }
 
