@@ -2,7 +2,7 @@ import '../css/modificar_perfil.css';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Aliado } from '../models/Usuario.js';
+import { Aliado, AdministradorDeEscuela } from '../models/Usuario.js';
 
 function ModificarPerfil() {
     document.title = 'Modificar Perfil';
@@ -85,7 +85,7 @@ function PerfilAliado() {
                     console.log('Cambios guardados: ', res);
                 }
             })
-
+        setCambios({nombre: '', email: '', password: '', confirmpsswd: '', empresa: '', sector: '', direccion: ''});
         setSaved(!saved);
     };
 
@@ -129,7 +129,7 @@ function PerfilAliado() {
                     <input type="text" className="modificar-perfil-input" placeholder="Agregar nuevo apoyo" value={nuevoApoyo} onChange={(e) => setNuevoApoyo(e.target.value)}/>
                     <button type="button" className="modificar-perfil-agregar-button" onClick={agregarApoyo}>Agregar</button><br /><br />
 
-                    <button className="modificar-perfil-button" type="button" onClick={handleGuardarCambios}>Guardar Cambios</button>
+                    <button className="modificar-perfil-button" type="submit" onClick={handleGuardarCambios}>Guardar Cambios</button>
                 </form>
             </div>
         </>
@@ -137,13 +137,117 @@ function PerfilAliado() {
 }
 
 function PerfilEscuela() {
-    return(
-        <>
-            <label htmlFor="register-institution">Institución</label>
-            <input type="text" className="modificar-perfil-input" id="register-institution" placeholder="Institución" /><br /><br />
+    const username = useSelector((state) => state.usuario.usuario);
+    const [escuela, setEscuela] = useState(new AdministradorDeEscuela('', '', '', '', '', '', '', '', true, []));
+    const [necesidades, setNecesidades] = useState([]);
+    const [nuevaNecesidad, setNuevaNecesidad] = useState('');
+    const [cambioNecesidad, setCambioNecesidad] = useState(false);
+    const [cambios, setCambios] = useState({nombre: '', email: '', password: '', confirmpsswd: '', escuela: '', direccion: '', cct: ''});
+    const [saved, setSaved] = useState(false);
 
-            <label htmlFor="address">Dirección:</label>
-            <input type="text" id="address" className="modificar-perfil-input" placeholder="Dirección" /><br /><br />
+    useEffect(() => {
+        fetch(`/api/escuelas/escuela?usuario=${username}`)
+            .then((res) => res.json())
+            .then((data) => {
+                const escuelaData = data[0];
+                setEscuela(new AdministradorDeEscuela(
+                    escuelaData.nombre, escuelaData.usuario_escuela, escuelaData.contrasena, escuelaData.email, escuelaData.escuela, escuelaData.direccion, escuelaData.cct, escuelaData.nivel_educativo, escuelaData.estatus_activo, []
+                ));
+            });
+    }, [saved]);
+
+    useEffect(() => {
+        fetch(`/api/escuelas/necesidades?usuario=${username}`)
+            .then((res) => res.json())
+            .then((necesidades) => setNecesidades(necesidades.map((necesidad) => necesidad.necesidad)));
+    }, [cambioNecesidad]);
+
+    const agregarNecesidad = () => {
+        if (!necesidades.includes(nuevaNecesidad)) {
+            fetch(`/api/escuelas/necesidad?usuario_escuela=${username}&necesidad=${nuevaNecesidad}`, {
+                method: 'POST',
+            })
+                .then((res) => {
+                    if (res.ok) {
+                        setNuevaNecesidad('');
+                        setCambioNecesidad(!cambioNecesidad);
+                    }
+                });
+        }
+    };
+
+    const eliminarNecesidad = (necesidad) => {
+        fetch(`/api/escuelas/necesidad?usuario_escuela=${username}&necesidad=${necesidad}`, {
+            method: 'DELETE',
+        })
+            .then((res) => {
+                if (res.ok) {
+                    setCambioNecesidad(!cambioNecesidad);
+                }
+            });
+    };
+
+    const handleGuardarCambios = () => {
+        if ((cambios.password || cambios.confirmpsswd) && (cambios.password !== cambios.confirmpsswd)) {
+            alert('Las contraseñas no coinciden');
+            return;
+        }
+
+        fetch(`/api/escuelas/edit?usuario_escuela=${username}&nombre=${cambios.nombre || escuela.nombre}&email=${cambios.email || escuela.email}&contrasena=${cambios.password || escuela.contrasena}&escuela=${cambios.escuela || escuela.escuela}&direccion=${cambios.direccion || escuela.direccion}&cct=${cambios.cct || escuela.cct}`, {
+            method: 'PUT',
+        })
+            .then((res) => {
+                if (res.ok) {
+                    console.log('Cambios guardados: ', res);
+                }
+            });
+        setCambios({nombre: '', email: '', password: '', confirmpsswd: '', escuela: '', direccion: '', cct: ''});
+        setSaved(!saved);
+    };
+
+    return (
+        <>
+            <div className="modificar-perfil-title">
+                <h1>Perfil de Escuela:</h1>
+            </div>
+            <div className="modificar-perfil-form">
+                <form>
+                    <label htmlFor="name">Nombre:</label>
+                    <input type="text" id="name" className="modificar-perfil-input" placeholder={escuela.nombre} onChange={(e) => setCambios((prev) => ({...prev, nombre: e.target.value}))}/><br /><br />
+
+                    <label htmlFor="email">Correo:</label>
+                    <input type="email" id="email" className="modificar-perfil-input" placeholder={escuela.email} onChange={(e) => setCambios((prev) => ({...prev, email: e.target.value}))}/><br /><br />
+
+                    <label htmlFor="password">Nueva Contraseña:</label>
+                    <input type="password" id="password" className="modificar-perfil-input" placeholder="Nueva Contraseña" onChange={(e) => setCambios((prev) => ({...prev, password: e.target.value}))}/><br /><br />
+
+                    <label htmlFor="repeated-password">Repita Nueva Contraseña:</label>
+                    <input type="password" id="repeated-password" className="modificar-perfil-input" placeholder="Repita Nueva Contraseña" onChange={(e) => setCambios((prev) => ({...prev, confirmpsswd: e.target.value}))}/><br /><br />
+
+                    <label htmlFor="school">Escuela:</label>
+                    <input type="text" id="school" className="modificar-perfil-input" placeholder={escuela.escuela} onChange={(e) => setCambios((prev) => ({...prev, escuela: e.target.value}))}/><br /><br />
+
+                    <label htmlFor="address">Dirección:</label>
+                    <input type="text" id="address" className="modificar-perfil-input" placeholder={escuela.direccion} onChange={(e) => setCambios((prev) => ({...prev, direccion: e.target.value}))}/><br /><br />
+
+                    <label htmlFor="cct">CCT:</label>
+                    <input type="text" id="cct" className="modificar-perfil-input" placeholder={escuela.cct} onChange={(e) => setCambios((prev) => ({...prev, cct: e.target.value}))}/><br /><br />
+
+                    <label>Necesidades:</label><br /><br />
+                    <ul className="modificar-perfil-ul">
+                        {necesidades.map((necesidad, index) => (
+                            <li key={index} className="modificar-perfil-li">
+                                <span>{necesidad}</span>
+                                <button type="button" onClick={() => eliminarNecesidad(necesidad)}>Eliminar</button>
+                            </li>
+                        ))}
+                    </ul>
+                    <input type="text" className="modificar-perfil-input" placeholder="Agregar nueva necesidad" value={nuevaNecesidad} onChange={(e) => setNuevaNecesidad(e.target.value)}/>
+                    <button type="button" className="modificar-perfil-agregar-button" onClick={agregarNecesidad}>Agregar</button><br /><br />
+
+                    <button className="modificar-perfil-button" type="submit" onClick={handleGuardarCambios}>Guardar Cambios</button>
+                </form>
+            </div>
         </>
     );
 }
