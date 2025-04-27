@@ -1,4 +1,4 @@
-import '../css/convenio.css';
+import './convenio.css';
 
 function Convenio() {
     return (

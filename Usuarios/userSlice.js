@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Usuario, Aliado, AdministradorDeEscuela, Administrador } from '../models/Usuario.js';
+import { Usuario, Aliado, AdministradorDeEscuela, Administrador } from './Usuario.js';
 
 const userSlice = createSlice({
     name: 'usuario',
