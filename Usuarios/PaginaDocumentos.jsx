@@ -1,4 +1,4 @@
-import '../css/pagina_documentos.css';
+import './pagina_documentos.css';
 import { useState, useEffect } from 'react';
 
 function PaginaDocumentos() {

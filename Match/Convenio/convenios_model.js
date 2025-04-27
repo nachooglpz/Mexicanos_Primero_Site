@@ -1,4 +1,4 @@
-const db = require('../db.js');
+const db = require('../../db.cjs');
 
 const getAllConvenios = async () => {
     return await db.query('SELECT c.*, upc.usuario_aliado, upc.usuario_escuela FROM convenio c JOIN usuarios_por_convenio upc ON upc.id_convenio = c.id_convenio;');
