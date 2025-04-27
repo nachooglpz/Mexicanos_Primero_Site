@@ -1,5 +1,10 @@
 const db = require('../db.cjs');
 
+const getEscuela = async (usuarioEscuela) => {
+    const result = await db.query('SELECT * FROM administradores_de_escuela WHERE usuario_escuela = $1', [usuarioEscuela]);
+    return result.rows;
+}
+
 const getAllEscuelas = async () => {
     const result = await db.query('SELECT * FROM administradores_de_escuela');
     return result.rows;
@@ -10,7 +15,7 @@ const getAllActiveEscuelas = async () => {
     return result.rows;
 }
 
-getFilteredEscuelas = async (name, necesidad) => {
+const getFilteredEscuelas = async (name, necesidad) => {
     let result;
     if (name === '' && necesidad === '') {
         result = await db.query('SELECT * FROM administradores_de_escuela WHERE estatus_activo = true');
@@ -34,4 +39,19 @@ const getDistinctNecesidades = async () => {
     return result.rows;
 }
 
-module.exports = { getAllEscuelas, getAllActiveEscuelas, getFilteredEscuelas, getNecesidadesByEscuela, getDistinctNecesidades }
+const agregarNecesidad = async (usuarioEscuela, necesidad) => {
+    const result = await db.query('INSERT INTO necesidades (usuario_escuela, necesidad) VALUES ($1, $2)', [usuarioEscuela, necesidad]);
+    return result.rows;
+}
+
+const modificarEscuela = async (usuarioEscuela, nombre, escuela, contrasena, email, direccion, cct) => {
+    const result = await db.query('UPDATE administradores_de_escuela SET nombre = $1, escuela = $2, contrasena = $3, email = $4, direccion = $5, cct = $6 WHERE usuario_escuela = $7', [nombre, escuela, contrasena, email, direccion, cct, usuarioEscuela]);
+    return result.rows;
+}
+
+const eliminarNecesidad = async (usuarioEscuela, necesidad) => {
+    const result = await db.query('DELETE FROM necesidades WHERE usuario_escuela = $1 AND necesidad = $2', [usuarioEscuela, necesidad]);
+    return result.rows;
+}
+
+module.exports = { getEscuela, getAllEscuelas, getAllActiveEscuelas, getFilteredEscuelas, getNecesidadesByEscuela, getDistinctNecesidades, agregarNecesidad, modificarEscuela, eliminarNecesidad }
