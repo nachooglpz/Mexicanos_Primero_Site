@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { logout } from '../features/userSlice.js';
 import {useEffect, useState} from "react";
 import { Usuario, AdministradorDeEscuela, Aliado } from '../models/Usuario';
-import '../css/panel_admin.css';
 
 function PanelAdmin() {
     const dispatch = useDispatch();
@@ -15,15 +14,14 @@ function PanelAdmin() {
     useEffect(() => {
         const fetchUsuarios = async () => {
             try {
-                const res = await fetch('/api/usuarios'); // Cambia esta URL según tu API
+                const res = await fetch('/api/usuarios');
                 const data = await res.json();
 
-                // Mapea los datos a instancias de las clases
                 const usuariosMapeados = data.map((usuario) => {
                     if (usuario.rol === 'Administrador de Escuela') {
                         return new AdministradorDeEscuela(
                             usuario.nombre,
-                            usuario.usuario_escuela, // Cambia a usuario_escuela para administradores
+                            usuario.usuario_escuela,
                             usuario.contrasena,
                             usuario.email,
                             usuario.escuela,
@@ -36,7 +34,7 @@ function PanelAdmin() {
                     } else if (usuario.rol === 'Aliado') {
                         return new Aliado(
                             usuario.nombre,
-                            usuario.usuario_aliado, // Cambia a usuario_aliado para aliados
+                            usuario.usuario_aliado,
                             usuario.contrasena,
                             usuario.email,
                             usuario.empresa,
@@ -48,7 +46,7 @@ function PanelAdmin() {
                     } else {
                         return new Usuario(
                             usuario.nombre,
-                            usuario.usuario, // Esto es para cualquier otro caso
+                            usuario.usuario,
                             usuario.contrasena,
                             usuario.email,
                             usuario.rol,
@@ -68,18 +66,15 @@ function PanelAdmin() {
 
     return (
         <>
-            <header className="panel-admin-header">
-                <h1>Panel de Administración</h1>
-            </header>
             <div className="panel-admin-sidebar">
                 <h2>Menú</h2>
                 <ul>
                     <li><Link to="/modificarPerfil">Perfil</Link></li>
-                    {/*<li><a href="../convenios/chatlist.html">Chat</a></li>*/}
                     <li><Link to="/" onClick={() => dispatch(logout())}>Cerrar Sesión</Link></li>
                 </ul>
             </div>
-            <main className="panel-admin-main">
+            <div className="panel-admin-main">
+                <h1>Panel de Administración</h1>
                 <section className="panel-admin-usuarios">
                     <h2>Lista de Usuarios</h2>
                     <table className="panel-admin-table">
@@ -94,22 +89,19 @@ function PanelAdmin() {
                             </tr>
                         </thead>
                         <tbody>
-                            {usuarios.map((usuario, index) => {
-
-                                return (
-                                    <tr key={index}>
-                                        <td>{usuario.usuario}</td>
-                                        <td>{usuario.nombre}</td>
-                                        <td>{usuario.email}</td>
-                                        <td>{usuario.rol}</td>
-                                        <td>{usuario.estatus_activo ? 'Activo' : 'Inactivo'}</td>
-                                        <td>
-                                            <button>Editar</button>
-                                            <button>Eliminar</button>
-                                        </td>
-                                    </tr>
-                                );
-                            })}
+                            {usuarios.map((usuario, index) => (
+                                <tr key={index}>
+                                    <td>{usuario.usuario}</td>
+                                    <td>{usuario.nombre}</td>
+                                    <td>{usuario.email}</td>
+                                    <td>{usuario.rol}</td>
+                                    <td>{usuario.estatus_activo ? 'Activo' : 'Inactivo'}</td>
+                                    <td>
+                                        <button>Editar</button>
+                                        <button>Eliminar</button>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                     <button className="panel-admin-crear-usuario">Crear Nuevo Usuario Administrador</button>
@@ -132,7 +124,7 @@ function PanelAdmin() {
                     </table>
                 </section>
                 <AdminNotis username={username} />
-            </main>
+            </div>
         </>
     );
 }
@@ -141,12 +133,11 @@ function AdminNotis({username}) {
     const [notis, setNotis] = useState([]);
 
     useEffect(() => {
-        // Fetch notificaciones
         fetch(`/api/notificaciones/admin?usuario=${username}`)
             .then((res) => res.json())
             .then((data) => {
                 setNotis(data);
-            })
+            });
     }, []);
 
     return (

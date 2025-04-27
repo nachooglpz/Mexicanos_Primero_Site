@@ -47,24 +47,9 @@ function VistaAliados() {
                 <SchoolList filters={filters} />
                 <AllyNotis username={username} />
                 <h1>Mapa de ubicacion de Aliados </h1>
-                <MapComponentSchool/>
+                {/*<MapComponentSchool/>*/}
+                <MapComponent username={username} />
             </div>
-        <div id="sidebar">
-            <h2>Menú</h2>
-            <ul>
-                <li><a href="../perfil/perfil.html">Perfil</a></li>
-                <li><a href="../convenios/chatlist.html">Chat</a></li>
-                <li><a href="../documentos/documentos.html">Carga de Documentos</a></li>
-            </ul>
-        </div>
-        <div className="main-content">
-            <h1>Lista de Escuelas</h1>
-            <SearchFilter onFilterChange={handleFilterChange}/>
-            <SchoolList filters={filters} />
-            {/* <AllyNotis username={username} /> */}
-            <h1>Mapa de ubicacion de Escuelas </h1>
-            <MapComponent username={username} />
-        </div>
         </div>
     );
 }

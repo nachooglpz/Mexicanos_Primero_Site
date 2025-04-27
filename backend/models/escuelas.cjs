@@ -54,7 +54,6 @@ const eliminarNecesidad = async (usuarioEscuela, necesidad) => {
     return result.rows;
 }
 
-module.exports = { getEscuela, getAllEscuelas, getAllActiveEscuelas, getFilteredEscuelas, getNecesidadesByEscuela, getDistinctNecesidades, agregarNecesidad, modificarEscuela, eliminarNecesidad }
 const getDireccionesEscuelas = async () => {
     try {
         const result = await db.query('SELECT usuario_escuela, nombre, escuela, direccion FROM administradores_de_escuela WHERE estatus_activo = true');
@@ -66,4 +65,4 @@ const getDireccionesEscuelas = async () => {
     }
 };
 
-module.exports = { getAllEscuelas,getDireccionesEscuelas ,getAllActiveEscuelas, getFilteredEscuelas, getNecesidadesByEscuela, getDistinctNecesidades }
+module.exports = { getEscuela, getAllEscuelas, getAllActiveEscuelas, getFilteredEscuelas, getNecesidadesByEscuela, getDistinctNecesidades, agregarNecesidad, modificarEscuela, eliminarNecesidad, getDireccionesEscuelas }
