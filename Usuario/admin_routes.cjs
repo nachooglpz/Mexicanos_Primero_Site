@@ -2,7 +2,7 @@ const express = require('express');
 
 const adminRouter = express.Router();
 
-const adminModel = require('../models/admin.cjs');
+const adminModel = require('./admin_models.cjs');
 
 // Middleware
 const validateAdminQuery = (req, res, next) => {

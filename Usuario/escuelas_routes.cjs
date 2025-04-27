@@ -2,7 +2,7 @@ const express = require('express');
 
 const escuelasRouter = express.Router();
 
-const escuelasModel = require('../models/escuelas.cjs');
+const escuelasModel = require('./escuelas_model.cjs');
 
 // Middleware
 const validateFilteredEscuelasQuery = (req, res, next) => {

@@ -2,12 +2,12 @@
 const express = require('express');
 const app = express();
 
-const { aliadosRouter } = require('./routes/aliados.cjs');
-const { escuelasRouter } = require('./routes/escuelas.cjs');
-const { adminRouter } = require('./routes/admin.cjs');
-const { notificacionesRouter } = require('./routes/notificaciones.cjs');
+const { aliadosRouter } = require('./Usuario/aliados_routes.cjs');
+const { escuelasRouter } = require('./Usuario/escuelas_routes.cjs');
+const { adminRouter } = require('./Usuario/admin_routes.cjs');
+const { notificacionesRouter } = require('./Comunicacion/notificaciones_routes.cjs');
 
-const inicioSesionModel = require('./models/inicioSesion.cjs');
+const inicioSesionModel = require('./Usuario/inicioSesion_model.cjs');
 
 const PORT = process.env.PORT || 3000;
 

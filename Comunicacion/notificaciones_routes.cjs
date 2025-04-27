@@ -2,7 +2,7 @@ const express = require('express');
 
 const notificacionesRouter = express.Router();
 
-const notificacionesModel = require('../models/notificaciones.cjs');
+const notificacionesModel = require('./notificaciones_model.cjs');
 
 const validateUsuarioQuery = (req, res, next) => {
     if (!('usuario' in req.query)) {
