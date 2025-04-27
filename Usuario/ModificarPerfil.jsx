@@ -2,7 +2,7 @@ import '../css/modificar_perfil.css';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Aliado, AdministradorDeEscuela, Administrador } from '../models/Usuario.js';
+import { Aliado, AdministradorDeEscuela, Administrador } from '../../Usuario/Usuario.js';
 
 function ModificarPerfil() {
     document.title = 'Modificar Perfil';

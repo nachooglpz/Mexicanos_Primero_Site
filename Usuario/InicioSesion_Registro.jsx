@@ -1,7 +1,7 @@
 import '../css/inicio_sesion.css';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../features/userSlice.js';
+import { login } from '../../Usuario/userSlice.js';
 
 function PaginaInicio() {
   return (

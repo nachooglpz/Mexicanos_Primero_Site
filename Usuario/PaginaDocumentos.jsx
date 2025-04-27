@@ -1,4 +1,4 @@
-import '../css/pagina_documentos.css';
+import '../src/css/pagina_documentos.css';
 
 function PaginaDocumentos() {
     return (

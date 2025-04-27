@@ -1,7 +1,7 @@
 import '../css/panel_admin.css';
 import {useDispatch, useSelector} from 'react-redux';
 import { Link } from 'react-router-dom';
-import { logout } from '../features/userSlice.js';
+import { logout } from '../../Usuario/userSlice.js';
 import {useEffect, useState} from "react";
 
 function PanelAdmin() {

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { Link } from 'react-router-dom';
-import { logout } from '../features/userSlice.js';
+import { logout } from '../../Usuario/userSlice.js';
 import '../css/pagina_principal.css';
-import Mapcomponent from './mapcomponent';
+import Mapcomponent from '../../Mapa/mapcomponent.jsx';
 
 class Aliado {
     constructor(data, tipos_de_ayuda = []) {
