@@ -3,10 +3,68 @@ import {useDispatch, useSelector} from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../features/userSlice.js';
 import {useEffect, useState} from "react";
+import { Usuario, AdministradorDeEscuela, Aliado } from '../models/Usuario';
+import '../css/panel_admin.css';
 
 function PanelAdmin() {
     const dispatch = useDispatch();
     const username = useSelector((state) => state.usuario.usuario);
+
+    const [usuarios, setUsuarios] = useState([]);
+
+    useEffect(() => {
+        const fetchUsuarios = async () => {
+            try {
+                const res = await fetch('/api/usuarios'); // Cambia esta URL según tu API
+                const data = await res.json();
+
+                // Mapea los datos a instancias de las clases
+                const usuariosMapeados = data.map((usuario) => {
+                    if (usuario.rol === 'Administrador de Escuela') {
+                        return new AdministradorDeEscuela(
+                            usuario.nombre,
+                            usuario.usuario_escuela, // Cambia a usuario_escuela para administradores
+                            usuario.contrasena,
+                            usuario.email,
+                            usuario.escuela,
+                            usuario.direccion,
+                            usuario.cct,
+                            usuario.nivel_educativo,
+                            usuario.estatus_activo,
+                            usuario.necesidades
+                        );
+                    } else if (usuario.rol === 'Aliado') {
+                        return new Aliado(
+                            usuario.nombre,
+                            usuario.usuario_aliado, // Cambia a usuario_aliado para aliados
+                            usuario.contrasena,
+                            usuario.email,
+                            usuario.empresa,
+                            usuario.sector,
+                            usuario.direccion,
+                            usuario.estatus_activo,
+                            usuario.tipo_apoyo
+                        );
+                    } else {
+                        return new Usuario(
+                            usuario.nombre,
+                            usuario.usuario, // Esto es para cualquier otro caso
+                            usuario.contrasena,
+                            usuario.email,
+                            usuario.rol,
+                            usuario.estatus_activo
+                        );
+                    }
+                });
+
+                setUsuarios(usuariosMapeados);
+            } catch (error) {
+                console.error('Error al obtener los usuarios:', error);
+            }
+        };
+
+        fetchUsuarios();
+    }, []);
 
     return (
         <>
@@ -27,15 +85,31 @@ function PanelAdmin() {
                     <table className="panel-admin-table">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>Usuario</th>
                                 <th>Nombre</th>
                                 <th>Email</th>
+                                <th>Rol</th>
                                 <th>Estatus</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {/* Aquí se llenará la lista de usuarios dinámicamente */}
+                            {usuarios.map((usuario, index) => {
+
+                                return (
+                                    <tr key={index}>
+                                        <td>{usuario.usuario}</td>
+                                        <td>{usuario.nombre}</td>
+                                        <td>{usuario.email}</td>
+                                        <td>{usuario.rol}</td>
+                                        <td>{usuario.estatus_activo ? 'Activo' : 'Inactivo'}</td>
+                                        <td>
+                                            <button>Editar</button>
+                                            <button>Eliminar</button>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
                         </tbody>
                     </table>
                     <button className="panel-admin-crear-usuario">Crear Nuevo Usuario Administrador</button>

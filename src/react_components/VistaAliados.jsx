@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { logout } from '../features/userSlice.js';
 import '../css/pagina_principal.css';
 import MapComponentSchool from './mapcomponent_escuela';
+import '../css/pagina_principal.css'
+import MapComponent from './mapcomponent';
 
 class Escuela {
     constructor(data, necesidades = []) {
@@ -47,6 +49,22 @@ function VistaAliados() {
                 <h1>Mapa de ubicacion de Aliados </h1>
                 <MapComponentSchool/>
             </div>
+        <div id="sidebar">
+            <h2>Menú</h2>
+            <ul>
+                <li><a href="../perfil/perfil.html">Perfil</a></li>
+                <li><a href="../convenios/chatlist.html">Chat</a></li>
+                <li><a href="../documentos/documentos.html">Carga de Documentos</a></li>
+            </ul>
+        </div>
+        <div className="main-content">
+            <h1>Lista de Escuelas</h1>
+            <SearchFilter onFilterChange={handleFilterChange}/>
+            <SchoolList filters={filters} />
+            {/* <AllyNotis username={username} /> */}
+            <h1>Mapa de ubicacion de Escuelas </h1>
+            <MapComponent username={username} />
+        </div>
         </div>
     );
 }
@@ -130,17 +148,35 @@ function SchoolList({filters}) {
     );
 }
 
-function AllyNotis({username}) {
+function AllyNotis({ username }) {
     const [notis, setNotis] = useState([]);
 
     useEffect(() => {
-        // Fetch notificaciones
+        if (!username) {
+            console.error('El usuario no está definido para las notificaciones');
+            return;
+        }
+
         fetch(`/api/notificaciones/aliados?usuario=${username}`)
-            .then((res) => res.json())
-            .then((data) => {
-                setNotis(data);
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error(`Error en la solicitud: ${res.status}`);
+                }
+                return res.json();
             })
-    });
+            .then((data) => {
+                if (Array.isArray(data)) {
+                    setNotis(data);
+                } else {
+                    console.error('La respuesta no es un arreglo:', data);
+                    setNotis([]);
+                }
+            })
+            .catch((error) => {
+                console.error('Error al obtener notificaciones:', error);
+                setNotis([]); // Asegúrate de que `notis` sea un arreglo vacío en caso de error
+            });
+    }, [username]);
 
     return (
         <div id="notifications">

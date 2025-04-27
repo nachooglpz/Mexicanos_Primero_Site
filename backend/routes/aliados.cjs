@@ -4,6 +4,7 @@ const aliadosRouter = express.Router();
 
 const aliadosModel = require('../models/aliados.cjs');
 
+// Middleware
 const validateApoyoQuery = (req, res, next) => {
     if (!('usuario_aliado' in req.query)) {
         const error = new Error(`Query is missing usuario_aliado. Arguments: ${req.query}`);
@@ -90,6 +91,17 @@ aliadosRouter.delete('/apoyo', validateApoyoPostDelete, async (req, res, next) =
     const {usuario_aliado, apoyo } = req.query;
     const deleted = await aliadosModel.eliminarApoyo(usuario_aliado, apoyo);
     res.status(204).send(deleted);
+});
+
+aliadosRouter.get('/direcciones', async (req, res, next) => {
+    try {
+        const direcciones = await aliadosModel.getDireccionesAliados();
+        console.log(direcciones); // Verifica que las direcciones se obtengan correctamente
+        res.json(direcciones); // Envía las direcciones como JSON
+    } catch (error) {
+        console.error('Error al obtener direcciones de aliados:', error);
+        res.status(500).send('Error al obtener direcciones de aliados');
+    }
 });
 
 aliadosRouter.use((err, req, res, next) => {

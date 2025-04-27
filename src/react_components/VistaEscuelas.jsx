@@ -4,6 +4,10 @@ import { Link } from 'react-router-dom';
 import { logout } from '../features/userSlice.js';
 import '../css/pagina_principal.css';
 import Mapcomponent from './mapcomponent';
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import '../css/pagina_principal.css'
+import MapComponentSchool from './mapcomponent_escuela';
 
 class Aliado {
     constructor(data, tipos_de_ayuda = []) {
@@ -28,6 +32,23 @@ function VistaEscuelas() {
     };
 
     return (
+        <>
+        <div id="sidebar">
+            <h2>Menú</h2>
+            <ul>
+                <li><a href="../perfil/perfil.html">Perfil</a></li>
+                <li><a href="../convenios/chatlist.html">Chat</a></li>
+                <li><a href="../documentos/documentos.html">Carga de Documentos</a></li>
+            </ul>
+        </div>
+        <div className="main-content">
+            <h1>Lista de Aliados</h1>
+            <SearchFilter onFilterChange={handleFilterChange}/>
+            <AllyList filters={filters} />
+            <SchoolNotis username={username}/>
+            <h1>Mapa de Ubicación de Aliados</h1>
+            <MapComponentSchool username={username}/>
+            
         <div className="vista-container">
             <div className="vista-sidebar">
                 <h2>Menú</h2>
@@ -47,6 +68,8 @@ function VistaEscuelas() {
                 <Mapcomponent />
             </div>
         </div>
+        </div>
+        </>
     );
 }
 

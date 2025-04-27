@@ -5,58 +5,85 @@ import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
 
 const MapComponent = () => {
-  // 1. Define la dirección que quieres mostrar:
-  const address = 'Av. México 100, Guadalajara, Jalisco, México';
-
-  // 2. Estado para guardar las coordenadas una vez obtenidas:
-  const [position, setPosition] = useState(null);
+  const [escuelas, setEscuelas] = useState([]); // Estado para guardar las escuelas con coordenadas
+  const [loading, setLoading] = useState(true); // Estado para controlar la carga
 
   useEffect(() => {
-    const fetchCoords = async () => {
+    const fetchEscuelas = async () => {
       try {
-        const { data } = await axios.get(
-          'https://nominatim.openstreetmap.org/search',
-          {
-            params: {
-              q: address,
-              format: 'json',
-              limit: 1
+        const { data } = await axios.get('/api/escuelas/direcciones');
+        console.log('Direcciones obtenidas:', data);
+
+        const escuelasConCoords = await Promise.all(
+          data.map(async (escuela) => {
+            try {
+              const geoRes = await axios.get('https://nominatim.openstreetmap.org/search', {
+                params: {
+                  q: escuela.direccion,
+                  format: 'json',
+                  limit: 1,
+                },
+              });
+              const coords = geoRes.data[0];
+              if (coords) {
+                return {
+                  ...escuela,
+                  lat: parseFloat(coords.lat),
+                  lng: parseFloat(coords.lon),
+                };
+              } else {
+                console.warn(`No se encontraron coordenadas para: ${escuela.direccion}`);
+                return { ...escuela, lat: null, lng: null };
+              }
+            } catch (geoError) {
+              console.error(`Error al geocodificar la dirección: ${escuela.direccion}`, geoError);
+              return { ...escuela, lat: null, lng: null };
             }
-          }
+          })
         );
-        if (data.length > 0) {
-          const { lat, lon } = data[0];
-          setPosition([parseFloat(lat), parseFloat(lon)]);
-        } else {
-          console.error('No se encontraron coordenadas para:', address);
-        }
-      } catch (err) {
-        console.error('Error al geocodificar:', err);
+
+        console.log('Escuelas con coordenadas:', escuelasConCoords);
+        setEscuelas(escuelasConCoords);
+        setLoading(false); // Finaliza la carga
+      } catch (error) {
+        console.error('Error al obtener las direcciones de las escuelas:', error);
+        setLoading(false); // Finaliza la carga incluso si hay un error
       }
     };
 
-    fetchCoords();
-  }, [address]);
+    fetchEscuelas();
+  }, []);
 
-  // 3. Mientras no tengamos coords, mostramos algo sencillo:
-  if (!position) {
-    return <p>Cargando mapa para "{address}"…</p>;
+  console.log('Estado de loading:', loading);
+
+  // 3. Mientras se cargan las coordenadas, muestra un mensaje
+  if (loading) {
+    return <p>Cargando mapa con direcciones de escuelas...</p>;
   }
 
-  // 4. Renderiza el mapa con las coords obtenidas
+  // 4. Renderiza el mapa con los marcadores
   return (
     <MapContainer
-      center={position}
+      center={[20.659698, -103.349609]} // Coordenadas iniciales (puedes ajustarlas)
       zoom={11}
-      style={{ height: '400px', width: '100%' }}
+      style={{ height: '500px', width: '100%' }}
     >
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Marker position={position}>
-        <Popup>Dirección: {address}</Popup>
-      </Marker>
+     {/*  <Marker position={[20.659698, -103.349609]}> */}
+      {escuelas.map((escuela, index) => (
+        escuela.lat && escuela.lng ? ( // Solo renderiza si las coordenadas están definidas
+          <Marker key={index} position={[escuela.lat, escuela.lng]}>
+            <Popup>
+              <h3>{escuela.nombre}</h3>
+              <p>{escuela.escuela}</p>
+              <p>{escuela.direccion}</p>
+            </Popup>
+          </Marker>
+        ) : null
+      ))}
     </MapContainer>
   );
 };
