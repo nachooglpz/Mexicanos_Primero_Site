@@ -55,6 +55,56 @@ body {
     border-color: var(--green);
 }
 
+.modificar-perfil-ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.modificar-perfil-li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--yellow);
+    color: var(--blue);
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.modificar-perfil-li button {
+    background-color: var(--orange);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.modificar-perfil-li button:hover {
+    background-color: #c94d0c;
+}
+
+.modificar-perfil-agregar-button {
+    background-color: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.modificar-perfil-agregar-button:hover {
+    background-color: #102244;
+    transform: scale(1.05);
+}
+
 .modificar-perfil-button {
     background-color: var(--green);
     color: white;
