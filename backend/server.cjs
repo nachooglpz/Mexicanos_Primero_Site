@@ -4,6 +4,7 @@ const app = express();
 
 const { aliadosRouter } = require('./routes/aliados.cjs');
 const { escuelasRouter } = require('./routes/escuelas.cjs');
+const { adminRouter } = require('./routes/admin.cjs');
 const { notificacionesRouter } = require('./routes/notificaciones.cjs');
 
 const inicioSesionModel = require('./models/inicioSesion.cjs');
@@ -17,6 +18,7 @@ app.use(express.static('public'));
 app.use('/api/aliados', aliadosRouter);
 app.use('/api/escuelas', escuelasRouter);
 app.use('/api/notificaciones', notificacionesRouter);
+app.use('/api/admin', adminRouter);
 
 // Login request
 const validateLoginQuery = (req, res, next) => {
