@@ -1,7 +1,7 @@
-import '../css/inicio_sesion.css';
+import './inicio_sesion.css';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../../Usuario/userSlice.js';
+import { login } from './userSlice.js';
 
 function PaginaInicio() {
   return (
@@ -53,7 +53,7 @@ function InicioSesion() {
           </button>
           <button
             type="button"
-            onClick={() => (window.location.href = './src/recuperar/recuperar.html')}
+            onClick={() => (window.location.href = 'recuperar/recuperar.html')}
             className="btn btn-primary inicio-sesion-boton"
           >
             Recuperar Contraseña

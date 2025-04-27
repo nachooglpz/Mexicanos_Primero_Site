@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { Link } from 'react-router-dom';
-import { logout } from '../../Usuario/userSlice.js';
-import '../css/pagina_principal.css';
-import MapComponentSchool from '../../Mapa/mapcomponent_escuela.jsx';
+import { logout } from './userSlice.js';
+import './pagina_principal.css';
+import MapComponentSchool from '../Mapa/mapcomponent_escuela.jsx';
 
 class Escuela {
     constructor(data, necesidades = []) {

@@ -1,12 +1,12 @@
 import React from "react";
 // import { useSelector } from "react-redux";
 
-import PaginaInicio from '../react_components/InicioSesion_Registro.jsx'
-import PaginaPrincipal from "../react_components/paginaPrincipal.jsx";
-import ModificarPerfil from '../react_components/ModificarPerfil.jsx'
-import PaginaDocumentos from '../react_components/PaginaDocumentos.jsx' // este si sobreescribe
-import ListadoConvenios from '../react_components/ListadoConvenios.jsx'
-import Convenio from '../react_components/Convenio.jsx' // este también sobreescribe
+import PaginaInicio from './Usuario/InicioSesion_Registro.jsx'
+import PaginaPrincipal from "./Usuario/paginaPrincipal.jsx";
+import ModificarPerfil from './Usuario/ModificarPerfil.jsx'
+import PaginaDocumentos from './Usuario/PaginaDocumentos.jsx' // este si sobreescribe
+import ListadoConvenios from './Match/Convenio/ListadoConvenios.jsx'
+import Convenio from './Match/Convenio/Convenio.jsx' // este también sobreescribe
 
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 
