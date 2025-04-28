@@ -147,8 +147,6 @@ function PanelAdmin() {
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Nombre del Convenio</th>
-                                <th>Usuario Creador</th>
                                 <th>Revisar Cronograma</th>
                                 <th>Finalizar convenio</th>
                             </tr>
@@ -158,7 +156,7 @@ function PanelAdmin() {
                         </tbody>
                     </table>
                 </section>
-                <section id="documentos">
+                {/*<section id="documentos">
                     <h2>Subir Documento</h2>
                     <form
                         onSubmit={(e) => {
@@ -185,7 +183,7 @@ function PanelAdmin() {
                         />
                         <button type="submit">Subir Documento</button>
                     </form>
-                </section>
+                </section>*/}
                 <AdminNotis username={username} />
             </div>
         </>
