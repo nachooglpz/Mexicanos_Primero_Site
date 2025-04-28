@@ -3,6 +3,7 @@ const express = require('express');
 const escuelasRouter = express.Router();
 
 const escuelasModel = require('./escuelas_model.cjs');
+const { buscarAliadosPorNecesidad } = require('./escuelas_model.cjs');
 
 // Middleware
 const validateFilteredEscuelasQuery = (req, res, next) => {
@@ -94,6 +95,59 @@ escuelasRouter.get('/direcciones', async (req, res) => {
     } catch (error) {
         console.error('Error al obtener direcciones de escuelas:', error);
         res.status(500).send('Error al obtener direcciones de escuelas');
+    }
+});
+
+escuelasRouter.get('/verificar-coincidencias', async (req, res) => {
+    try {
+        const coincidencias = await escuelasModel.verificarCoincidencias();
+        console.log('Route received coincidencias:', {
+            count: coincidencias?.length,
+            hasData: !!coincidencias
+        });
+
+        if (coincidencias && coincidencias.length > 0) {
+            res.status(200).json({
+                message: 'Se encontraron coincidencias y se generaron notificaciones',
+                matches: coincidencias
+            });
+        } else {
+            res.status(200).json({
+                message: 'No se encontraron coincidencias',
+                matches: [],
+                debug: 'No matches found in database'
+            });
+        }
+    } catch (error) {
+        console.error('Detailed route error:', {
+            message: error.message,
+            stack: error.stack
+        });
+        
+        res.status(500).json({
+            message: 'Error al verificar coincidencias',
+            error: error.message,
+            details: 'Check server logs for more information'
+        });
+    }
+});
+
+escuelasRouter.get('/verificar-notificaciones', async (req, res) => {
+    try {
+        const notificaciones = await escuelasModel.verificarNotificaciones();
+        res.status(200).json({
+            message: notificaciones.length > 0 ? 
+                'Notificaciones encontradas' : 
+                'No se encontraron notificaciones de match',
+            count: notificaciones.length,
+            notificaciones: notificaciones
+        });
+    } catch (error) {
+        console.error('Error detallado al verificar notificaciones:', error);
+        res.status(500).json({
+            message: 'Error al verificar notificaciones',
+            error: error.message
+        });
     }
 });
 

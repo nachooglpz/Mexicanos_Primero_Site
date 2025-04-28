@@ -10,6 +10,9 @@ const { notificacionesRouter } = require('./Comunicacion/notificaciones_route.cj
 const documentosRouter = require('./Usuarios/documentos_route.cjs');
 const { sesionRouter } = require('./Usuarios/sesion_registro_route.cjs');
 const { convenioRouter } = require('./Match/Convenio/convenio_route.cjs');
+const inicioSesionModel = require('./Usuarios/inicioSesion_model.cjs');
+
+inicioSesionModel
 
 const PORT = process.env.PORT || 3000;
 
@@ -18,7 +21,6 @@ app.use(express.static('public'));
 
 // Middleware para parsear JSON
 app.use(express.json());
-
 
 // Routes go here
 app.use('/api/aliados', aliadosRouter);
@@ -29,7 +31,29 @@ app.use('/api/documentos', documentosRouter);
 app.use('/api/sesion', sesionRouter);
 app.use('/api/convenios', convenioRouter);
 
-//ruta para obtener todos los usuarios
+// Login request middleware
+const validateLoginQuery = (req, res, next) => {
+    if (!('usuario' in req.query && 'contrasena' in req.query)) {
+        const error = new Error(`Query is missing usuario or contrasena. Arguments: ${req.query}`);
+        error.status = 401;
+        return next(error);
+    }
+    next();
+};
+
+// Login endpoint
+app.get('/api/login', validateLoginQuery, async (req, res, next) => {
+    try {
+        const { usuario, contrasena } = req.query;
+        const userInfo = await inicioSesionModel.getExistentUser(usuario, contrasena);
+        res.status(201).send(userInfo);
+    } catch (error) {
+        console.error('Error en /api/login:', error);
+        next(error);
+    }
+});
+
+// Ruta para obtener todos los usuarios
 app.get('/api/usuarios', async (req, res) => {
     try {
         console.log('Ruta /api/usuarios llamada');
@@ -41,12 +65,12 @@ app.get('/api/usuarios', async (req, res) => {
         // Agrega el rol a cada registro
         const administradoresConRol = administradores.rows.map((admin) => ({
             ...admin,
-            rol: 'Administrador de Escuela'
+            rol: 'Administrador de Escuela',
         }));
 
         const aliadosConRol = aliados.rows.map((aliado) => ({
             ...aliado,
-            rol: 'Aliado'
+            rol: 'Aliado',
         }));
 
         // Combina los datos
@@ -60,8 +84,10 @@ app.get('/api/usuarios', async (req, res) => {
     }
 });
 
+// Error handling middleware
 app.use((err, req, res, next) => {
     const status = err.status || 500;
+    console.error('Error:', err.message);
     res.status(status).send(err.message);
 });
 
