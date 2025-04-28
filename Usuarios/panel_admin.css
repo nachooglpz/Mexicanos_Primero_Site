@@ -72,7 +72,7 @@ body {
 }
 
 .panel-admin-main {
-    margin-left: 270px; /* Espacio para el sidebar */
+    /*margin-left: 200px; !* Espacio para el sidebar *!*/
     padding: 20px;
     box-sizing: border-box;
     height : 100vh;
