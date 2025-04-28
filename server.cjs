@@ -7,7 +7,7 @@ const { aliadosRouter } = require('./Usuarios/aliados_route.cjs');
 const { escuelasRouter } = require('./Usuarios/escuelas_route.cjs');
 const { adminRouter } = require('./Usuarios/admin_route.cjs');
 const { notificacionesRouter } = require('./Comunicacion/notificaciones_route.cjs');
-const documentosRouter = require('./routes/documentos.cjs');
+const documentosRouter = require('./Usuarios/documentos_route.cjs');
 
 const inicioSesionModel = require('./Usuarios/inicioSesion_model.cjs');
 
@@ -19,7 +19,6 @@ app.use(express.static('public'));
 // Middleware para parsear JSON
 app.use(express.json());
 
-
 // Routes go here
 app.use('/api/aliados', aliadosRouter);
 app.use('/api/escuelas', escuelasRouter);
@@ -27,7 +26,7 @@ app.use('/api/notificaciones', notificacionesRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/documentos', documentosRouter);
 
-// Login request
+// Login request middleware
 const validateLoginQuery = (req, res, next) => {
     if (!('usuario' in req.query && 'contrasena' in req.query)) {
         const error = new Error(`Query is missing usuario or contrasena. Arguments: ${req.query}`);
@@ -37,18 +36,19 @@ const validateLoginQuery = (req, res, next) => {
     next();
 };
 
+// Login endpoint
 app.get('/api/login', validateLoginQuery, async (req, res, next) => {
-    const { usuario, contrasena } = req.query;
-    const userInfo = await inicioSesionModel.getExistentUser(usuario, contrasena);
-    res.status(201).send(userInfo);
+    try {
+        const { usuario, contrasena } = req.query;
+        const userInfo = await inicioSesionModel.getExistentUser(usuario, contrasena);
+        res.status(201).send(userInfo);
+    } catch (error) {
+        console.error('Error en /api/login:', error);
+        next(error);
+    }
 });
 
-app.use((err, req, res, next) => {
-    const status = err.status || 500;
-    res.status(status).send(err.message);
-});
-
-//ruta para obtener todos los usuarios
+// Ruta para obtener todos los usuarios
 app.get('/api/usuarios', async (req, res) => {
     try {
         console.log('Ruta /api/usuarios llamada');
@@ -60,12 +60,12 @@ app.get('/api/usuarios', async (req, res) => {
         // Agrega el rol a cada registro
         const administradoresConRol = administradores.rows.map((admin) => ({
             ...admin,
-            rol: 'Administrador de Escuela'
+            rol: 'Administrador de Escuela',
         }));
 
         const aliadosConRol = aliados.rows.map((aliado) => ({
             ...aliado,
-            rol: 'Aliado'
+            rol: 'Aliado',
         }));
 
         // Combina los datos
@@ -79,24 +79,10 @@ app.get('/api/usuarios', async (req, res) => {
     }
 });
 
-// Login request
-const validateLoginQuery = (req, res, next) => {
-    if (!('usuario' in req.query && 'contrasena' in req.query)) {
-        const error = new Error(`Query is missing usuario or contrasena. Arguments: ${req.query}`);
-        error.status = 401;
-        return next(error);
-    }
-    next();
-};
-
-app.get('/api/login', validateLoginQuery, async (req, res, next) => {
-    const { usuario, contrasena } = req.query;
-    const userInfo = await inicioSesionModel.getExistentUser(usuario, contrasena);
-    res.send(userInfo);
-});
-
+// Error handling middleware
 app.use((err, req, res, next) => {
     const status = err.status || 500;
+    console.error('Error:', err.message);
     res.status(status).send(err.message);
 });
 
