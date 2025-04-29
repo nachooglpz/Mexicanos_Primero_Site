@@ -1,17 +1,32 @@
 import './pagina_documentos.css';
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 function PaginaDocumentos() {
     const [titulo, setTitulo] = useState('');
     const [link, setLink] = useState('');
     const [documentos, setDocumentos] = useState([]);
+    const usuario = useSelector(state => state.usuario.usuario);
+    const tipo_usuario = useSelector(state => state.usuario.tipo_usuario);
+
+    const getHomeRoute = () => {
+        switch(tipo_usuario) {
+            case 'aliado':
+                return '/vistaAliados';
+            case 'escuela':
+                return '/vistaEscuelas';
+            case 'admin':
+                return '/vistaAdmin';
+            default:
+                return '/';
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log('Formulario enviado');
-        console.log('Título:', titulo);
-        console.log('Link:', link);
+        console.log('Enviando documento:', { titulo, link, tipo_usuario, usuario });
 
         try {
             const response = await fetch('/api/documentos', {
@@ -19,31 +34,35 @@ function PaginaDocumentos() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ titulo, link }),
+                body: JSON.stringify({
+                    titulo,
+                    link,
+                    tipo_usuario,
+                    usuario
+                }),
             });
 
-            console.log('Respuesta del servidor:', response);
+            const data = await response.json();
+            console.log('Respuesta del servidor:', data);
 
             if (response.ok) {
                 alert('Documento subido exitosamente');
                 setTitulo('');
                 setLink('');
-                // Actualiza la lista de documentos después de subir uno nuevo
                 fetchDocumentos();
             } else {
-                const errorData = await response.json();
-                console.log('Error del servidor:', errorData);
-                alert(`Error: ${errorData.error}`);
+                console.error('Error del servidor:', data);
+                alert(`Error: ${data.error}`);
             }
         } catch (error) {
             console.error('Error al subir el documento:', error);
-            alert('Error al subir el documento');
+            alert('Error al subir el documento: ' + error.message);
         }
     };
 
     const fetchDocumentos = async () => {
         try {
-            const response = await fetch('/api/documentos');
+            const response = await fetch(`/api/documentos/${tipo_usuario}/${usuario}`);
             if (response.ok) {
                 const data = await response.json();
                 console.log('Documentos obtenidos:', data);
@@ -56,20 +75,23 @@ function PaginaDocumentos() {
         }
     };
 
-    const handleDelete = async (id) => {
+    const handleDelete = async (id_documento) => {
         try {
-            const response = await fetch(`/api/documentos/${id}`, {
+            const response = await fetch(`/api/documentos/${tipo_usuario}/${id_documento}`, {
                 method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             });
+
+            const data = await response.json();
 
             if (response.ok) {
                 alert('Documento eliminado exitosamente');
-                // Actualiza la lista de documentos después de eliminar uno
-                fetchDocumentos();
+                fetchDocumentos(); // Refresh the list
             } else {
-                const errorData = await response.json();
-                console.error('Error del servidor:', errorData);
-                alert(`Error: ${errorData.error}`);
+                console.error('Error del servidor:', data);
+                alert(`Error: ${data.error}`);
             }
         } catch (error) {
             console.error('Error al eliminar el documento:', error);
@@ -86,9 +108,9 @@ function PaginaDocumentos() {
             <div className="pagina-documentos-sidebar">
                 <h2>Menú</h2>
                 <ul>
-                    <li><a href="#inicio">Inicio</a></li>
-                    <li><a href="#perfil">Perfil</a></li>
-                    <li><a href="#chat">Chat</a></li>
+                    <li><Link to={getHomeRoute()}>Inicio</Link></li>
+                    <li><Link to="/modificarPerfil">Perfil</Link></li>
+                    <li><Link to="/chat">Chat</Link></li>
                 </ul>
             </div>
             <div className="pagina-documentos-main-content">

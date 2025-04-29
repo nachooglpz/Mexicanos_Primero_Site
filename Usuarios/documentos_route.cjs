@@ -1,53 +1,46 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db.cjs'); // Asegúrate de que este archivo maneje la conexión a la base de datos
+const documentosModel = require('./documentos_model.cjs');
 
-// Endpoint para guardar un documento
 router.post('/', async (req, res) => {
-    const { titulo, link } = req.body;
+    const { titulo, link, tipo_usuario, usuario } = req.body;
 
-    console.log('Datos recibidos en el servidor:', { titulo, link }); // Log para verificar los datos
-
-    if (!titulo || !link) {
-        console.log('Faltan datos en la solicitud');
-        return res.status(400).json({ error: 'El título y el link son obligatorios' });
+    if (!titulo || !link || !tipo_usuario || !usuario) {
+        return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     try {
-        const result = await db.query('INSERT INTO documentos (titulo, link) VALUES ($1, $2)', [titulo, link]);
-        console.log('Documento guardado en la base de datos:', result);
-        res.status(201).json({ message: 'Documento creado exitosamente' });
+        const result = await documentosModel.crearDocumento(titulo, link, tipo_usuario, usuario);
+        res.status(201).json({ message: 'Documento creado exitosamente', documento: result });
     } catch (error) {
         console.error('Error al guardar el documento:', error);
         res.status(500).json({ error: 'Error al guardar el documento' });
     }
 });
 
-// Endpoint para obtener todos los documentos
-router.get('/', async (req, res) => {
+router.get('/:tipo_usuario/:usuario', async (req, res) => {
+    const { tipo_usuario, usuario } = req.params;
     try {
-        const result = await db.query('SELECT * FROM documentos');
-        res.json(result.rows);
+        const documentos = await documentosModel.obtenerDocumentos(tipo_usuario, usuario);
+        res.json(documentos);
     } catch (error) {
-        console.error('Error al obtener los documentos:', error);
-        res.status(500).json({ error: 'Error al obtener los documentos' });
+        console.error('Error al obtener documentos:', error);
+        res.status(500).json({ error: 'Error al obtener documentos' });
     }
 });
 
-// Endpoint para eliminar un documento
-router.delete('/:id', async (req, res) => {
-    const { id } = req.params;
-
+router.delete('/:tipo_usuario/:id', async (req, res) => {
+    const { tipo_usuario, id } = req.params;
     try {
-        const result = await db.query('DELETE FROM documentos WHERE id_documento = $1', [id]);
-        if (result.rowCount > 0) {
-            res.status(200).json({ message: 'Documento eliminado exitosamente' });
+        const result = await documentosModel.eliminarDocumento(tipo_usuario, id);
+        if (result) {
+            res.json({ message: 'Documento eliminado exitosamente' });
         } else {
             res.status(404).json({ error: 'Documento no encontrado' });
         }
     } catch (error) {
-        console.error('Error al eliminar el documento:', error);
-        res.status(500).json({ error: 'Error al eliminar el documento' });
+        console.error('Error al eliminar documento:', error);
+        res.status(500).json({ error: 'Error al eliminar documento' });
     }
 });
 
