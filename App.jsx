@@ -1,7 +1,7 @@
 import React from "react";
 // import { useSelector } from "react-redux";
 
-import PaginaInicio from './Usuarios/InicioSesion_Registro.jsx'
+import { PaginaInicio, PaginaRegistro } from './Usuarios/InicioSesion_Registro.jsx'
 import PaginaPrincipal from "./Usuarios/paginaPrincipal.jsx";
 import ModificarPerfil from './Usuarios/ModificarPerfil.jsx'
 import PaginaDocumentos from './Usuarios/PaginaDocumentos.jsx' // este si sobreescribe
@@ -19,6 +19,7 @@ function App() {
         <>
             <Route path="/" element={ <PaginaInicio/> } />
             <Route path="/paginaPrincipal" element={ <PaginaPrincipal />} />
+            <Route path="/registro" element={ <PaginaRegistro />} />
             <Route path="/modificarPerfil" element={ <ModificarPerfil /> } />
             <Route path="/documentos" element={ <PaginaDocumentos /> } />
             <Route path="/convenios" element={ <ListadoConvenios />} />

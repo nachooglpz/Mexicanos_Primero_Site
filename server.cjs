@@ -8,8 +8,7 @@ const { escuelasRouter } = require('./Usuarios/escuelas_route.cjs');
 const { adminRouter } = require('./Usuarios/admin_route.cjs');
 const { notificacionesRouter } = require('./Comunicacion/notificaciones_route.cjs');
 const documentosRouter = require('./Usuarios/documentos_route.cjs');
-
-const inicioSesionModel = require('./Usuarios/inicioSesion_model.cjs');
+const { sesionRouter } = require('./Usuarios/sesion_registro_route.cjs');
 
 const PORT = process.env.PORT || 3000;
 
@@ -25,6 +24,7 @@ app.use('/api/escuelas', escuelasRouter);
 app.use('/api/notificaciones', notificacionesRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/documentos', documentosRouter);
+app.use('/api/sesion', sesionRouter);
 
 // Login request middleware
 const validateLoginQuery = (req, res, next) => {
