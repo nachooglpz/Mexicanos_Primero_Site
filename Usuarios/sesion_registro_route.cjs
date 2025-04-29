@@ -87,4 +87,4 @@ sesionRouter.use((err, req, res, next) => {
     res.status(status).send(err.message);
 });
 
-module.exports = { sesionRouter }
+module.exports = { sesionRouter };
