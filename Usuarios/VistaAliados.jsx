@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { logout } from './userSlice.js';
 import './pagina_principal.css';
 import MapComponentSchool from '../Mapa/mapcomponent_escuela.jsx';
@@ -43,7 +43,7 @@ function VistaAliados() {
             <div className="vista-main-content">
                 <h1>Lista de Escuelas</h1>
                 <SearchFilter onFilterChange={handleFilterChange} />
-                <SchoolList filters={filters} />
+                <SchoolList filters={filters} username={username} />
                 <AllyNotis username={username} />
                 <h1>Mapa de ubicacion de Escuelas </h1>
                 <MapComponent username={username} />
@@ -91,7 +91,8 @@ function SearchFilter({ onFilterChange }) {
     );
 }
 
-function SchoolList({filters}) {
+function SchoolList({filters, username}) {
+    const navigate = useNavigate();
     const [escuelasInstances, setEscuelasInstances] = useState([]);
 
     useEffect(() => {
@@ -113,6 +114,21 @@ function SchoolList({filters}) {
             });
     }, [filters]);
 
+    const handleIniciarConvenio = (usuario_escuela) => {
+        const fechaInicio = new Date().toISOString().split('T')[0]; // Genera la fecha de hoy
+
+        fetch(`/api/convenios/post?usuario_escuela=${usuario_escuela}&usuario_aliado=${username}&fecha_inicio=${fechaInicio}`, {
+            method: 'POST',
+        })
+            .then((res) => {
+                if (res.ok) {
+                    alert('Convenio iniciado exitosamente');
+                } else {
+                    alert('Error al iniciar el convenio');
+                }
+            });
+        };
+
     return (
         <div className="ally-list">
             {escuelasInstances.map((escuela) => (
@@ -125,6 +141,7 @@ function SchoolList({filters}) {
                             <li key={index}>{necesidad}</li>
                         ))}
                     </ul>
+                    <button onClick={() => handleIniciarConvenio(escuela.usuario_escuela)}>Iniciar convenio</button>
                 </div>
             ))}
         </div>

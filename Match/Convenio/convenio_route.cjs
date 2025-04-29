@@ -6,7 +6,7 @@ const convenioModel = require('./convenio_model.cjs');
 
 // Middleware
 const validateCreateConvenioQuery = (req, res, next) => {
-    if (!(('usuario_aliado' && 'usuario_escuela' && 'fechaInicio') in req.body)) {
+    if (!(('usuario_aliado' && 'usuario_escuela' && 'fecha_inicio') in req.query)) {
         const error = new Error(`Query is missing usuario_aliado, usuario_escuela or fechaInicio. Arguments: ${req.query}`);
         error.status = 400;
         return next(error);
@@ -24,7 +24,7 @@ const validateUsuarioQuery = (req, res, next) => {
 };
 
 const validateLinkContratoQuery = (req, res, next) => {
-    if (!('id_convenio' in req.body && 'link_contrato' in req.body)) {
+    if (!('id_convenio' in req.query && 'link_contrato' in req.query)) {
         const error = new Error(`Query is missing id_convenio or link_contrato. Arguments: ${req.query}`);
         error.status = 400;
         return next(error);
@@ -33,7 +33,7 @@ const validateLinkContratoQuery = (req, res, next) => {
 }
 
 const validateLinkChatQuery = (req, res, next) => {
-    if (!('id_convenio' in req.body && 'link_chat' in req.body)) {
+    if (!('id_convenio' in req.query && 'link_chat' in req.query)) {
         const error = new Error(`Query is missing id_convenio or link_chat. Arguments: ${req.query}`);
         error.status = 400;
         return next(error);
@@ -42,7 +42,7 @@ const validateLinkChatQuery = (req, res, next) => {
 }
 
 const validateFirmaQuery = (req, res, next) => {
-    if (!('id_convenio' in req.body)) {
+    if (!('id_convenio' in req.query)) {
         const error = new Error(`Query is missing id_convenio. Arguments: ${req.query}`);
         error.status = 400;
         return next(error);
@@ -51,10 +51,10 @@ const validateFirmaQuery = (req, res, next) => {
 }
 
 // Requests
-convenioRouter.post('/', validateCreateConvenioQuery, async (req, res, next) => {
-    const { usuario_aliado, usuario_escuela, fechaInicio } = req.body;
-    const dbConvenio = await convenioModel.createConvenio(usuario_aliado, usuario_escuela, fechaInicio);
-    res.send(dbConvenio);
+convenioRouter.post('/post', validateCreateConvenioQuery, async (req, res, next) => {
+    const { usuario_aliado, usuario_escuela, fecha_inicio } = req.query;
+    const dbConvenio = await convenioModel.createConvenio(usuario_aliado, usuario_escuela, fecha_inicio);
+    res.status(200).send(dbConvenio);
 });
 
 convenioRouter.get('/aliado', validateUsuarioQuery, async (req, res, next) => {
@@ -75,31 +75,31 @@ convenioRouter.get('/', async (req, res, next) => {
 });
 
 convenioRouter.put('/linkContrato', validateLinkContratoQuery, async (req, res, next) => {
-    const { id_convenio, link_contrato } = req.body;
+    const { id_convenio, link_contrato } = req.query;
     const dbConvenio = await convenioModel.updateLinkContrato(id_convenio, link_contrato);
     res.send(dbConvenio);
 });
 
 convenioRouter.put('/linkChat', validateLinkChatQuery, async (req, res, next) => {
-    const { id_convenio, link_chat } = req.body;
+    const { id_convenio, link_chat } = req.query;
     const dbConvenio = await convenioModel.updateLinkChat(id_convenio, link_chat);
     res.send(dbConvenio);
 });
 
 convenioRouter.put('/estatusFirmaAliado', validateFirmaQuery, async (req, res, next) => {
-    const { id_convenio } = req.body;
+    const { id_convenio } = req.query;
     const dbConvenio = await convenioModel.updateEstatusFirmaAliado(id_convenio);
     res.send(dbConvenio);
 });
 
 convenioRouter.put('/estatusFirmaEscuela', validateFirmaQuery, async (req, res, next) => {
-    const { id_convenio } = req.body;
+    const { id_convenio } = req.query;
     const dbConvenio = await convenioModel.updateEstatusFirmaEscuela(id_convenio);
     res.send(dbConvenio);
 });
 
 convenioRouter.put('/finalizado', validateFirmaQuery, async (req, res, next) => {
-    const { id_convenio } = req.body;
+    const { id_convenio } = req.query;
     const dbConvenio = await convenioModel.updateFinalizado(id_convenio);
     res.send(dbConvenio);
 });

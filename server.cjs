@@ -27,7 +27,7 @@ app.use('/api/notificaciones', notificacionesRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/documentos', documentosRouter);
 app.use('/api/sesion', sesionRouter);
-app.use('api/convenios', convenioRouter);
+app.use('/api/convenios', convenioRouter);
 
 //ruta para obtener todos los usuarios
 app.get('/api/usuarios', async (req, res) => {
