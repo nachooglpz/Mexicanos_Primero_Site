@@ -16,7 +16,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Ocupa toda la pantalla */
+    min-height: 100vh;
 }
 
 .inicio-sesion-registro {
@@ -94,6 +94,21 @@ body {
 
 .inicio-sesion-boton:hover, .registro-boton:hover {
     background-color: var(--green);
+}
+
+.cambiar-pagina-registro-inicio-sesion-boton {
+    background-color: var(--orange);
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.cambiar-pagina-registro-inicio-sesion-boton:hover {
+    background-color: var(--yellow);
 }
 
 .registro-check {
