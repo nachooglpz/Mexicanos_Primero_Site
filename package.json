@@ -8,10 +8,10 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "rollback": "knex --knexfile knexfile.js migrate:rollback",
     "migrate": "knex --knexfile knexfile.js migrate:latest",
-    "rollback": "knex --knexfile knexfile.js migrate:down",
-    "knex_up": "knex --knexfile knexfile.js migrate:up",
-    "knex_down": "knex --knexfile knexfile.js migrate:down"
+    "knex_down": "knex --knexfile knexfile.js migrate:down",
+    "knex_up": "knex --knexfile knexfile.js migrate:up"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.7.0",
