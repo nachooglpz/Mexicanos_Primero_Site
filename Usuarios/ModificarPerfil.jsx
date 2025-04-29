@@ -126,7 +126,20 @@ function PerfilAliado() {
                             </li>
                         ))}
                     </ul>
-                    <input type="text" className="modificar-perfil-input" placeholder="Agregar nuevo apoyo" value={nuevoApoyo} onChange={(e) => setNuevoApoyo(e.target.value)}/>
+
+                    <select className="form-control add-necesity-support" id="register-type" onChange={(e) => setNuevoApoyo(e.target.value)}>
+                        <option value=''>Seleccione una opción</option>
+                        <option value='Formación docente'>Formación docente</option>
+                        <option value='Formación a familias'>Formación a familias</option>
+                        <option value='Formación niñas y niños'>Formación niñas y niños</option>
+                        <option value='Personal de apoyo'>Personal de apoyo</option>
+                        <option value='Infraestructura'>Infraestructura</option>
+                        <option value='Materiales'>Materiales</option>
+                        <option value='Mobiliario'>Mobiliario</option>
+                        <option value='Alimentación'>Alimentación</option>
+                        <option value='Transporte'>Transporte</option>
+                        <option value='Jurídico'>Jurídico</option>
+                    </select>
                     <button type="button" className="modificar-perfil-agregar-button" onClick={agregarApoyo}>Agregar</button><br /><br />
 
                     <button className="modificar-perfil-button" type="submit" onClick={handleGuardarCambios}>Guardar Cambios</button>
@@ -242,7 +255,20 @@ function PerfilEscuela() {
                             </li>
                         ))}
                     </ul>
-                    <input type="text" className="modificar-perfil-input" placeholder="Agregar nueva necesidad" value={nuevaNecesidad} onChange={(e) => setNuevaNecesidad(e.target.value)}/>
+
+                    <select className="form-control add-necesity-support" id="register-type" onChange={(e) => setNuevaNecesidad(e.target.value)}>
+                        <option value=''>Seleccione una opción</option>
+                        <option value='Formación docente'>Formación docente</option>
+                        <option value='Formación a familias'>Formación a familias</option>
+                        <option value='Formación niñas y niños'>Formación niñas y niños</option>
+                        <option value='Personal de apoyo'>Personal de apoyo</option>
+                        <option value='Infraestructura'>Infraestructura</option>
+                        <option value='Materiales'>Materiales</option>
+                        <option value='Mobiliario'>Mobiliario</option>
+                        <option value='Alimentación'>Alimentación</option>
+                        <option value='Transporte'>Transporte</option>
+                        <option value='Jurídico'>Jurídico</option>
+                    </select>
                     <button type="button" className="modificar-perfil-agregar-button" onClick={agregarNecesidad}>Agregar</button><br /><br />
 
                     <button className="modificar-perfil-button" type="submit" onClick={handleGuardarCambios}>Guardar Cambios</button>
