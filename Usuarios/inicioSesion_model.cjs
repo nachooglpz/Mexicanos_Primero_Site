@@ -44,4 +44,23 @@ const registerEscuela = (nombre, usuario, contrasena, email, escuela, cct, direc
     return request.rows;
 }
 
-module.exports = { getExistentUser, registerAliado, registerEscuela }
+const activarAliado = (usuario_aliado) => {
+    const request = db.query('UPDATE aliados SET estatus_activo = true WHERE usuario_aliado = $1', [usuario_aliado]);
+    return request.rows;
+}
+
+const activarEscuela = (usuario_escuela) => {
+    const request = db.query('UPDATE administradores_de_escuela SET estatus_activo = true WHERE usuario_escuela = $1', [usuario_escuela]);
+    return request.rows;
+}
+
+const desactivarAliado = (usuario_aliado) => {
+    const request = db.query('UPDATE aliados SET estatus_activo = false WHERE usuario_aliado = $1', [usuario_aliado]);
+    return request.rows;
+}
+
+const desactivarEscuela = (usuario_escuela) => {
+    const request = db.query('UPDATE administradores_de_escuela SET estatus_activo = false WHERE usuario_escuela = $1', [usuario_escuela]);
+    return request.rows;
+}
+module.exports = { getExistentUser, registerAliado, registerEscuela, activarAliado, activarEscuela, desactivarAliado, desactivarEscuela }
