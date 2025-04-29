@@ -34,7 +34,7 @@ function InicioSesion() {
           console.log(data);
           if (data.usuario === null) {
             alert('Usuario o contraseña incorrectos');
-          } else if (!data.usuario_activo) {
+          } else if (!data.usuario_activo && !data.usuario === 'admin') {
             alert('Su cuenta no está activa. Por favor espere a que un administrador valide su cuenta');
           } else {
             dispatch(login({ usuario: data.usuario, tipo_usuario: data.tipo_usuario }));

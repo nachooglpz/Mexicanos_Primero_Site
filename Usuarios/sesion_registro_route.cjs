@@ -30,6 +30,15 @@ const validateEscuelaQuery = (req, res, next) => {
     next();
 }
 
+const validateUsuarioQuery = (req, res, next) => {
+    if (!('usuario' in req.query)) {
+        const error = new Error(`Query is missing usuario. Arguments: ${req.query}`);
+        error.status = 400;
+        return next(error);
+    }
+    next();
+}
+
 sesionRouter.get('/login', validateLoginQuery, async (req, res, next) => {
     const { usuario, contrasena } = req.query;
     const userInfo = await inicioSesionModel.getExistentUser(usuario, contrasena);
@@ -49,9 +58,33 @@ sesionRouter.post('/escuela', validateEscuelaQuery, (req, res, next) => {
     res.status(201).send(result);
 });
 
+sesionRouter.put('/activarAliado', validateUsuarioQuery, async (req, res, next) => {
+    const { usuario } = req.query;
+    const result = await inicioSesionModel.activarAliado(usuario);
+    res.send(result);
+});
+
+sesionRouter.put('/activarEscuela', validateUsuarioQuery, async (req, res, next) => {
+    const {usuario} = req.query;
+    const result = await inicioSesionModel.activarEscuela(usuario);
+    res.send(result);
+});
+
+sesionRouter.put('/desactivarAliado', validateUsuarioQuery, async (req, res, next) => {
+    const { usuario } = req.query;
+    const result = await inicioSesionModel.desactivarAliado(usuario);
+    res.send(result);
+});
+
+sesionRouter.put('/desactivarEscuela', validateUsuarioQuery, async (req, res, next) => {
+    const {usuario} = req.query;
+    const result = await inicioSesionModel.desactivarEscuela(usuario);
+    res.send(result);
+});
+
 sesionRouter.use((err, req, res, next) => {
     const status = err.status || 500;
     res.status(status).send(err.message);
 });
 
-module.exports = { sesionRouter };
+module.exports = { sesionRouter }

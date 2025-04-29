@@ -12,6 +12,7 @@ function PanelAdmin() {
     const [usuarios, setUsuarios] = useState([]);
     const [titulo, setTitulo] = useState('');
     const [link, setLink] = useState('');
+    const [refresh, setRefresh] = useState(false);
 
     useEffect(() => {
         const fetchUsuarios = async () => {
@@ -64,7 +65,60 @@ function PanelAdmin() {
         };
 
         fetchUsuarios();
-    }, []);
+    }, [refresh]);
+
+    const handleActivar = async (usuario, usertype) => {
+        if (usertype === 'Aliado') {
+            fetch(`/api/sesion/activarAliado?usuario=${usuario}`, {
+                method: 'PUT',
+            }).then((res) => {
+                if (res.ok) {
+                    alert('Aliado activado');
+                } else {
+                    alert('Error al activar el aliado');
+                }
+                setRefresh((prev) => !prev);
+            });
+        } else if (usertype === 'Administrador de Escuela') {
+            fetch(`/api/sesion/activarEscuela?usuario=${usuario}`, {
+                method: 'PUT',
+            }).then((res) => {
+                if (res.ok) {
+                    alert('Escuela activada');
+
+                } else {
+                    alert('Error al activar la escuela');
+                }
+                setRefresh((prev) => !prev);
+            });
+        }
+    };
+
+    const handleDesactivar = async (usuario, usertype) => {
+        if (usertype === 'Aliado') {
+            fetch(`/api/sesion/desactivarAliado?usuario=${usuario}`, {
+                method: 'PUT',
+            }).then((res) => {
+                if (res.ok) {
+                    alert('Aliado desactivado');
+                } else {
+                    alert('Error al desactivar el aliado');
+                }
+                setRefresh((prev) => !prev);
+            });
+        } else if (usertype === 'Administrador de Escuela') {
+            fetch(`/api/sesion/desactivarEscuela?usuario=${usuario}`, {
+                method: 'PUT',
+            }).then((res) => {
+                if (res.ok) {
+                    alert('Escuela desactivada');
+                } else {
+                    alert('Error al desactivar la escuela');
+                }
+                setRefresh((prev) => !prev);
+            });
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -132,8 +186,8 @@ function PanelAdmin() {
                                     <td>{usuario.rol}</td>
                                     <td>{usuario.estatus_activo ? 'Activo' : 'Inactivo'}</td>
                                     <td>
-                                        <button>Editar</button>
-                                        <button>Eliminar</button>
+                                        {usuario.estatus_activo && <button onClick={() => handleDesactivar(usuario.usuario, usuario.rol)}>Desactivar</button>}
+                                        {!usuario.estatus_activo && <button onClick={() => handleActivar(usuario.usuario, usuario.rol)}>Activar</button>}
                                     </td>
                                 </tr>
                             ))}
