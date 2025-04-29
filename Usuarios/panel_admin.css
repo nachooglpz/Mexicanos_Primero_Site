@@ -32,17 +32,19 @@ body {
 }
 
 .panel-admin-sidebar {
-    width: 250px;
     background-color: var(--blue);
     color: var(--white);
-    position: fixed; /* Fija el sidebar en su lugar */
-    top: 0; /* Elimina el espacio reservado por el header */
+    position: fixed;
+    top: 0;
     left: 0;
-    height: 100vh; /* Ocupa toda la altura de la pantalla */
-    padding: 20px;
+    width: 100%; /* Ocupa todo el ancho */
+    height: auto; /* Ajusta la altura automáticamente */
+    padding: 10px 20px;
     box-sizing: border-box;
-    z-index: 1001; /* Asegura que el sidebar esté encima del header */
-    overflow-y: auto; /* Permite desplazamiento si el contenido es largo */
+    z-index: 1001;
+    display: flex; /* Para alinear los elementos horizontalmente */
+    justify-content: space-between; /* Espaciado entre los elementos */
+    align-items: center; /* Centra verticalmente los elementos */
 }
 
 .panel-admin-sidebar h2 {
@@ -51,12 +53,14 @@ body {
 }
 
 .panel-admin-sidebar ul {
+    display: flex; /* Alinea los elementos del menú horizontalmente */
     list-style-type: none;
+    margin: 0;
     padding: 0;
 }
 
 .panel-admin-sidebar ul li {
-    margin: 20px 0;
+    margin: 0 15px; /* Espaciado entre los elementos del menú */
 }
 
 .panel-admin-sidebar ul li a {
@@ -72,10 +76,9 @@ body {
 }
 
 .panel-admin-main {
-    /*margin-left: 200px; !* Espacio para el sidebar *!*/
+    margin-top: 60px; /* Deja espacio para el encabezado */
     padding: 20px;
     box-sizing: border-box;
-    height : 100vh;
 }
 
 .panel-admin-main h1 {

@@ -1,5 +1,5 @@
 class Convenio {
-    constructor(id_convenio, link_chat, link_contrato, estatus_firma_aliado, estatus_firma_escuela, finalizado, fecha_inicio) {
+    constructor(id_convenio, link_chat, link_contrato, estatus_firma_aliado, estatus_firma_escuela, finalizado, fecha_inicio, empresa, escuela) {
         this._id_convenio = id_convenio;
         this._link_chat = link_chat;
         this._link_contrato = link_contrato;
@@ -7,6 +7,8 @@ class Convenio {
         this._estatus_firma_escuela = estatus_firma_escuela;
         this._finalizado = finalizado;
         this._fecha_inicio = fecha_inicio;
+        this._empresa = empresa;
+        this._escuela = escuela;
     }
 
     get id_convenio() {
@@ -30,6 +32,13 @@ class Convenio {
     get fecha_inicio() {
         return this._fecha_inicio;
     }
+    get empresa() {
+        return this._empresa;
+    }
+    get escuela() {
+        return this._escuela;
+    }
+
 }
 
 export { Convenio };

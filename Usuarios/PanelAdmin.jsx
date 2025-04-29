@@ -4,15 +4,17 @@ import { Link } from 'react-router-dom';
 import { logout } from './userSlice.js';
 import {useEffect, useState} from "react";
 import { Usuario, AdministradorDeEscuela, Aliado } from './Usuario.js';
+import {Convenio} from "../Match/Convenio/Convenio.js";
 
 function PanelAdmin() {
     const dispatch = useDispatch();
     const username = useSelector((state) => state.usuario.usuario);
 
     const [usuarios, setUsuarios] = useState([]);
-    const [titulo, setTitulo] = useState('');
-    const [link, setLink] = useState('');
+    /*const [titulo, setTitulo] = useState('');
+    const [link, setLink] = useState('');*/
     const [refresh, setRefresh] = useState(false);
+    const [convenios, setConvenios] = useState([]);
 
     useEffect(() => {
         const fetchUsuarios = async () => {
@@ -67,6 +69,17 @@ function PanelAdmin() {
         fetchUsuarios();
     }, [refresh]);
 
+    useEffect(() => {
+        fetch(`api/convenios/`)
+            .then((res) => res.json())
+            .then((dataReturn) => {
+                const nuevosConvenios = dataReturn.map((data) =>
+                    new Convenio(data.id_convenio, data.link_chat, data.link_contrato, data.estatus_firma_aliado, data.estatus_firma_escuela, data.finalizado, data.fecha_inicio, data.empresa, data.escuela)
+                );
+                setConvenios(nuevosConvenios);
+            });
+    });
+
     const handleActivar = async (usuario, usertype) => {
         if (usertype === 'Aliado') {
             fetch(`/api/sesion/activarAliado?usuario=${usuario}`, {
@@ -120,7 +133,20 @@ function PanelAdmin() {
         }
     };
 
-    const handleSubmit = async (e) => {
+    const handleFinalizarConvenio = (id_convenio) => {
+        fetch(`/api/convenios/finalizado?id_convenio=${id_convenio}`, {
+            method: 'PUT',
+        }).then((res) => {
+            if (res.ok) {
+                alert('Convenio finalizado');
+            } else {
+                alert('Error al finalizar el convenio');
+            }
+            setRefresh((prev) => !prev);
+        })
+    };
+
+    /*const handleSubmit = async (e) => {
         e.preventDefault();
 
         console.log('Formulario enviado'); // Verifica si el método se ejecuta
@@ -151,7 +177,7 @@ function PanelAdmin() {
             console.error('Error al subir el documento:', error); // Verifica si ocurre un error en el fetch
             alert('Error al subir el documento');
         }
-    };
+    };*/
 
     return (
         <>
@@ -201,12 +227,32 @@ function PanelAdmin() {
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Revisar Cronograma</th>
-                                <th>Finalizar convenio</th>
+                                <th>Escuela</th>
+                                <th>Aliado</th>
+                                <th>Link del chat</th>
+                                <th>Link del contrato</th>
+                                <th>Estatus de firma del aliado</th>
+                                <th>Estatus de firma del administrador de escuela</th>
+                                <th>Finalizado</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {/* Aquí se llenará la lista de convenios dinámicamente */}
+                        {convenios.map((convenio, index) => (
+                            <tr key={index}>
+                                <td>{convenio.id_convenio}</td>
+                                <td>{convenio.escuela}</td>
+                                <td>{convenio.empresa}</td>
+                                <td>{convenio.link_chat}</td>
+                                <td>{convenio.link_contrato}</td>
+                                <td>{convenio.estatus_firma_aliado ? 'Firmado' : 'No Firmado'}</td>
+                                <td>{convenio.estatus_firma_escuela ? 'Firmado' : 'No Firmado'}</td>
+                                <td>{convenio.finalizado ? 'Sí' : 'No'}</td>
+                                <td>
+                                    <button onClick={() => handleFinalizarConvenio(convenio.id_convenio)}>Finalizar</button>
+                                </td>
+                            </tr>
+                        ))}
                         </tbody>
                     </table>
                 </section>

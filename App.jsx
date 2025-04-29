@@ -6,7 +6,7 @@ import PaginaPrincipal from "./Usuarios/paginaPrincipal.jsx";
 import ModificarPerfil from './Usuarios/ModificarPerfil.jsx'
 import PaginaDocumentos from './Usuarios/PaginaDocumentos.jsx' // este si sobreescribe
 import ListadoConvenios from './Match/Convenio/ListadoConvenios.jsx'
-import Convenio from './Match/Convenio/Convenio.jsx' // este también sobreescribe
+import PresentConvenio from './Match/Convenio/Convenio.jsx' // este también sobreescribe
 
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 
@@ -23,9 +23,7 @@ function App() {
             <Route path="/modificarPerfil" element={ <ModificarPerfil /> } />
             <Route path="/documentos" element={ <PaginaDocumentos /> } />
             <Route path="/convenios" element={ <ListadoConvenios />} />
-            <Route path="/convenio" element={ <Convenio/> } >
-                {/* <Route path="/convenio/:id" element={ <Convenio /> } /> */}
-            </Route>
+            <Route path="/convenio/:id_convenio" element={<PresentConvenio />} />
         </>
     ));
 

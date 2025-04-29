@@ -1,12 +1,13 @@
 import './lista_convenios.css';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Convenio } from './Convenio.js';
 
 function ListadoConvenios() {
     document.title = 'Modificar Perfil';
 
+    const navigate = useNavigate();
     const usertype = useSelector((state) => state.usuario.tipo_usuario);
     const username = useSelector((state) => state.usuario.usuario);
 
@@ -18,7 +19,7 @@ function ListadoConvenios() {
                 .then((res) => res.json())
                 .then((dataReturn) => {
                     const nuevosConvenios = dataReturn.map((data) =>
-                        new Convenio(data.id_convenio, data.link_chat, data.link_contrato, data.estatus_firma_aliado, data.estatus_firma_escuela, data.finalizado, data.fecha_inicio)
+                        new Convenio(data.id_convenio, data.link_chat, data.link_contrato, data.estatus_firma_aliado, data.estatus_firma_escuela, data.finalizado, data.fecha_inicio, data.empresa, data.escuela)
                     );
                     setConvenios(nuevosConvenios);
                 })
@@ -27,12 +28,16 @@ function ListadoConvenios() {
                 .then((res) => res.json())
                 .then((dataReturn) => {
                     const nuevosConvenios = dataReturn.map((data) =>
-                        new Convenio(data.id_convenio, data.link_chat, data.link_contrato, data.estatus_firma_aliado, data.estatus_firma_escuela, data.finalizado, data.fecha_inicio)
+                        new Convenio(data.id_convenio, data.link_chat, data.link_contrato, data.estatus_firma_aliado, data.estatus_firma_escuela, data.finalizado, data.fecha_inicio, data.empresa, data.escuela)
                     );
                     setConvenios(nuevosConvenios);
                 })
         }
     }, [])
+
+    const handleCardClick = (id_convenio) => {
+        navigate(`/convenio/${id_convenio}`);
+    };
 
     return (
         <div className="listado-convenios-container">
@@ -49,8 +54,10 @@ function ListadoConvenios() {
                 <div className="listado-convenios-chat-list">
                     {convenios.length === 0 ? <h2>No hay convenios activos</h2>
                         : convenios.map((convenio, index) => (
-                        (!convenio.finalizado) && <div key={index} className="listado-convenios-chat-card">
-                            <h2>Convenio {convenio.id_convenio}</h2>
+                        (!convenio.finalizado) &&
+                        <div key={index} className="listado-convenios-chat-card" onClick={() => handleCardClick(convenio.id_convenio)}>
+                            {usertype === 'aliado' && <h2>Convenio con {convenio.escuela}</h2>}
+                            {usertype === 'escuela' && <h2>Convenio con {convenio.empresa}</h2>}
                             <p>Fecha de Inicio: {convenio.fecha_inicio.split('T')[0]}</p>
                             <p>Link de Chat: {convenio.link_chat}</p>
                             <p>Link de Contrato: {convenio.link_contrato}</p>
