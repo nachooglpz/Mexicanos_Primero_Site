@@ -36,8 +36,8 @@ function VistaEscuelas() {
                 <h2>Menú</h2>
                 <ul>
                     <li><Link to="/modificarPerfil">Perfil</Link></li>
-                    <li><a href="../convenios/chatlist.html">Chat</a></li>
-                    <li><a href="../documentos/documentos.html">Carga de Documentos</a></li>
+                    <li><a href="../convenios">Chat</a></li>
+                    <li><a href="../documentos">Carga de Documentos</a></li>
                     <li><Link to="/" onClick={() => dispatch(logout())}>Cerrar Sesión</Link></li>
                 </ul>
             </div>
