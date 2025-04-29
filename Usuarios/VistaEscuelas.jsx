@@ -44,7 +44,7 @@ function VistaEscuelas() {
             <div className="vista-main-content">
                 <h1>Lista de Aliados</h1>
                 <SearchFilter onFilterChange={handleFilterChange} />
-                <AllyList filters={filters} />
+                <AllyList filters={filters} username={username} />
                 <SchoolNotis username={username} />
                 <h1>Mapa de Ubicación de Aliados</h1>
                 <MapComponentSchool username={username}/>
@@ -116,7 +116,7 @@ function SearchFilter({ onFilterChange }) {
     );
 }
 
-function AllyList({filters}) {
+function AllyList({filters, username}) {
     const [aliadosInstances, setAliadosInstances] = useState([]);
 
     useEffect(() => {
@@ -138,6 +138,21 @@ function AllyList({filters}) {
             });
     }, [filters]);
 
+    const handleIniciarConvenio = (usuario_aliado) => {
+        const fechaInicio = new Date().toISOString().split('T')[0]; // Genera la fecha de hoy
+
+        fetch(`/api/convenios/post?usuario_aliado=${usuario_aliado}&usuario_escuela=${username}&fecha_inicio=${fechaInicio}`, {
+            method: 'POST',
+        })
+            .then((res) => {
+                if (res.ok) {
+                    alert('Convenio iniciado exitosamente');
+                } else {
+                    alert('Error al iniciar el convenio');
+                }
+            });
+    };
+
     return (
         <div className="ally-list">
             {aliadosInstances.map((aliado) => (
@@ -151,6 +166,7 @@ function AllyList({filters}) {
                                 <li key={index}>{ayuda}</li>
                             ))}
                         </ul>
+                        <button onClick={() => handleIniciarConvenio(aliado.usuario_aliado)}>Iniciar convenio</button>
                     </div>
             ))}
         </div>

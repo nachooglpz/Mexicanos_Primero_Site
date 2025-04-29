@@ -16,7 +16,6 @@ const getAllConvenios = async () => {
 }
 
 const createConvenio = async (usuario_aliado, usuario_escuela, fechaInicio) => {
-    console.log('solicitud de crear convenio creada');
     const result = await db.query('INSERT INTO convenio (fecha_inicio) VALUES ($1) RETURNING *', [fechaInicio]);
     const id =  result.rows[0].id_convenio;
 
