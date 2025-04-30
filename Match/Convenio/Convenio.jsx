@@ -59,8 +59,8 @@ function PresentConvenio() {
                     </div>
                     <div className="convenio-step">
                         <label htmlFor="accept-agreement" className="convenio-label">
-                            {usertype === 'escuela' && <input type="checkbox" id="accept-agreement-school" className="convenio-checkbox" disabled={convenio.estatus_firma_escuela} checked={convenio.estatus_firma_escuela} onChange={(e) => setCambios((prev) => ({...prev, estatus_firma_escuela: e.target.value}))}/>}
-                            {usertype === 'aliado' && <input type="checkbox" id="accept-agreement-ally" className="convenio-checkbox" disabled={convenio.estatus_firma_aliado} checked={convenio.estatus_firma_aliado} onChange={(e) => setCambios((prev) => ({...prev, estatus_firma_aliado: e.target.value}))}/>}
+                            {usertype === 'escuela' && <input type="checkbox" id="accept-agreement-school" className="convenio-checkbox" disabled={convenio.estatus_firma_escuela} checked={convenio.estatus_firma_escuela || cambios.estatus_firma_escuela} onChange={(e) => setCambios((prev) => ({...prev, estatus_firma_escuela: e.target.value}))}/>}
+                            {usertype === 'aliado' && <input type="checkbox" id="accept-agreement-ally" className="convenio-checkbox" disabled={convenio.estatus_firma_aliado} checked={convenio.estatus_firma_aliado || cambios.estatus_firma_aliado} onChange={(e) => setCambios((prev) => ({...prev, estatus_firma_aliado: e.target.value}))}/>}
                             Aceptar el Convenio
                         </label>
                     </div>

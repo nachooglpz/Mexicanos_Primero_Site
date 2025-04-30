@@ -35,7 +35,7 @@ function VistaAliados() {
                 <h2>Menú</h2>
                 <ul>
                     <li><Link to="/modificarPerfil">Perfil</Link></li>
-                    <li><a href="../convenios">Chat</a></li>
+                    <li><a href="../convenios">Convenios</a></li>
                     <li><a href="../documentos">Carga de Documentos</a></li>
                     <li><Link to="/" onClick={() => dispatch(logout())}>Cerrar Sesión</Link></li>
                 </ul>
@@ -141,7 +141,7 @@ function SchoolList({filters, username}) {
                             <li key={index}>{necesidad}</li>
                         ))}
                     </ul>
-                    <button onClick={() => handleIniciarConvenio(escuela.usuario_escuela)}>Iniciar convenio</button>
+                    <button className="iniciar-convenio-button" onClick={() => handleIniciarConvenio(escuela.usuario_escuela)}>Iniciar convenio</button>
                 </div>
             ))}
         </div>

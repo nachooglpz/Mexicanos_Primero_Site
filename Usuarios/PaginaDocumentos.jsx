@@ -153,7 +153,7 @@ function PaginaDocumentos() {
                         </Link>
                     </li>
                     <li><Link to="/modificarPerfil">Perfil</Link></li>
-                    <li><Link to="/chat">Chat</Link></li>
+                    <li><Link to="/">Convenios</Link></li>
                 </ul>
             </div>
             <div className="pagina-documentos-main-content">

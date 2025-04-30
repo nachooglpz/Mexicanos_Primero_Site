@@ -36,7 +36,7 @@ function VistaEscuelas() {
                 <h2>Menú</h2>
                 <ul>
                     <li><Link to="/modificarPerfil">Perfil</Link></li>
-                    <li><a href="../convenios">Chat</a></li>
+                    <li><a href="../convenios">Convenios</a></li>
                     <li><a href="../documentos">Carga de Documentos</a></li>
                     <li><Link to="/" onClick={() => dispatch(logout())}>Cerrar Sesión</Link></li>
                 </ul>
@@ -166,7 +166,7 @@ function AllyList({filters, username}) {
                                 <li key={index}>{ayuda}</li>
                             ))}
                         </ul>
-                        <button onClick={() => handleIniciarConvenio(aliado.usuario_aliado)}>Iniciar convenio</button>
+                        <button className="iniciar-convenio-button" onClick={() => handleIniciarConvenio(aliado.usuario_aliado)}>Iniciar convenio</button>
                     </div>
             ))}
         </div>

@@ -246,3 +246,20 @@
 .convenio-back-button:hover {
     background-color: var(--green);
 }
+
+.iniciar-convenio-button {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.iniciar-convenio-button:hover {
+    background-color: var(--orange);
+    transform: scale(1.05);
+}
