@@ -219,7 +219,7 @@ function PanelAdmin() {
                             ))}
                         </tbody>
                     </table>
-                    <button className="panel-admin-crear-usuario">Crear Nuevo Usuario Administrador</button>
+                    {/*<button className="panel-admin-crear-usuario">Crear Nuevo Usuario Administrador</button>*/}
                 </section>
                 <section className="panel-admin-convenios">
                     <h2>Lista de Convenios</h2>
