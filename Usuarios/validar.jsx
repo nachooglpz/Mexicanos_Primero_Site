@@ -7,6 +7,7 @@ import { useSearchParams } from 'react-router-dom';
 function Validar(){
     const [SearchParams] = useSearchParams();
     const [mensaje, setMensaje] = useState("");
+    const [error, setError] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -18,6 +19,7 @@ function Validar(){
         .then((res) => res.json())
         .then((data) => {
             setMensaje(data.mensaje);
+            setError(data.error);
           
         })
         .catch((err) => console.log(err));
@@ -25,15 +27,27 @@ function Validar(){
         console.log(mensaje);
 
     }
+
+    let text;
+
+    if(mensaje){
+        text = "Contraseña cambió exitosamente, vuelve a iniciar sesión ";
+        
+    }else if(error == true){
+        text = "hubo un error en el cambio"
+    }
+
   
   
   return (
     <>
-        <h1>Cambiar contraseña</h1>
         <form action="" onSubmit={handleSubmit}>
+            <h2>Ingresa nueva contraseña</h2>
             <input type="text" name="" id="newPass" />
-            <input type="submit" value="Enviar"/>
+            <button type="submit" value="Enviar">Enviar</button>
         </form>
+        
+        <p>{text}</p>
     </>
    )
 }

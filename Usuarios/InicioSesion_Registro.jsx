@@ -62,7 +62,7 @@ function InicioSesion() {
           </button>
           <button
             type="button"
-            onClick={() => (window.location.href = 'recuperar/recuperar.html')}
+            onClick={() => (window.location.href = '/recuperar')}
             className="btn btn-primary inicio-sesion-boton"
           >
             Recuperar Contraseña

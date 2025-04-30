@@ -41,12 +41,13 @@ function App() {
     <>
     <div>
     <form onSubmit={handleSubmit}>
+    <h2 align="center">Ingresa tu correo </h2>
+
         <input type="email" id='email' />
         <button type="submit" >Enviar Correo</button>
       </form>
 
-      <p>{user}</p>
-      <p>{token}</p>
+
     </div>
 
     </>

@@ -51,9 +51,9 @@ router.get('/validar', async (req, res) => {
     const result = await validate(user,token);
 
     if(result == false){
-        res.json({mensaje: "Token incorrecto"});
+        res.json({mensaje: false, error: true});
     }else{
-        res.json({mensaje: "El token es correcto"})
+        res.json({mensaje: true, error: false})
         await changePass(user,newPass);
     }
 })
