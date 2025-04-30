@@ -8,6 +8,7 @@ import PaginaDocumentos from './Usuarios/PaginaDocumentos.jsx' // este si sobree
 import ListadoConvenios from './Match/Convenio/ListadoConvenios.jsx'
 import Convenio from './Match/Convenio/Convenio.jsx' // este también sobreescribe
 import Recuperar from './Usuarios/recuperar/recuperar.jsx' 
+import Validar from './Usuarios/validar.jsx'
 
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 
@@ -26,6 +27,7 @@ function App() {
             <Route path="/convenio" element={ <Convenio/> } />
                 {/* <Route path="/convenio/:id" element={ <Convenio /> } /> */}
             <Route path="/recuperar" element={ <Recuperar/>} />
+            <Route path="/auth" element={ <Validar/>} />
         </>
     ));
 

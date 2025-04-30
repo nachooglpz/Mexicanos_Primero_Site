@@ -16,11 +16,36 @@ const getUser = async (email) => {
 };
 
 const changePass = async (email, token) => {
-  const query = `
-  UPDATE administrador SET contraseña = $1 WHERE email = $2;
-`;
-  await db.query(query, [token, email]);
-}
+  const queryAliados = `UPDATE aliados SET contrasena = $2 WHERE email = $1 RETURNING email;`;
+  const queryAdminsEscuela = `UPDATE administradores_de_escuela SET contrasena = $2 WHERE email = $1 RETURNING email;`;
+  const queryAdmin = `UPDATE administrador SET contraseña = $2 WHERE email = $1 RETURNING email;`;
+
+  let result;
+
+  // Intentamos cada tabla en orden
+  try {
+    result = await db.query(queryAliados, [email, token]);
+    if (result.rowCount > 0) {
+      return result.rows[0];  // Si se actualizó en 'aliados', retornamos el usuario actualizado
+    }
+
+    result = await db.query(queryAdminsEscuela, [email, token]);
+    if (result.rowCount > 0) {
+      return result.rows[0];  // Si se actualizó en 'administradores_de_escuela', retornamos el usuario actualizado
+    }
+
+    result = await db.query(queryAdmin, [email, token]);
+    if (result.rowCount > 0) {
+      return result.rows[0];  // Si se actualizó en 'administrador', retornamos el usuario actualizado
+    }
+
+    return null;  // Si no se encontró el email en ninguna tabla
+  } catch (error) {
+    console.error('Error al actualizar la contraseña:', error);
+    throw error;
+  }
+};
+
 // Ruta GET /mensaje
 router.get('/mensaje', async (req, res) => {
   const email = req.query.user;
@@ -37,13 +62,13 @@ router.get('/mensaje', async (req, res) => {
       return res.status(404).json({ error: 'Usuario no encontrado' });
     }
     // Generar token aleatorio
-    const caracteres = 'ABC123';
+    const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789';
     let token = '';
     for (let i = 0; i < caracteres.length; i++) {
       const randomIndex = Math.floor(Math.random() * caracteres.length);
       token += caracteres[randomIndex];
     }
-    changePass(email, token)
+     await changePass(email, token)
 
     res.json({ user: email, token });
   } catch (error) {

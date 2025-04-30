@@ -12,6 +12,7 @@ const { notificacionesRouter } = require('./Comunicacion/notificaciones_route.cj
 const documentosRouter = require('./Usuarios/documentos_route.cjs');
 const { sesionRouter } = require('./Usuarios/sesion_registro_route.cjs');
 const { mensajeRouter } = require('./Usuarios/mensaje_route.cjs');
+const { recuperarRouter } = require('./Usuarios/recuperar_route.cjs');
 
 const PORT = process.env.PORT || 3000;
 
@@ -35,6 +36,7 @@ app.use('/api/admin', adminRouter);
 app.use('/api/documentos', documentosRouter);
 app.use('/api/sesion', sesionRouter);
 app.use('/api', mensajeRouter);
+app.use('/api/recuperar', recuperarRouter)
 
 
 //ruta para obtener todos los usuarios
@@ -68,22 +70,6 @@ app.get('/api/usuarios', async (req, res) => {
     }
 });
 
-/*app.post('/api/sesion/recuperar', async (req, res) => {
-    const { name } = req.body;  // Recibe el nombre de usuario o correo desde el cuerpo de la solicitud
-
-    try {
-        console.log('Solicitud de recuperación recibida para:', name);
-
-        // Aquí puedes agregar la lógica de recuperación de contraseña
-        // Por ejemplo: Enviar un enlace de recuperación por correo o verificar si el usuario existe
-
-        res.status(200).json({ message: 'Enlace de recuperación enviado' });
-    } catch (error) {
-        console.error('Error en la recuperación:', error);
-        res.status(500).json({ message: 'Hubo un problema al intentar recuperar la contraseña' });
-    }
-});
-*/
 app.get('/api/mensaje', (req, res) => {
     const user = req.query.user; // Aquí recibes el parámetro de la URL
     const caracteres = 'ABC123';
