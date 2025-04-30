@@ -1,7 +1,7 @@
 import './pagina_documentos.css';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function PaginaDocumentos() {
     const [titulo, setTitulo] = useState('');
@@ -9,16 +9,43 @@ function PaginaDocumentos() {
     const [documentos, setDocumentos] = useState([]);
     const usuario = useSelector(state => state.usuario.usuario);
     const tipo_usuario = useSelector(state => state.usuario.tipo_usuario);
+    const navigate = useNavigate();
 
     const getHomeRoute = () => {
-        switch(tipo_usuario) {
+        console.log('getHomeRoute - tipo_usuario from Redux:', tipo_usuario);
+        
+        if (tipo_usuario) {
+            switch(tipo_usuario) {
+                case 'aliado':
+                    console.log('Returning route for aliado');
+                    return '/vistaAliados';
+                case 'escuela':
+                    console.log('Returning route for escuela');
+                    return '/vistaEscuelas';
+                case 'admin':
+                    console.log('Returning route for admin');
+                    return '/vistaAdmin';
+                default:
+                    console.log('No match in Redux state, trying localStorage');
+                    break;
+            }
+        }
+        
+        const fallbackType = localStorage.getItem('tipo_usuario');
+        console.log('getHomeRoute - fallbackType from localStorage:', fallbackType);
+        
+        switch(fallbackType) {
             case 'aliado':
+                console.log('Returning fallback route for aliado');
                 return '/vistaAliados';
             case 'escuela':
+                console.log('Returning fallback route for escuela');
                 return '/vistaEscuelas';
             case 'admin':
+                console.log('Returning fallback route for admin');
                 return '/vistaAdmin';
             default:
+                console.log('No route found, returning to root');
                 return '/';
         }
     };
@@ -103,12 +130,28 @@ function PaginaDocumentos() {
         fetchDocumentos();
     }, []);
 
+    useEffect(() => {
+        const userType = tipo_usuario || localStorage.getItem('tipo_usuario');
+        if (!userType) {
+            console.warn('No user type found, redirecting to login');
+            navigate('/');
+        }
+    }, [tipo_usuario, navigate]);
+
     return (
         <div className="pagina-documentos-container">
             <div className="pagina-documentos-sidebar">
                 <h2>Menú</h2>
                 <ul>
-                    <li><Link to={getHomeRoute()}>Inicio</Link></li>
+                    <li>
+                        <Link to={(() => {
+                            const route = getHomeRoute();
+                            console.log('Route being used:', route);
+                            return route;
+                        })()}>
+                            Inicio
+                        </Link>
+                    </li>
                     <li><Link to="/modificarPerfil">Perfil</Link></li>
                     <li><Link to="/chat">Chat</Link></li>
                 </ul>
