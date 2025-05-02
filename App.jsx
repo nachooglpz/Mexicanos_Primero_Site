@@ -10,6 +10,8 @@ import PresentConvenio from './Match/Convenio/Convenio.jsx' // este también sob
 import VistaAliados from './Usuarios/VistaAliados';
 import VistaEscuelas from './Usuarios/VistaEscuelas';
 import PanelAdmin from './Usuarios/PanelAdmin.jsx';
+import Recuperar from './Usuarios/recuperar/recuperar.jsx' 
+import Validar from './Usuarios/validar.jsx'
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 
 function App() {
@@ -29,6 +31,8 @@ function App() {
             <Route path="/documentos" element={ <PaginaDocumentos /> } />
             <Route path="/convenios" element={ <ListadoConvenios />} />
             <Route path="/convenio/:id_convenio" element={<PresentConvenio />} />
+            <Route path="/recuperar" element={ <Recuperar/>} />
+            <Route path="/auth" element={ <Validar/>} />
         </>
     ));
 

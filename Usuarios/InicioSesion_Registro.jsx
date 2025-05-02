@@ -8,13 +8,6 @@ export function PaginaInicio() {
   return (
       <div className="inicio-sesion-registro">
         <InicioSesion />
-      </div>
-  );
-}
-
-export function PaginaRegistro() {
-  return(
-      <div className="inicio-sesion-registro">
         <Registro />
       </div>
       );
@@ -62,7 +55,7 @@ function InicioSesion() {
           </button>
           <button
             type="button"
-            onClick={() => (window.location.href = 'recuperar/recuperar.html')}
+            onClick={() => (window.location.href = '/recuperar')}
             className="btn btn-primary inicio-sesion-boton"
           >
             Recuperar Contraseña
@@ -185,6 +178,31 @@ function Registro() {
     </div>
   );
 }
+
+function RegistroAliado({ setForm }) {
+  return (
+      <>
+        <label htmlFor="register-institution" className="registro-label">Empresa/Institución</label>
+        <input type="text" className="form-control registro-input" id="register-institution" placeholder="Empresa/Institución" onChange={(e) => setForm((prev) => ({ ...prev, institucion: e.target.value }))} />
+
+        <label htmlFor="register-sector" className="registro-label">Sector</label>
+        <input type="text" className="form-control registro-input" id="register-sector" placeholder="Sector" onChange={(e) => setForm((prev) => ({ ...prev, sector: e.target.value }))} />
+      </>
+  );
+}
+
+function RegistroEscuela({ setForm }) {
+  return (
+      <>
+        <label htmlFor="register-escuela" className="registro-label">Escuela</label>
+        <input type="text" className="form-control registro-input" id="register-escuela" placeholder="Escuela" onChange={(e) => setForm((prev) => ({ ...prev, institucion: e.target.value }))} />
+
+        <label htmlFor="register-cct" className="registro-label">CCT</label>
+        <input type="text" className="form-control registro-input" id="register-cct" placeholder="CCT" onChange={(e) => setForm((prev) => ({ ...prev, cct: e.target.value }))} />
+      </>
+  )
+}
+
 
 function RegistroAliado({ setForm }) {
   return (

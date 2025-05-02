@@ -2,6 +2,8 @@
 const db = require('./db.cjs');
 const express = require('express');
 const app = express();
+const cors = require('cors');
+
 
 const { aliadosRouter } = require('./Usuarios/aliados_route.cjs');
 const { escuelasRouter } = require('./Usuarios/escuelas_route.cjs');
@@ -11,8 +13,8 @@ const documentosRouter = require('./Usuarios/documentos_route.cjs');
 const { sesionRouter } = require('./Usuarios/sesion_registro_route.cjs');
 const { convenioRouter } = require('./Match/Convenio/convenio_route.cjs');
 const inicioSesionModel = require('./Usuarios/inicioSesion_model.cjs');
-
-inicioSesionModel
+const { mensajeRouter } = require('./Usuarios/mensaje_route.cjs');
+const { recuperarRouter } = require('./Usuarios/recuperar_route.cjs');
 
 const PORT = process.env.PORT || 3000;
 
@@ -20,6 +22,11 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static('public'));
 
 // Middleware para parsear JSON
+app.use(cors({
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST'],
+    credentials: true
+  }));  
 app.use(express.json());
 
 // Routes go here
@@ -30,6 +37,8 @@ app.use('/api/admin', adminRouter);
 app.use('/api/documentos', documentosRouter);
 app.use('/api/sesion', sesionRouter);
 app.use('/api/convenios', convenioRouter);
+app.use('/api', mensajeRouter);
+app.use('/api/recuperar', recuperarRouter)
 
 // Login request middleware
 const validateLoginQuery = (req, res, next) => {
@@ -84,14 +93,28 @@ app.get('/api/usuarios', async (req, res) => {
     }
 });
 
-// Error handling middleware
+app.get('/api/mensaje', (req, res) => {
+    const user = req.query.user; // Aquí recibes el parámetro de la URL
+    const caracteres = 'ABC123';
+    let token = '';
+    for (let i = 0; i < caracteres.length; i++) {
+      const randomIndex = Math.floor(Math.random() * caracteres.length);
+      token += caracteres[randomIndex];
+    }
+    res.json({ 
+        user: user,
+        token: token,
+
+     });
+  });
+// Start the server listening on PORT
+app.listen(PORT, () => {
+    console.log(`The server is listening for requests on port ${PORT}`);
+});
+
+
 app.use((err, req, res, next) => {
     const status = err.status || 500;
     console.error('Error:', err.message);
     res.status(status).send(err.message);
-});
-
-// Start the server listening on PORT
-app.listen(PORT, () => {
-    console.log(`The server is listening for requests on port ${PORT}`);
 });
