@@ -1,6 +1,6 @@
 //validar que el token y usuario sean correctos para restablecer contraseña
 import { useState } from 'react';
-import "./validar.css";
+//import "./validar.css";
 import { useNavigate } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
 

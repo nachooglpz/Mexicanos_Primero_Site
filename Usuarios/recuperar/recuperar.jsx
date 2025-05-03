@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import emailjs from 'emailjs-com';
-import "./recuperar.css";
+//import "./recuperar.css";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
